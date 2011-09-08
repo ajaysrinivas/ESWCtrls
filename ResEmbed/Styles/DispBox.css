@@ -1,0 +1,48 @@
+﻿div.ESW_DispBox { height: 1%; margin:0; }
+div.ESW_DispBox_head {
+	background-position: right top;
+	background-repeat: no-repeat;
+	/*padding right*/
+}
+div.ESW_DispBox_headLeft {
+	background-position: left top;
+	background-repeat: no-repeat;
+	/*padding left*/
+}
+div.ESW_DispBox_headCtr {
+	height: auto !important;
+	background-position: top;
+	background-repeat: repeat-x;
+	/*padding top right bottom*/
+}
+div.ESW_DispBox_body {
+	background-position: right;
+	background-repeat: repeat-y;
+	/*padding right*/
+}
+div.ESW_DispBox_bodyLeft {
+	background-position: left;
+	background-repeat: repeat-y;
+	/*padding left*/
+}
+div.ESW_DispBox_bodyCtr {
+	border: 0;
+	margin: 0;
+	overflow: hidden;
+	/*padding top 0 0 0*/
+}
+div.ESW_DispBox_foot {
+	background-position: right bottom;
+	background-repeat: no-repeat;
+	/*padding right*/
+}
+div.ESW_DispBox_footLeft {
+	background-position: left bottom;
+	background-repeat: no-repeat;
+	/* padding left */
+}
+div.ESW_DispBox_footCtr {
+	background-position:bottom;
+	background-repeat: repeat-x;
+	font-size:1px;
+}
