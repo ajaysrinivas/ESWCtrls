@@ -160,7 +160,7 @@ namespace ESWCtrls
         ///
         public override void WriteEncodedText(string s)
         {
-            base.WriteEncodedText(this.StripWhiteSpace(s).Trim());
+            base.WriteEncodedText(this.StripWhiteSpace(s));
         }
 
         #endregion
@@ -169,36 +169,38 @@ namespace ESWCtrls
 
         ///
         public override void WriteLine()
-        { }
+        { 
+            base.Write(" "); 
+        }
 
         ///
         public override void WriteLine(string format, object arg0)
         {
-            base.WriteLine(StripWhiteSpace(format).Trim(), arg0);
+            base.WriteLine(StripWhiteSpace(format), arg0);
         }
 
         ///
         public override void WriteLine(string format, object arg0, object arg1)
         {
-            base.WriteLine(StripWhiteSpace(format).Trim(), arg0, arg1);
+            base.WriteLine(StripWhiteSpace(format), arg0, arg1);
         }
 
         ///
         public override void WriteLine(string format, object arg0, object arg1, object arg2)
         {
-            base.WriteLine(StripWhiteSpace(format).Trim(), arg0, arg1, arg2);
+            base.WriteLine(StripWhiteSpace(format), arg0, arg1, arg2);
         }
 
         ///
         public override void WriteLine(string format, params object[] arg)
         {
-            base.WriteLine(StripWhiteSpace(format).Trim(), arg);
+            base.WriteLine(StripWhiteSpace(format), arg);
         }
 
         ///
         public override void WriteLine(string s)
         {
-            base.WriteLine(this.StripWhiteSpace(s).Trim());
+            base.WriteLine(this.StripWhiteSpace(s));
         }
 
         #endregion
@@ -238,7 +240,7 @@ namespace ESWCtrls
             while(s.Contains("  "))
                 s = s.Replace("  ", " ");
 
-            return s;
+            return (s.TrimStart());
         }
 
     }
