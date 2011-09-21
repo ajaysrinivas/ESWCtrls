@@ -247,7 +247,7 @@ namespace ESWCtrls
 
     #endregion
 
-    #region PopupBox/Dialog
+    #region PopupBox/Dialog/AutoComplete
 
     /// <summary>The positions the box can take</summary>
     public enum Position
@@ -270,6 +270,31 @@ namespace ESWCtrls
         RightCenter,
         /// <summary>Bottom Right of screen, margin is distance from the right and bottom</summary>
         RightBottom
+    }
+
+    /// <summary>
+    /// How to handle cllisions in position
+    /// </summary>
+    public enum Collision
+    {
+        /// <summary>Don't do collision detection</summary>
+        None,
+        /// <summary>Flip to the opposite side, to see if it will fit, if it won't center</summary>
+        Flip,
+        /// <summary>Do its best to reposition to make the element fit</summary>
+        Fit,
+        /// <summary>Horizontal <see cref="None">None</see>, Vertical <see cref="Flip">Flip</see></summary>
+        NoneFlip,
+        /// <summary>Horizontal <see cref="None">None</see>, Vertical <see cref="Fit">Fit</see></summary>
+        NoneFit,
+        /// <summary>Horizontal <see cref="Flip">Flip</see>, Vertical <see cref="None">None</see></summary>
+        FlipNone,
+        /// <summary>Horizontal <see cref="Flip">Flip</see>, Vertical <see cref="Fit">Fit</see></summary>
+        FlipFit,
+        /// <summary>Horizontal <see cref="Fit">Fit</see>, Vertical <see cref="None">None</see></summary>
+        FitNone,
+        /// <summary>Horizontal <see cref="Fit">Fit</see>, Vertical <see cref="Flip">Flip</see></summary>
+        FitFlip
     }
 
     #endregion
@@ -386,4 +411,7 @@ namespace ESWCtrls
     }
 
     #endregion
+
+
+
 }

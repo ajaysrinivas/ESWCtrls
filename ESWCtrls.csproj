@@ -67,9 +67,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoComplete.cs" />
     <Compile Include="Container\Accordion\Accordion.cs" />
     <Compile Include="BusyBox.cs" />
     <Compile Include="Button.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Container\TabControl\TabControl.cs" />
     <Compile Include="Parts\Effect.cs" />
     <Compile Include="Parts\Option.cs" />
+    <Compile Include="Parts\Positioning.cs" />
     <Compile Include="Parts\Triggers.cs" />
     <Compile Include="Schedule\DatePicker.cs" />
     <Compile Include="Graphic\Blur.cs" />
