@@ -168,6 +168,16 @@ namespace ESWCtrls
         public string ActivePageTitle
         {
             get { return _pages[ActivePageIndex].Title; }
+            set { ActivePageIndex = _pages.IndexOfTitle(value) >= 0 ? _pages.IndexOfTitle(value) : 0; }
+        }
+
+        /// <summary>
+        /// Gets or sets the active page by id.
+        /// </summary>
+        [Category("Data")]
+        public string ActivePageId
+        {
+            get { return _pages[ActivePageIndex].Id; }
             set { ActivePageIndex = _pages.IndexOf(value) >= 0 ? _pages.IndexOf(value) : 0; }
         }
 

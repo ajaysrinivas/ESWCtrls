@@ -34,6 +34,22 @@ namespace ESWCtrls
         }
 
         /// <summary>
+        /// If the regex should ignore case
+        /// </summary>
+        [Bindable(true), Category("Behaviour"), DefaultValue(false)]
+        public bool IgnoreCase
+        {
+            get
+            {
+                if(ViewState["IgnoreCase"] == null)
+                    return false;
+                else
+                    return (bool)ViewState["IgnoreCase"];
+            }
+            set { ViewState["IgnoreCase"] = value; }
+        }
+
+        /// <summary>
         /// The validation expression
         /// </summary>
         /// <value>String</value>
@@ -67,7 +83,10 @@ namespace ESWCtrls
 
             if(string.IsNullOrEmpty(ValidationExpression)) return true;
 
-            return Regex.IsMatch(value, ValidationExpression);
+            if(IgnoreCase)
+                return Regex.IsMatch(value, ValidationExpression, RegexOptions.IgnoreCase);
+            else
+                return Regex.IsMatch(value, ValidationExpression);
         }
 
         ///
@@ -79,6 +98,7 @@ namespace ESWCtrls
                 ScriptManager.RegisterExpandoAttribute(this, ClientID, "evaluationfunction", "ESW_RegExValidator", false);
                 ScriptManager.RegisterExpandoAttribute(this, ClientID, "required", Required.ToString().ToLower(), false);
                 ScriptManager.RegisterExpandoAttribute(this, ClientID, "validationexpression", ValidationExpression, false);
+                ScriptManager.RegisterExpandoAttribute(this, ClientID, "options", IgnoreCase ? "i" : "", false);
             }
         }
 

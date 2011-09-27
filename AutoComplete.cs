@@ -33,6 +33,9 @@ namespace ESWCtrls
                 if(_pos == null)
                 {
                     _pos = new Positioning();
+                    _pos.My = ESWCtrls.Position.LeftTop;
+                    _pos.At = ESWCtrls.Position.LeftBottom;
+                    _pos.Collision = Collision.None;
                     if(IsTrackingViewState) ((IStateManager)_pos).TrackViewState();
                 }
                 return _pos;
@@ -332,6 +335,12 @@ namespace ESWCtrls
             if(MinLength != 1)
                 opts.Add(string.Format("minLength:{0}", MinLength));
 
+            if(_pos != null)
+            {
+                if(_pos.My != ESWCtrls.Position.LeftTop || _pos.At != ESWCtrls.Position.LeftBottom || _pos.Collision != Collision.None || !string.IsNullOrEmpty(_pos.Of))
+                    opts.Add("position:" + _pos.JSOption(this));
+            }
+
             if(AppendTo != "body")
             {
                 Control c = Util.FindControlRecursiveOut(this, AppendTo, null);
@@ -378,7 +387,37 @@ namespace ESWCtrls
             else
                 throw new ArgumentNullException("No Source provided for auto complete control");
 
-            opts.Add(string.Format("select:function(event,ui){{this.value=ui.item.label;$(\"#{0}_data\").val(ui.item.value);return false;}}", ClientID));
+            string selectJS = string.Format("this.value=ui.item.label;$(\"#{0}_data\").val(ui.item.value);return false;", ClientID);
+            string changeJS = string.Format("if(ui.item==null) $(\"#{0}_data\").val(\"\");", ClientID);
+
+            if(_clientEvents != null)
+            {
+                if(!string.IsNullOrEmpty(ClientSideEvents.Create))
+                    opts.Add("create:function(event,ui){" + ClientSideEvents.Create + "}");
+                if(!string.IsNullOrEmpty(ClientSideEvents.Search))
+                    opts.Add("search:function(event,ui){" + ClientSideEvents.Search + "}");
+                if(!string.IsNullOrEmpty(ClientSideEvents.Open))
+                    opts.Add("open:function(event,ui){" + ClientSideEvents.Open + "}");
+                if(!string.IsNullOrEmpty(ClientSideEvents.Focus))
+                    opts.Add("focus:function(event,ui){" + ClientSideEvents.Focus + "}");
+                if(!string.IsNullOrEmpty(ClientSideEvents.Close))
+                    opts.Add("close:function(event,ui){" + ClientSideEvents.Close + "}");
+
+                if(!string.IsNullOrEmpty(ClientSideEvents.Select))
+                    opts.Add(string.Format("select:function(event,ui){{{0}{1}}}", selectJS, ClientSideEvents.Select));
+                else
+                    opts.Add(string.Format("select:function(event,ui){{{0}}}", selectJS));
+
+                if(!string.IsNullOrEmpty(ClientSideEvents.Change))
+                    opts.Add(string.Format("change:function(event,ui){{{0}{1}}}", changeJS, ClientSideEvents.Change));
+                else
+                    opts.Add(string.Format("change:function(event,ui){{{0}}}", changeJS));
+            }
+            else
+            {
+                opts.Add(string.Format("select:function(event,ui){{{0}}}", selectJS));
+                opts.Add(string.Format("change:function(event,ui){{{0}}}", changeJS));
+            }
 
             Script.AddStartupScript(this, "autocomplete", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_data", SelectedValue);

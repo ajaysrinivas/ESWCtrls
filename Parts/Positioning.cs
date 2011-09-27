@@ -103,5 +103,29 @@ namespace ESWCtrls
             }
         }
     
+        /// <summary>
+        /// Returns a string containing the options as a javascript object.
+        /// </summary>
+        public string JSOption(Control parent = null)
+        {
+            if(string.IsNullOrEmpty(Of))
+                return string.Format("{{my:\"{0}\",at:\"{1}\",collision:\"{2}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], CollisionStrings[(int)Collision]);
+            else
+            {
+                if(parent != null)
+                {
+                    Control c = Util.FindControlRecursiveOut(parent, Of, null);
+                    if(c != null)
+                        return string.Format("{{my:\"{0}\",at:\"{1}\",of:\"{2}\",collision:\"{3}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], c.ClientID, CollisionStrings[(int)Collision]);
+                    else
+                        return string.Format("{{my:\"{0}\",at:\"{1}\",of:\"{2}\",collision:\"{3}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], Of, CollisionStrings[(int)Collision]);
+                }
+                else
+                    return string.Format("{{my:\"{0}\",at:\"{1}\",of:\"{2}\",collision:\"{3}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], Of, CollisionStrings[(int)Collision]);
+            }
+        }
+
+        private static readonly string[] PositionStrings = new string[] { "'top'", "'center'", "'bottom'", "'left top'", "'left'", "'left bottom'", "'right top'", "'right'", "'right bottom'" };
+        private static readonly string[] CollisionStrings = new string[] {"'none'","'flip'", "'fit'", "'none flip'", "'none fit'", "'flip none'", "'flip fit'", "'fit none'", "'fit flip'" };
     }
 }

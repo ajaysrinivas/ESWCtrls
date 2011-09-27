@@ -8,11 +8,36 @@ namespace ESWCtrls
     /// <summary>
     /// The individual pages for a tab page class
     /// </summary>
+    [ParseChildren(true), PersistChildren(false),DefaultProperty("Content")]
     public class TabPage : ViewStateBase
     {
         /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        [Bindable(true),DefaultValue(null)]
+        public string Id
+        {
+            get
+            {
+                if(ViewState["Id"] != null)
+                    return (string)ViewState["Id"];
+                else
+                    return string.Empty;
+            }
+            set
+            {
+                if(!string.IsNullOrEmpty(value))
+                    ViewState["Id"] = value;
+                else
+                    ViewState.Remove("Id");
+            }
+        }
+
+
+        /// <summary>
         /// The title of the page
         /// </summary>
+        [Bindable(true),DefaultValue(null)]
         public string Title
         {
             get
@@ -25,12 +50,22 @@ namespace ESWCtrls
             set { ViewState["Title"] = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="TabPage"/> is visible.
+        /// </summary>
+        [Bindable(true),DefaultValue(true)]
+        public bool Visible
+        {
+            get { return ContentTemplateContainer.Visible; }
+            set { ContentTemplateContainer.Visible = value; }
+        }
+
         #region Data Properties
 
         /// <summary>
         /// The contents of the box
         /// </summary>
-        [Browsable(false), PersistenceMode(PersistenceMode.InnerProperty), TemplateInstance(TemplateInstance.Single)]
+        [Browsable(false), PersistenceMode(PersistenceMode.InnerDefaultProperty), TemplateInstance(TemplateInstance.Single)]
         public ITemplate Content
         {
             get { return _contentTemplate; }

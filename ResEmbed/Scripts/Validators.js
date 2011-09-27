@@ -8,8 +8,8 @@ function ESW_RegExValidator( validator )
             return false;
         else
             return true;
-    }   
-    var rx = new RegExp(validator.validationexpression);
+    }
+    var rx = new RegExp(validator.validationexpression, validator.options);
     var matches = rx.exec(value);
     return (matches != null && value == matches[0]);
 }
@@ -106,7 +106,7 @@ function ESW_ControlValue( ctrlID )
     {
         switch( ctrl.type )
         {
-            case "text": 
+            case "text": case "file":
                 return ctrl.value;
                 break;
             case "checkbox":
