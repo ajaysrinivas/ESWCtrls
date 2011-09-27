@@ -387,7 +387,7 @@ namespace ESWCtrls
             else
                 throw new ArgumentNullException("No Source provided for auto complete control");
 
-            string selectJS = string.Format("this.value=ui.item.label;$(\"#{0}_data\").val(ui.item.value);return false;", ClientID);
+            string selectJS = string.Format("this.value=ui.item.label;$(\"#{0}_data\").val(ui.item.value);", ClientID);
             string changeJS = string.Format("if(ui.item==null) $(\"#{0}_data\").val(\"\");", ClientID);
 
             if(_clientEvents != null)
@@ -404,9 +404,9 @@ namespace ESWCtrls
                     opts.Add("close:function(event,ui){" + ClientSideEvents.Close + "}");
 
                 if(!string.IsNullOrEmpty(ClientSideEvents.Select))
-                    opts.Add(string.Format("select:function(event,ui){{{0}{1}}}", selectJS, ClientSideEvents.Select));
+                    opts.Add(string.Format("select:function(event,ui){{{0}{1};return false;}}", selectJS, ClientSideEvents.Select));
                 else
-                    opts.Add(string.Format("select:function(event,ui){{{0}}}", selectJS));
+                    opts.Add(string.Format("select:function(event,ui){{{0}return false;}}", selectJS));
 
                 if(!string.IsNullOrEmpty(ClientSideEvents.Change))
                     opts.Add(string.Format("change:function(event,ui){{{0}{1}}}", changeJS, ClientSideEvents.Change));
@@ -415,7 +415,7 @@ namespace ESWCtrls
             }
             else
             {
-                opts.Add(string.Format("select:function(event,ui){{{0}}}", selectJS));
+                opts.Add(string.Format("select:function(event,ui){{{0}return false;}}", selectJS));
                 opts.Add(string.Format("change:function(event,ui){{{0}}}", changeJS));
             }
 
@@ -484,7 +484,7 @@ namespace ESWCtrls
             states[0] = base.SaveViewState();
             if(_items != null) states[1] = ((IStateManager)Items).SaveViewState();
             if(_pos != null) states[2] = _pos.SaveViewState();
-            if(_clientEvents != null) states[4] = _clientEvents.SaveViewState();
+            if(_clientEvents != null) states[3] = _clientEvents.SaveViewState();
             return states;
         }
 
