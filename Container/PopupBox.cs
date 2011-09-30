@@ -67,66 +67,40 @@ namespace ESWCtrls
         /// <summary>
         /// The position of the popup on the screen
         /// </summary>
-        [Bindable(true), Category("Appearance"), DefaultValue(Position.CenterCenter)]
-        public Position Position
+        [Bindable(true), Category("Appearance"), DefaultValue(typeof(Positioning), null), MergableProperty(false), PersistenceMode(PersistenceMode.InnerProperty)]
+        public Positioning Position
         {
             get
             {
-                if(ViewState["Position"] == null)
-                    return Position.CenterCenter;
-                else
-                    return (Position)ViewState["Position"];
-            }
-            set
-            {
-                if(value == Position.CenterCenter)
-                    ViewState.Remove("Position");
-                else
-                    ViewState["Position"] = value;
+                if(_pos == null)
+                {
+                    _pos = new Positioning();
+                    _pos.Collision = Collision.Fit;
+                    if(IsTrackingViewState) ((IStateManager)_pos).TrackViewState();
+                }
+                return _pos;
             }
         }
 
         /// <summary>
-        /// Whether to position the control relative to another
+        /// The offset to apply to its position
         /// </summary>
-        [Bindable(true), Category("Appearance"), DefaultValue("")]
-        public string RelativeTo
+        [Bindable(true), Category("Appearance")]
+        public Point Offset
         {
             get
             {
-                if(ViewState["RelativeTo"] == null)
-                    return null;
+                if(ViewState["Offset"] == null)
+                    return new Point();
                 else
-                    return (string)ViewState["RelativeTo"];
+                    return (Point)ViewState["Offset"];
             }
             set
             {
-                if(string.IsNullOrEmpty(value))
-                    ViewState.Remove("RelativeTo");
+                if(value == null || value.IsEmpty)
+                    ViewState.Remove("Offset");
                 else
-                    ViewState["RelativeTo"] = value;
-            }
-        }
-
-        /// <summary>
-        /// The margin from the edge of the screen
-        /// </summary>
-        [Bindable(true), Category("Appearance"), DefaultValue(0)]
-        public int Margin
-        {
-            get
-            {
-                if(ViewState["Margin"] == null)
-                    return 0;
-                else
-                    return (int)ViewState["Margin"];
-            }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("Margin");
-                else
-                    ViewState["Margin"] = value;
+                    ViewState["Offset"] = value;
             }
         }
 
@@ -395,36 +369,49 @@ namespace ESWCtrls
             return new LimitCollection(this, 1);
         }
 
-        ///
+        /// <summary>
+        /// Causes the control to track changes to its view state so they can be stored in the object's <see cref="P:System.Web.UI.Control.ViewState"/> property.
+        /// </summary>
         protected override void TrackViewState()
         {
             base.TrackViewState();
-            if(_openTriggers != null) ((IStateManager)_openTriggers).TrackViewState();
-            if(_closeTriggers != null) ((IStateManager)_closeTriggers).TrackViewState();
-            if(_clientEvents != null) ((IStateManager)_clientEvents).TrackViewState();
+            if(_openTriggers != null) _openTriggers.TrackViewState();
+            if(_closeTriggers != null) _closeTriggers.TrackViewState();
+            if(_clientEvents != null) _clientEvents.TrackViewState();
+            if(_pos != null) _pos.TrackViewState();
         }
 
-        ///
+        /// <summary>
+        /// Restores view-state information from a previous request that was saved with the <see cref="M:System.Web.UI.WebControls.WebControl.SaveViewState"/> method.
+        /// </summary>
+        /// <param name="savedState">An object that represents the control state to restore.</param>
         protected override void LoadViewState(object savedState)
         {
             object[] states = (object[])savedState;
             if(states != null)
             {
                 if(states[0] != null) base.LoadViewState(states[0]);
-                if(states[1] != null) ((IStateManager)OpenTriggers).LoadViewState(states[1]);
-                if(states[2] != null) ((IStateManager)CloseTriggers).LoadViewState(states[2]);
-                if(states[3] != null) ((IStateManager)ClientSideEvents).LoadViewState(states[3]);
+                if(states[1] != null) OpenTriggers.LoadViewState(states[1]);
+                if(states[2] != null) CloseTriggers.LoadViewState(states[2]);
+                if(states[3] != null) ClientSideEvents.LoadViewState(states[3]);
+                if(states[4] != null) Position.LoadViewState(states[4]);
             }
         }
 
-        ///
+        /// <summary>
+        /// Saves any state that was modified after the <see cref="M:System.Web.UI.WebControls.Style.TrackViewState"/> method was invoked.
+        /// </summary>
+        /// <returns>
+        /// An object that contains the current view state of the control; otherwise, if there is no view state associated with the control, null.
+        /// </returns>
         protected override object SaveViewState()
         {
-            object[] states = new object[4];
+            object[] states = new object[5];
             states[0] = base.SaveViewState();
-            if(_openTriggers != null) states[1] = ((IStateManager)_openTriggers).SaveViewState();
-            if(_closeTriggers != null) states[2] = ((IStateManager)_closeTriggers).SaveViewState();
-            if(_clientEvents != null) states[3] = ((IStateManager)_clientEvents).SaveViewState();
+            if(_openTriggers != null) states[1] = _openTriggers.SaveViewState();
+            if(_closeTriggers != null) states[2] = _closeTriggers.SaveViewState();
+            if(_clientEvents != null) states[3] = _clientEvents.SaveViewState();
+            if(_pos != null) states[4] = _pos.SaveViewState();
             return states;
         }
 
@@ -507,25 +494,16 @@ namespace ESWCtrls
 
             base.OnPreRender(e);
 
-            Script.AddResourceScript(Page, "jquery.popup.js");
+            Script.AddResourceScript(Page, "jquery.ui.position.js", "jquery.popup.js");
             List<string> opts = new List<string>();
 
             if(Modal)
                 opts.Add("modal:true");
-            if(Position != ESWCtrls.Position.CenterCenter)
-                opts.Add("position:" + PositionStrings[(int)Position]);
 
-            if(!string.IsNullOrEmpty(RelativeTo))
-            {
-                Control ctrl = Util.FindControlRecursiveOut(this, RelativeTo, null);
-                if(ctrl != null)
-                    opts.Add("relativeto:\"" + ctrl.ClientID + "\"");
-                else
-                    opts.Add("relativeto:\"" + RelativeTo + "\"");
-            }
+            opts.Add("position:" + Position.JSOption(this));
 
-            if(Margin > 0)
-                opts.Add("margin:" + Margin.ToString());
+            if(!Offset.IsEmpty)
+                opts.Add(string.Format("offset:\"{0} {1}\"", Offset.X, Offset.Y));
             if(UseJQueryOverlay)
                 opts.Add("usejqueryoverlay:true");
             if(ZIndex != 1000)
@@ -661,8 +639,7 @@ namespace ESWCtrls
         private TriggerList _openTriggers;
         private TriggerList _closeTriggers;
         private PopupClientEvents _clientEvents;
-
-        internal static readonly string[] PositionStrings = new string[] { "top", "center", "bottom", "left,top", "left", "left,bottom", "right,top", "right", "right,bottom" };
+        private Positioning _pos;
 
         #endregion
     }

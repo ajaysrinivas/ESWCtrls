@@ -395,7 +395,7 @@ namespace ESWCtrls
 
     #endregion
 
-    #region SortColumn
+    #region SortColumn / HelpPoint
 
     /// <summary>
     /// Whether to show image or text or both
@@ -412,6 +412,13 @@ namespace ESWCtrls
 
     #endregion
 
+#region Constants
 
+    internal static class Constants
+    {
+        internal static string[] PositionStrings = new string[] { "top", "center", "bottom", "left top", "left", "left bottom", "right top", "right", "right bottom" };
+        internal static string[] CollisionStrings = new string[] { "none", "flip", "fit", "none flip", "none fit", "flip none", "flip fit", "fit none", "fit flip" };
+    }
 
+#endregion
 }

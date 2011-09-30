@@ -2,6 +2,7 @@
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System;
 
 namespace ESWCtrls.Internal
 {
@@ -96,17 +97,29 @@ namespace ESWCtrls.Internal
         public static Control FindControlRecursive(Control Parent, string ID)
         {
             if (Parent.ID == ID)
-            {
                 return Parent;
-            }
 
             foreach (Control child in Parent.Controls)
             {
                 Control ctrl = FindControlRecursive(child, ID);
                 if (ctrl != null)
-                {
                     return ctrl;
-                }
+            }
+
+            return null;
+        }
+
+        //Finds a control recursivly within a parent
+        public static Control FindControlRecursive(Control Parent, Type ctrlType)
+        {
+            if(Parent.GetType() == ctrlType)
+                return Parent;
+
+            foreach(Control child in Parent.Controls)
+            {
+                Control ctrl = FindControlRecursive(child, ctrlType);
+                if(ctrl != null)
+                    return ctrl;
             }
 
             return null;
@@ -122,19 +135,32 @@ namespace ESWCtrls.Internal
                 if (child.Equals(check)) continue;
                 Control ctrl = FindControlRecursive(child, ID);
                 if (ctrl != null)
-                {
                     return ctrl;
-                }
             }
 
             if (parent.Parent != null)
-            {
                 return FindControlRecursiveOut(parent.Parent, ID, parent);
-            }
             else
-            {
                 return null;
+        }
+
+        // Finds a control first within the parent, then proceeds up the tree skipping the bits its already checked
+        public static Control FindControlRecursiveOut(Control parent, Type ctrlType, Control check)
+        {
+            if(parent.GetType() == ctrlType) return parent;
+
+            foreach(Control child in parent.Controls)
+            {
+                if(child.Equals(check)) continue;
+                Control ctrl = FindControlRecursive(child, ctrlType);
+                if(ctrl != null)
+                    return ctrl;
             }
+
+            if(parent.Parent != null)
+                return FindControlRecursiveOut(parent.Parent, ctrlType, parent);
+            else
+                return null;
         }
 
         // Finds if a controls parent tree has an update panel
@@ -152,6 +178,30 @@ namespace ESWCtrls.Internal
             }
 
             return false;
+        }
+
+        public static string BuildVirtPath(Control ctrl)
+        {
+            string rst = string.Empty;
+            Control p = ctrl.Parent;
+            while(p != null)
+            {
+                if(p is UserControl)
+                {
+                    UserControl c = (UserControl)p;
+                    rst = c.AppRelativeVirtualPath.Replace(c.AppRelativeTemplateSourceDirectory, "");
+                    break;
+                }
+                else if(p is Page)
+                {
+                    Page c = (Page)p;
+                    rst = c.Request.Path.Substring(c.Request.Path.IndexOf("/", 1) + 1);
+                    break;
+                }
+                p = p.Parent;
+            }
+
+            return rst;
         }
 
         #endregion

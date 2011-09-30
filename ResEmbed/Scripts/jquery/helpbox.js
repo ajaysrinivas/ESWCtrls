@@ -1,0 +1,10 @@
+﻿/*
+* jQuery.ls_helpbox.js - helpbox plugin, specifically to work with asp.net control
+*
+* version 1.0.0 (2011/09/30) (C)opyright Leon Pennington 2011
+* 
+* Dual licensed under the MIT and GPL licenses: 
+*   http://www.opensource.org/licenses/mit-license.php 
+*   http://www.gnu.org/licenses/gpl.html 
+*/
+;(function(a){a.fn.ls_helpbox=function(b){var c=a.extend(true,{controls:null,clickModal:false,ajaxCallback:null},b);return this.each(function(){function p(b,d,e){if(c.ajaxCallback==null){e("Help is not available. Missing ajax callback.");return}a.ajax({url:c.ajaxCallback.url,data:"{"+c.ajaxCallback.paramHelpId+':"'+b+'",'+c.ajaxCallback.paramClick+":"+d+"}",dataType:"json",contentType:"application/json; charset=utf-8",type:"POST",success:function(a){e(a.d)},errror:function(a,b){e(a+"<br />"+b)}})}function o(){if(!f)return;e.ls_popup("hide");f=false}function n(a){e.html(a);e.ls_popup("show")}function m(){if(f)return;l();f=true;var b=a(this);var c=b.data("opts");if(c.clickPosition!=null)e.ls_popup("option","position",c.clickPosition);else if(c.forCtrl!=null)e.ls_popup("option","position",{my:"left top",at:"left bottom",of:"#"+c.forCtrl});else e.ls_popup("option","position",{my:"left top",at:"left bottom",of:this});if(c.clickHelp!=null)n(c.clickHelp);else p(c.helpId,true,n)}function l(){if(f)return;d.ls_popup("hide")}function k(a){d.html(a);d.ls_popup("show")}function j(){if(f)return;var b=a(this);var c=b.data("opts");if(c.hoverPosition!=null)d.ls_popup("option","position",c.hoverPosition);else if(c.forCtrl!=null)d.ls_popup("option","position",{my:"left bottom",at:"right top",of:"#"+c.forCtrl});else d.ls_popup("option","position",{my:"left bottom",at:"right top",of:this});if(c.hoverHelp!=null)k(c.hoverHelp);else p(c.helpId,false,k)}var b=a(this);var d=b.children("[id$='_hover']").ls_popup();var e=b.children("[id$='_click']").ls_popup({modal:c.clickModal}).click(o);var f=false;for(var g=0;g<c.controls.length;++g){var h=c.controls[g];var i=a("#"+h.id);i.data("opts",h);if(h.hasHoverHelp)i.hover(j,l);if(h.hasClickHelp)i.click(m)}})}})(jQuery);

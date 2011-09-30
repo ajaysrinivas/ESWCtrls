@@ -139,26 +139,28 @@ function ESW_BB_onStartedRequest(sender, args)
 
 function ESW_BB_AddImage( elem )
 {
-    var pos = ESW_GetElementPositionDepth(elem);
+    var e = $(elem);
+    var pos = e.offset();
+    var zidx = isNaN(parseInt(e.css("z-index"))) ? 0 : parseInt(e.css("z-index"));
+    e.parents().each(function () { var ti = parseInt($(this).css("z-index")); zidx = isNaN(ti) ? zidx : (ti > zidx ? ti : zidx); });
 
     ESW_BB_AX.style.display = "block";
-    ESW_BB_AX.style.left = (pos.x + (( elem.offsetWidth - ESW_BB_AX.offsetWidth ) / 2)) + "px";
-    ESW_BB_AX.style.top = (pos.y + ((elem.offsetHeight - ESW_BB_AX.offsetHeight) / 2)) + "px";
-    ESW_BB_AX.style.zIndex = pos.z + 2;
-    
+    ESW_BB_AX.style.left = (pos.left + ((e.outerWidth() - ESW_BB_AX.offsetWidth) / 2)) + "px";
+    ESW_BB_AX.style.top = (pos.top + ((e.outerHeight() - ESW_BB_AX.offsetHeight) / 2)) + "px";
+    ESW_BB_AX.style.zIndex = zidx + 2;
 
     if (ESW_BB_AX.cover)
     {
-        ESW_BB_AX.coverElem.style.left = pos.x + "px";
-        ESW_BB_AX.coverElem.style.top = pos.y + "px";
-        ESW_BB_AX.coverElem.style.width = elem.offsetWidth + "px";
-        ESW_BB_AX.coverElem.style.height = elem.offsetHeight + "px";
-        ESW_BB_AX.coverElem.style.zIndex = pos.z + 1;
+        ESW_BB_AX.coverElem.style.left = pos.left + "px";
+        ESW_BB_AX.coverElem.style.top = pos.top + "px";
+        ESW_BB_AX.coverElem.style.width = e.outerWidth() + "px";
+        ESW_BB_AX.coverElem.style.height = e.outerHeight() + "px";
+        ESW_BB_AX.coverElem.style.zIndex = zidx + 1;
         ESW_BB_AX.coverElem.style.display = "block";
     }
     else
     {
-        elem.style.visibility = "hidden";       
+        e.css("visibility", "hidden");
         ESW_BB_AX.busyElement = elem;
     }
 }

@@ -8,6 +8,7 @@ namespace ESWCtrls
     using Internal;
     using System.ComponentModel;
     using System.Web.UI;
+    using System.Drawing;
 
     /// <summary>
     /// Used by controls for position elements or the control itself
@@ -17,7 +18,7 @@ namespace ESWCtrls
         /// <summary>
         /// The position of the main element
         /// </summary>
-        [DefaultValue(Position.LeftTop), Category("Appearance")]
+        [DefaultValue(Position.CenterCenter), Category("Appearance")]
         public Position My
         {
             get
@@ -25,7 +26,7 @@ namespace ESWCtrls
                 if(ViewState["My"] != null)
                     return (Position)ViewState["My"];
                 else
-                    return Position.LeftTop;
+                    return Position.CenterCenter;
             }
             set
             {
@@ -39,7 +40,7 @@ namespace ESWCtrls
         /// <summary>
         /// The position relative to the element specified in <see cref="Of">Of</see>
         /// </summary>
-        [DefaultValue(Position.LeftBottom), Category("Appearance")]
+        [DefaultValue(Position.CenterCenter), Category("Appearance")]
         public Position At
         {
             get
@@ -47,7 +48,7 @@ namespace ESWCtrls
                 if(ViewState["At"] != null)
                     return (Position)ViewState["At"];
                 else
-                    return Position.LeftBottom;
+                    return Position.CenterCenter;
             }
             set
             {
@@ -102,30 +103,63 @@ namespace ESWCtrls
                     ViewState.Remove("Collision");
             }
         }
-    
+
+        /// <summary>
+        /// Gets or sets the offset.
+        /// </summary>
+        [Category("Appearance")]
+        public Point Offset
+        {
+            get
+            {
+                if(ViewState["Offset"] != null)
+                    return (Point)ViewState["Offset"];
+                else
+                    return new Point();
+            }
+            set{
+                if(value != null && !value.IsEmpty)
+                    ViewState["Offset"] = value;
+                else
+                    ViewState.Remove("Offset");
+            }
+        }
+
         /// <summary>
         /// Returns a string containing the options as a javascript object.
         /// </summary>
         public string JSOption(Control parent = null)
         {
+            List<string> opts = new List<string>();
+
+            if(My != Position.CenterCenter)
+                opts.Add(string.Format("my:\"{0}\"", Constants.PositionStrings[(int)My]));
+            if(At != Position.CenterCenter)
+                opts.Add(string.Format("at:\"{0}\"", Constants.PositionStrings[(int)At]));
+
+            if(Collision != Collision.None)
+                opts.Add(string.Format("collision:\"{0}\"", Constants.CollisionStrings[(int)Collision]));
+
+            if(!Offset.IsEmpty)
+                opts.Add(string.Format("offset:\"{0} {1}\"", Offset.X, Offset.Y));
+
             if(string.IsNullOrEmpty(Of))
-                return string.Format("{{my:\"{0}\",at:\"{1}\",collision:\"{2}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], CollisionStrings[(int)Collision]);
+                opts.Add("of:window");
             else
             {
                 if(parent != null)
                 {
                     Control c = Util.FindControlRecursiveOut(parent, Of, null);
                     if(c != null)
-                        return string.Format("{{my:\"{0}\",at:\"{1}\",of:\"{2}\",collision:\"{3}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], c.ClientID, CollisionStrings[(int)Collision]);
+                        opts.Add(string.Format("of:\"#{0}\"",c.ClientID));
                     else
-                        return string.Format("{{my:\"{0}\",at:\"{1}\",of:\"{2}\",collision:\"{3}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], Of, CollisionStrings[(int)Collision]);
+                        opts.Add(string.Format("of:\"#{0}\"", Of));
                 }
                 else
-                    return string.Format("{{my:\"{0}\",at:\"{1}\",of:\"{2}\",collision:\"{3}\"}}", PositionStrings[(int)My], PositionStrings[(int)At], Of, CollisionStrings[(int)Collision]);
+                    opts.Add(string.Format("of:\"#{0}\"", Of));
             }
-        }
 
-        private static readonly string[] PositionStrings = new string[] { "'top'", "'center'", "'bottom'", "'left top'", "'left'", "'left bottom'", "'right top'", "'right'", "'right bottom'" };
-        private static readonly string[] CollisionStrings = new string[] {"'none'","'flip'", "'fit'", "'none flip'", "'none fit'", "'flip none'", "'flip fit'", "'fit none'", "'fit flip'" };
+            return "{" + string.Join(",", opts) + "}";
+        }
     }
 }

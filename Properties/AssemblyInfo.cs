@@ -130,3 +130,6 @@ using System.Web.UI;
 
 //SortColumn
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.sortcolumn.js", "text/javascript")]
+
+//HelpBox
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.helpbox.js", "text/javascript")]

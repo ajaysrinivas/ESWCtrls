@@ -380,7 +380,7 @@ namespace ESWCtrls
                 StringBuilder sb = new StringBuilder();
                 sb.AppendFormat("function(req,rsp){{$.ajax({{url:\"{0}/{1}\",data:\"{{{2}:\\\"\"+req.term+\"\\\"}}\",", System.IO.Path.GetFileName(Page.Request.CurrentExecutionFilePath), mi.Name, mi.GetParameters()[0].Name);
                 sb.Append("dataType:\"json\",contentType:\"application/json; charset=utf-8\",type:\"POST\",");
-                sb.Append("\nsuccess:function(msg){var rst=[];for(var i=0; i<msg.d.length;++i) rst.push({value:msg.d[i].Value,label:msg.d[i].Text});rsp(rst);},");
+                sb.Append("success:function(msg){var rst=[];for(var i=0; i<msg.d.length;++i) rst.push({value:msg.d[i].Value,label:msg.d[i].Text});rsp(rst);},");
                 sb.Append("error:function(msg,text){rsp();alert(msg+\"--\"+text);}});}");
                 opts.Add(string.Format("source:{0}", sb.ToString()));
             }

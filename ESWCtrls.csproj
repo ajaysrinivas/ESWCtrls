@@ -86,6 +86,8 @@
     <Compile Include="Container\Layout.cs" />
     <Compile Include="Container\PopupBox.cs" />
     <Compile Include="Container\TabControl\TabControl.cs" />
+    <Compile Include="Help\HelpBox.cs" />
+    <Compile Include="Help\HelpPoint.cs" />
     <Compile Include="Parts\Effect.cs" />
     <Compile Include="Parts\Option.cs" />
     <Compile Include="Parts\Positioning.cs" />
@@ -271,6 +273,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResEmbed\Scripts\jquery\sortcolumn.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ResEmbed\Scripts\jquery\helpbox.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ResEmbed\Scripts\jquery\uncompressed\helpbox.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -555,7 +555,7 @@ namespace ESWCtrls
                     ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "GFXPostFix", GfxPostFix, false);
                     ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "GFXFrameCount", GfxFrameCount.ToString(), false);
                 }
-                ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "position", PopupBox.PositionStrings[(int)BoxPosition], false);
+                ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "position", Constants.PositionStrings[(int)BoxPosition], false);
                 ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "margin", BoxMargin.ToString(), false);
                 ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "modal", Modal.ToString().ToLower(), false);
                 ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "relativeTo", "", false);
