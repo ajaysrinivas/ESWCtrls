@@ -361,7 +361,7 @@ namespace ESWCtrls
                 opts.Add(string.Format("source:{0}_src", ClientID));
             }
             else if(!string.IsNullOrEmpty(SourceURL))
-                opts.Add(string.Format("source:\"{0}\"", SourceURL));
+                opts.Add(string.Format("source:\"{0}\"", Page.ResolveUrl(SourceURL)));
             else if(SourcePageMethod != null)
             {
                 MethodInfo mi = SourcePageMethod.Method;
@@ -374,7 +374,7 @@ namespace ESWCtrls
                         break;
                     }
                 }
-                if(!found || !mi.IsStatic || ! mi.IsPublic)
+                if(!found || !mi.IsStatic || !mi.IsPublic)
                     throw new ArgumentException("SourcePageMethod must be a static public web method.");
 
                 StringBuilder sb = new StringBuilder();
@@ -522,12 +522,12 @@ namespace ESWCtrls
             if(postCollection[UniqueID] != null)
             {
                 // See if we have the data value
-                if(postCollection[UniqueID + "_data"] != null)
+                if(postCollection[ClientID + "_data"] != null)
                 {
                     // See if we have items, search for the selected one, and select it, or add it if it doesn't exist
                     if(Items.Count > 0)
                     {
-                        ListItem i = Items.FindByValue(postCollection[UniqueID + "_data"]);
+                        ListItem i = Items.FindByValue(postCollection[ClientID + "_data"]);
                         if(i != null)
                         {
                             SelectedValue = i.Value;
@@ -544,15 +544,15 @@ namespace ESWCtrls
                             else
                             {
                                 // Not found so add an item
-                                Items.Add(new ListItem(postCollection[UniqueID], postCollection[UniqueID + "_data"]));
-                                SelectedValue = postCollection[UniqueID + "_data"];
+                                Items.Add(new ListItem(postCollection[UniqueID], postCollection[ClientID + "_data"]));
+                                SelectedValue = postCollection[ClientID + "_data"];
                                 SelectedText = postCollection[UniqueID];
                             }
                         }
                     }
                     else
                     {
-                        SelectedValue = postCollection[UniqueID + "_data"];
+                        SelectedValue = postCollection[ClientID + "_data"];
                         SelectedText = postCollection[UniqueID];
                     }
                 }
@@ -581,11 +581,11 @@ namespace ESWCtrls
                     }
                 }
             }
-            else if(postCollection[UniqueID + "_data"] != null)
+            else if(postCollection[ClientID + "_data"] != null)
             {
                 if(Items.Count > 0)
                 {
-                    ListItem i = Items.FindByValue(postCollection[UniqueID + "_data"]);
+                    ListItem i = Items.FindByValue(postCollection[ClientID + "_data"]);
                     if(i != null)
                     {
                         SelectedValue = i.Value;
@@ -593,15 +593,15 @@ namespace ESWCtrls
                     }
                     else
                     {
-                        Items.Add(new ListItem(postCollection[UniqueID + "_data"]));
-                        SelectedValue = postCollection[UniqueID + "_data"];
-                        SelectedText = postCollection[UniqueID + "_data"];
+                        Items.Add(new ListItem(postCollection[ClientID + "_data"]));
+                        SelectedValue = postCollection[ClientID + "_data"];
+                        SelectedText = postCollection[ClientID + "_data"];
                     }
                 }
                 else
                 {
-                    SelectedValue = postCollection[UniqueID + "_data"];
-                    SelectedText = postCollection[UniqueID + "_data"];
+                    SelectedValue = postCollection[ClientID + "_data"];
+                    SelectedText = postCollection[ClientID + "_data"];
                 }
             }
 

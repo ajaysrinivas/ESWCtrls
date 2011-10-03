@@ -83,28 +83,6 @@ namespace ESWCtrls
         }
 
         /// <summary>
-        /// The offset to apply to its position
-        /// </summary>
-        [Bindable(true), Category("Appearance")]
-        public Point Offset
-        {
-            get
-            {
-                if(ViewState["Offset"] == null)
-                    return new Point();
-                else
-                    return (Point)ViewState["Offset"];
-            }
-            set
-            {
-                if(value == null || value.IsEmpty)
-                    ViewState.Remove("Offset");
-                else
-                    ViewState["Offset"] = value;
-            }
-        }
-
-        /// <summary>
         /// Whether the popup is currently shown
         /// </summary>
         [Bindable(true), Category("Appearance"), DefaultValue(false)]
@@ -494,7 +472,7 @@ namespace ESWCtrls
 
             base.OnPreRender(e);
 
-            Script.AddResourceScript(Page, "jquery.ui.position.js", "jquery.popup.js");
+            Script.AddResourceScript(Page, "jquery.popup.js", "jquery.ui.position.js");
             List<string> opts = new List<string>();
 
             if(Modal)
@@ -502,8 +480,6 @@ namespace ESWCtrls
 
             opts.Add("position:" + Position.JSOption(this));
 
-            if(!Offset.IsEmpty)
-                opts.Add(string.Format("offset:\"{0} {1}\"", Offset.X, Offset.Y));
             if(UseJQueryOverlay)
                 opts.Add("usejqueryoverlay:true");
             if(ZIndex != 1000)

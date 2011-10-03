@@ -333,9 +333,6 @@ namespace ESWCtrls
         {
             base.OnPreRender(e);
 
-            if(!HasHoverHelp && !HasClickHelp)
-                return;
-
             HelpBox.Current(this);
         }
 
@@ -357,7 +354,7 @@ namespace ESWCtrls
 
             if(!string.IsNullOrEmpty(ImageURL) && DisplayType != ImageText.TextOnly)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, ImageURL);
+                writer.AddAttribute(HtmlTextWriterAttribute.Src,Page.ResolveUrl(ImageURL));
                 writer.AddAttribute(HtmlTextWriterAttribute.Alt, "Help");
                 writer.RenderBeginTag(HtmlTextWriterTag.Img);
                 writer.RenderEndTag();
@@ -491,5 +488,29 @@ namespace ESWCtrls
         private Positioning _clickPos;
 
         #endregion
+    }
+
+    /// <summary>
+    /// A list of help points
+    /// </summary>
+    public class HelpPointList : List<HelpPoint>
+    {
+        /// <summary>
+        /// Returns the HelpPoint with the matching help id or null
+        /// </summary>
+        /// <param name="helpId">The help id to match</param>
+        public HelpPoint this[string helpId]
+        {
+            get
+            {
+                foreach(HelpPoint hp in this)
+                {
+                    if(hp.HelpId == helpId)
+                        return hp;
+                }
+
+                return null;
+            }
+        }
     }
 }

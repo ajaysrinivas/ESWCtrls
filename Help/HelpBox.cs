@@ -129,6 +129,19 @@ namespace ESWCtrls
             }
         }
 
+        /// <summary>
+        /// The delegate for HelpCheck
+        /// </summary>
+        /// <param name="ids">The ids to check</param>
+        /// <returns></returns>
+        public delegate HelpPointCheckList HelpPointCheckHandler(List<string> ids);
+
+        /// <summary>
+        /// The delegate to call to check that help points exists, and what help they provide.
+        /// If this is not provided will just use what the help point says directly
+        /// </summary>
+        public event HelpPointCheckHandler HelpPointCheck;
+
         #endregion
 
         #region AjaxCallBack
@@ -141,7 +154,7 @@ namespace ESWCtrls
         public delegate string HelpDetailsHandler(string id, bool click);
 
         /// <summary>
-        /// The event to get the actial gelp text for a help point
+        /// The event to get the actual help text for a help point
         /// </summary>
         public event HelpDetailsHandler HelpDetails;
 
@@ -162,12 +175,40 @@ namespace ESWCtrls
             {
                 HelpBox hb = c as HelpBox;
                 if(hb._points == null)
-                    hb._points = new List<HelpPoint>();
+                    hb._points = new HelpPointList();
                 hb._points.Add(ctrl);
                 return hb;
             }
             else
                 throw new Exception("A Helpbox is missing for use with helppoints");
+        }
+
+        /// <summary>
+        /// returns a list of ids that haven't been checked
+        /// </summary>
+        internal  List<string> helpNotChecked()
+        {
+            List<string> notChecked = new List<string>();
+            if(ViewState["HelpChecked"] != null)
+            {
+                List<string> check = (List<string>)ViewState["HelpChecked"];
+                foreach(HelpPoint hp in _points)
+                {
+                    if(!check.Contains(hp.HelpId))
+                        notChecked.Add(hp.HelpId);
+                }
+
+                check.AddRange(notChecked);
+                ViewState["HelpChecked"] = check;
+            }
+            else
+            {
+                foreach(HelpPoint hp in _points)
+                        notChecked.Add(hp.HelpId);
+                ViewState["HelpChecked"] = notChecked;
+            }
+
+            return notChecked;
         }
 
         #endregion
@@ -182,11 +223,27 @@ namespace ESWCtrls
         {
             base.OnPreRender(e);
 
-            Script.AddResourceScript(Page, "jquery.popup.js");
-            Script.AddResourceScript(Page, "jquery.helpbox.js");
+            if(_points == null || _points.Count == 0)
+                return;
+
+            Script.AddResourceScript(Page, "jquery.helpbox.js", "jquery.popup.js", "jquery.ui.position.js");
 
             string hoverHelp = null;
             string clickHelp = null;
+            
+
+            if(HelpPointCheck != null)
+            {
+                List<string> hpi = helpNotChecked();
+                HelpPointCheckList hpcl = HelpPointCheck(hpi);
+                foreach(HelpPointCheckResult hpc in hpcl)
+                {
+                    HelpPoint hp = _points[hpc.id];
+                    hp.HasHoverHelp = hpc.hoverHelp;
+                    hp.HasClickHelp = hpc.clickHelp;
+                }
+            }
+
             List<string> ctrls = new List<string>();
             foreach(HelpPoint hp in _points)
             {
@@ -237,6 +294,9 @@ namespace ESWCtrls
         /// <param name="writer">The <see cref="T:System.Web.UI.HtmlTextWriter"/> object that receives the control content.</param>
         protected override void Render(HtmlTextWriter writer)
         {
+            if(_points == null || _points.Count == 0)
+                return;
+
             writer.AddAttribute(HtmlTextWriterAttribute.Id, ClientID);
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
@@ -307,8 +367,38 @@ namespace ESWCtrls
 
         private AdvStyle _hoverStyle;
         private AdvStyle _clickStyle;
-        List<HelpPoint> _points;
+        private HelpPointList _points;
 
         #endregion
+    }
+
+    /// <summary>
+    /// Structure used during help point checks to set whether click or hover help is available
+    /// </summary>
+    public class HelpPointCheckResult 
+    {
+        /// <summary>
+        /// Constructor for HelpPointCheckResult
+        /// </summary>
+        public HelpPointCheckResult(string id, bool hoverHelp, bool clickHelp)
+        {
+            this.id = id;
+            this.hoverHelp = hoverHelp;
+            this.clickHelp = clickHelp;
+        }
+
+        /// <summary>The Help point ID</summary>
+        public string id;
+        /// <summary>The Help point has hover help</summary>
+        public bool hoverHelp;
+        /// <summary>The Help point has click help</summary>
+        public bool clickHelp;
+    }
+
+    /// <summary>
+    /// The list of Help Point Check Results
+    /// </summary>
+    public class HelpPointCheckList : List<HelpPointCheckResult>
+    {
     }
 }

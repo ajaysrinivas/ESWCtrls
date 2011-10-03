@@ -30,7 +30,7 @@ namespace ESWCtrls
             }
             set
             {
-                if(value != Position.LeftTop)
+                if(value != Position.CenterCenter)
                     ViewState["My"] = value;
                 else
                     ViewState.Remove("My");
@@ -52,7 +52,7 @@ namespace ESWCtrls
             }
             set
             {
-                if(value != Position.LeftBottom)
+                if(value != Position.CenterCenter)
                     ViewState["At"] = value;
                 else
                     ViewState.Remove("At");

@@ -13,9 +13,7 @@
             var opts = $.extend(true,{
                 modal:false,
                 position:{of:window},
-                relativeto:null,
                 moveelement: null,
-                margin:0,
                 usejqueryoverlay: false,
                 scrolling: true,
                 open: false,

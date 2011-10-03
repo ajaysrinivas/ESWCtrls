@@ -186,7 +186,7 @@ namespace ESWCtrls.Internal
             Control p = ctrl.Parent;
             while(p != null)
             {
-                if(p is UserControl)
+                if(p is UserControl && !(p is TemplateControl))
                 {
                     UserControl c = (UserControl)p;
                     rst = c.AppRelativeVirtualPath.Replace(c.AppRelativeTemplateSourceDirectory, "");
