@@ -10,7 +10,7 @@ using System.Web.UI;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Economic Solutions")]
 [assembly: AssemblyProduct("ESWCtrls")]
-[assembly: AssemblyCopyright("Copyright ©Leon Pennington 2008-2010")]
+[assembly: AssemblyCopyright("Copyright ©Leon Pennington 2008-2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,8 +32,7 @@ using System.Web.UI;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.*")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.1.*")]
 
 
 // jQuery Scripts

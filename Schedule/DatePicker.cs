@@ -243,6 +243,28 @@ namespace ESWCtrls
         }
 
         /// <summary>
+        /// Whether to allow a blank datefield
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(true)]
+        public bool AllowBlank
+        {
+            get
+            {
+                if(ViewState["AllowBlank"] != null)
+                    return (bool)ViewState["AllowBlank"];
+                else
+                    return true;
+            }
+            set
+            {
+                if(value != true)
+                    ViewState["AllowBlank"] = value;
+                else
+                    ViewState.Remove("AllowBlank");
+            }
+        }
+
+        /// <summary>
         /// The date format to use
         /// </summary>
         [Category("Behaviour"), DefaultValue("dd/MM/yyyy")]
@@ -302,6 +324,7 @@ namespace ESWCtrls
                 return _clientEvents;
             }
         }
+
 
         #endregion
 
@@ -565,8 +588,11 @@ namespace ESWCtrls
 
             string create = string.Empty;
             string close = string.Empty;
+
+            if(!AllowBlank)
+                close = "if(dateText=='')$(this).datepicker(\"setDate\",inst.lastVal);";
+
             MinMaxDateRange(ref create, ref close);
-           
 
             // Auto postback
             if(AutoPostBack)
@@ -601,6 +627,8 @@ namespace ESWCtrls
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text");
             if(CurrentDate.HasValue)
                 writer.AddAttribute(HtmlTextWriterAttribute.Value, CurrentDate.Value.ToString(DateFormat));
+            else if(!AllowBlank)
+                writer.AddAttribute(HtmlTextWriterAttribute.Value, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
             writer.RenderBeginTag(HtmlTextWriterTag.Input);
             writer.RenderEndTag();
         }
