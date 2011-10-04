@@ -524,7 +524,7 @@ namespace ESWCtrls
             {
                 Control button = Util.FindControlRecursive(this, DefaultButton);
                 if(button is IButtonControl)
-                    writer.AddAttribute("onkeypress", "return WebFor_FireDefaultButton(event, '" + button.ClientID + "')");
+                    writer.AddAttribute("onkeypress", "return WebForm_FireDefaultButton(event, '" + button.ClientID + "')");
             }
 
             if(string.IsNullOrEmpty(Style["z-index"])) writer.AddStyleAttribute(HtmlTextWriterStyle.ZIndex, "1000");

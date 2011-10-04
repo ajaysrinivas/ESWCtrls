@@ -590,18 +590,17 @@ namespace ESWCtrls
             string close = string.Empty;
 
             if(!AllowBlank)
+            {
                 close = "if(dateText=='')$(this).datepicker(\"setDate\",inst.lastVal);";
+                if(!CurrentDate.HasValue)
+                    CurrentDate = DefaultDate.GetValueOrDefault(DateTime.Now);
+            }
 
             MinMaxDateRange(ref create, ref close);
 
             // Auto postback
             if(AutoPostBack)
-            {
-                if(CurrentDate.HasValue)
-                    close += string.Format("if(dateText != \"{0}\"){1};", CurrentDate.Value.ToString(DateFormat), Page.ClientScript.GetPostBackEventReference(this, "dateChanged"));
-                else
-                    close += string.Format("if(dateText != \"\"){0};",  Page.ClientScript.GetPostBackEventReference(this, "dateChanged"));
-            }
+                close += string.Format("if(dateText!=inst.lastVal){0};",  Page.ClientScript.GetPostBackEventReference(this, "dateChanged"));
 
             ClientSideEvents.PreRender(opts, create, close);
 
