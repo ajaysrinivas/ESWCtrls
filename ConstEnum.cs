@@ -247,7 +247,7 @@ namespace ESWCtrls
 
     #endregion
 
-    #region PopupBox/Dialog/AutoComplete
+    #region Positioning
 
     /// <summary>The positions the box can take</summary>
     public enum Position
@@ -320,29 +320,6 @@ namespace ESWCtrls
 
     #endregion
 
-    #region Script
-
-    /// <summary>
-    /// The diffrent types of scripts available
-    /// </summary>
-    public enum ScriptType
-    {
-        /// <summary>
-        /// The General scripts holds some low-level stuff 
-        /// </summary>
-        General,
-        /// <summary>
-        /// jQuery for general use
-        /// </summary>
-        jQuery,
-        /// <summary>
-        /// All the available script types
-        /// </summary>
-        All
-    }
-
-    #endregion
-
     #region Tabs
 
     /// <summary>
@@ -412,7 +389,30 @@ namespace ESWCtrls
 
     #endregion
 
-#region Constants
+    #region Date Picker
+
+    /// <summary>
+    /// The min/max control modes how the control should control the min/max of the other control
+    /// </summary>
+    public enum DateRangeMode
+    {
+        /// <summary>
+        /// Uses min/max date on the other control. So the limit is hard fixed on the control
+        /// </summary>
+        Fixed,
+        /// <summary>
+        /// Alters the current value directly instead, to allow min/max values to push the other
+        /// </summary>
+        /// <example>
+        /// If this control has the minimumdatectrl set, if when its value is set, its greater than
+        /// the other control, its sets the other controls value to the same.
+        /// </example>
+        Sliding
+    }
+
+    #endregion
+
+    #region Constants
 
     internal static class Constants
     {
