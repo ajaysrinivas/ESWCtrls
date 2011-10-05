@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text;
 
 namespace ESWCtrls
 {
@@ -261,6 +262,28 @@ namespace ESWCtrls
                     ViewState["AllowBlank"] = value;
                 else
                     ViewState.Remove("AllowBlank");
+            }
+        }
+
+        /// <summary>
+        /// Whether to allow manually entering of a date
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(true)]
+        public bool AllowManualEntry
+        {
+            get
+            {
+                if(ViewState["AllowManualEntry"] != null)
+                    return (bool)ViewState["AllowManualEntry"];
+                else
+                    return true;
+            }
+            set
+            {
+                if(value != true)
+                    ViewState["AllowManualEntry"] = value;
+                else
+                    ViewState.Remove("AllowManualEntry");
             }
         }
 
@@ -532,7 +555,7 @@ namespace ESWCtrls
         {
             base.OnPreRender(e);
 
-            Script.AddResourceScript(Page, "jquery.ui.datepicker.js");
+            Script.AddResourceScript(Page, "jquery.ui.datepicker.js", "jquery.datepicker.js");
             List<string> opts = new List<string>();
 
             opts.Add(string.Format("dateFormat:\"{0}\"",jqFormat()));
@@ -564,14 +587,8 @@ namespace ESWCtrls
                     opts.Add(string.Format("buttonText:\"{0}\"", ButtonText));
             }
 
-            if(MinDate.HasValue)
-                opts.Add(string.Format("minDate:new Date({0:yyyy,M,d})", MinDate.Value));
-            if(MaxDate.HasValue)
-                opts.Add(string.Format("maxDate:new Date({0:yyyy,M,d})", MaxDate.Value));
-
-
             if(DefaultDate.HasValue)
-                opts.Add(string.Format("defaultDate:new Date({0:yyyy,M,d})", DefaultDate.Value));
+                opts.Add(string.Format("defaultDate:\"{0}\"",DefaultDate.Value.ToString(DateFormat)));
 
             if(NumberOfMonths > 1)
             {
@@ -586,23 +603,23 @@ namespace ESWCtrls
             if(ShowWeek)
                 opts.Add("showWeek:true");
 
-            string create = string.Empty;
-            string close = string.Empty;
+            StringBuilder create = new StringBuilder();
+            StringBuilder close = new StringBuilder();
 
-            if(!AllowBlank)
-            {
-                close = "if(dateText=='')$(this).datepicker(\"setDate\",inst.lastVal);";
-                if(!CurrentDate.HasValue)
-                    CurrentDate = DefaultDate.GetValueOrDefault(DateTime.Now);
-            }
+            close.AppendFormat("ls_dp_close(dateText,inst,{0},{1},", AllowManualEntry.ToString().ToLower(), AllowBlank.ToString().ToLower());
 
             MinMaxDateRange(ref create, ref close);
 
+            if(MinDate.HasValue)
+                opts.Add(string.Format("minDate:\"{0}\"", MinDate.Value.ToString(DateFormat)));
+            if(MaxDate.HasValue)
+                opts.Add(string.Format("maxDate:\"{0}\"", MaxDate.Value.ToString(DateFormat)));
+
             // Auto postback
             if(AutoPostBack)
-                close += string.Format("if(dateText!=inst.lastVal){0};",  Page.ClientScript.GetPostBackEventReference(this, "dateChanged"));
+                close.AppendFormat("if(dateText!=inst.lastVal){0};", Page.ClientScript.GetPostBackEventReference(this, "dateChanged"));
 
-            ClientSideEvents.PreRender(opts, create, close);
+            ClientSideEvents.PreRender(opts, create.ToString(), close.ToString());
 
             if(YearRange != 10)
                 opts.Add(string.Format("yearRange:\"c-{0}:c+{0}\"", YearRange));
@@ -624,6 +641,8 @@ namespace ESWCtrls
             AddAttributesToRender(writer);
             writer.AddAttribute(HtmlTextWriterAttribute.Name, UniqueID);
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text");
+            if(!AllowManualEntry)
+                writer.AddAttribute(HtmlTextWriterAttribute.ReadOnly, "readonly");
             if(CurrentDate.HasValue)
                 writer.AddAttribute(HtmlTextWriterAttribute.Value, CurrentDate.Value.ToString(DateFormat));
             else if(!AllowBlank)
@@ -667,6 +686,7 @@ namespace ESWCtrls
 
         #region Private
 
+        //Converts current ASP.NET format to jQuery format
         private string jqFormat()
         {
             string rst = DateFormat.Replace("dddd","DD").Replace("ddd","D");
@@ -683,61 +703,71 @@ namespace ESWCtrls
             return rst;
         }
 
-        private void MinMaxDateRange(ref string create, ref string close)
+        private void MinMaxDateRange(ref StringBuilder create, ref StringBuilder close)
         {
             if(!string.IsNullOrEmpty(MinDateControl))
             {
                 DatePicker altCtrl = Util.FindControlRecursiveOut(this.Parent, MinDateControl, this) as DatePicker;
-                if(MinDateControlMode == DateRangeMode.Fixed)
+                if(altCtrl != null)
                 {
-                    if(altCtrl != null)
+                    close.AppendFormat("\"#{0}\",", altCtrl.ClientID);
+
+                    if(MinDateControlMode == DateRangeMode.Fixed)
                     {
-                        close += string.Format("$(\"#{0}\").datepicker(\"option\",\"minDate\",dateText!=''?dateText:null);", altCtrl.ClientID);
                         if(CurrentDate.HasValue)
-                            create += string.Format("$(\"#{0}\").datepicker(\"option\",\"minDate\",new Date({1:yyyy,M,d}));", altCtrl.ClientID, CurrentDate.GetValueOrDefault());
-                    }
-                    else
-                    {
-                        close += string.Format("$(\"{0}\").datepicker(\"option\",\"minDate\",dateText!=''?dateText:null);", MinDateControl);
-                        if(CurrentDate.HasValue)
-                            create += string.Format("$(\"{0}\").datepicker(\"option\",\"minDate\",new Date({1:yyyy,M,d}));", MinDateControl, CurrentDate.GetValueOrDefault());
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, CurrentDate.Value.ToString(DateFormat));
+                        else if(!AllowBlank)
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
                     }
                 }
-                else if(MinDateControlMode == DateRangeMode.Sliding)
+                else
                 {
-                    if(altCtrl != null)
-                        close += string.Format("var c=$(this).datepicker(\"getDate\");if(c!=null&&c>$(\"#{0}\").datepicker(\"getDate\"))$(\"#{0}\").datepicker(\"setDate\",c);", altCtrl.ClientID);
-                    else
-                        close += string.Format("var c=$(this).datepicker(\"getDate\");if(c!=null&&c>$(\"{0}\").datepicker(\"getDate\"))$(\"{0}\").datepicker(\"setDate\",c);", MinDateControl);
+                    close.AppendFormat("\"{0}\",", MinDateControl);
+
+                    if(MinDateControlMode == DateRangeMode.Fixed)
+                    {
+                        if(CurrentDate.HasValue)
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, CurrentDate.Value.ToString(DateFormat));
+                        else if(!AllowBlank)
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                    }
                 }
+
+                close.AppendFormat("\"{0}\",", MinDateControlMode.ToString());
             }
+            else
+                close.AppendFormat("null,null,");
 
             if(!string.IsNullOrEmpty(MaxDateControl))
             {
                 DatePicker altCtrl = Util.FindControlRecursiveOut(this.Parent, MaxDateControl, this) as DatePicker;
-                if(MaxDateControlMode == DateRangeMode.Fixed)
+                if(altCtrl != null)
                 {
-                    if(altCtrl != null)
+                    close.AppendFormat("\"#{0}\",", altCtrl.ClientID);
+                    if(MaxDateControlMode == DateRangeMode.Fixed)
                     {
-                        close += string.Format("$(\"#{0}\").datepicker(\"option\",\"maxDate\",dateText!=''?dateText:null);", altCtrl.ClientID);
                         if(CurrentDate.HasValue)
-                            create += string.Format("$(\"#{0}\").datepicker(\"option\",\"maxDate\",new Date({1:yyyy,M,d}));", altCtrl.ClientID, CurrentDate.GetValueOrDefault());
-                    }
-                    else
-                    {
-                        close += string.Format("$(\"{0}\").datepicker(\"option\",\"maxDate\",dateText!=''?dateText:null);", MaxDateControl);
-                        if(CurrentDate.HasValue)
-                            create += string.Format("$(\"{0}\").datepicker(\"option\",\"maxDate\",new Date({1:yyyy,M,d}));", MaxDateControl, CurrentDate.GetValueOrDefault());
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, CurrentDate.Value.ToString(DateFormat));
+                        else if(!AllowBlank)
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
                     }
                 }
-                else if(MaxDateControlMode == DateRangeMode.Sliding)
+                else
                 {
-                    if(altCtrl != null)
-                        close += string.Format("var c=$(this).datepicker(\"getDate\");if(c!=null&&c<$(\"#{0}\").datepicker(\"getDate\"))$(\"#{0}\").datepicker(\"setDate\",c);", altCtrl.ClientID);
-                    else
-                        close += string.Format("var c=$(this).datepicker(\"getDate\");if(c!=null&&c<$(\"{0}\").datepicker(\"getDate\"))$(\"{0}\").datepicker(\"setDate\",c);", MaxDateControl);
+                    close.AppendFormat("\"{0}\",", MaxDateControl);
+                    if(MaxDateControlMode == DateRangeMode.Fixed)
+                    {
+                        if(CurrentDate.HasValue)
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, CurrentDate.Value.ToString(DateFormat));
+                        else if(!AllowBlank)
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                    }
                 }
+
+                close.AppendFormat("\"{0}\");", MaxDateControlMode.ToString());
             }
+            else
+                close.Append("null,null);");
         }
         
         private DatePickerClientEvents _clientEvents;

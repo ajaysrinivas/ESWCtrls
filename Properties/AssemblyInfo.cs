@@ -74,6 +74,14 @@ using System.Web.UI;
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.slide.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.transfer.js", "text/javascript")]
 
+//My Jquery Layout
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.panels.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.sortcolumn.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.helpbox.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.tabctrl.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.popup.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.datepicker.js", "text/javascript")]
+
 //Number Validator
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.NumberValidator.js", "text/javascript")]
 
@@ -104,12 +112,6 @@ using System.Web.UI;
 [assembly: WebResource("ESWCtrls.ResEmbed.Gfxs.arrow_down.gif", "img/gif")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Gfxs.arrow_right.gif", "img/gif")]
 
-//Pop Control
-[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.popup.js", "text/javascript")]
-
-//Tab Control
-[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.tabctrl.js", "text/javascript")]
-
 //Tree View
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.TreeView.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Gfxs.tree.bline.gif", "img/gif")]
@@ -123,12 +125,3 @@ using System.Web.UI;
 
 //Password
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.Password.js", "text/javascript")]
-
-//Layout
-[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.panels.js", "text/javascript")]
-
-//SortColumn
-[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.sortcolumn.js", "text/javascript")]
-
-//HelpBox
-[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.helpbox.js", "text/javascript")]
