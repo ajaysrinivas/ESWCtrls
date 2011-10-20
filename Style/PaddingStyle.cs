@@ -124,7 +124,7 @@ namespace ESWCtrls
             {
                 if(base.IsEmpty)
                 {
-                    if( PaddingTop.IsEmpty && PaddingBottom.IsEmpty && PaddingLeft.IsEmpty)
+                    if( PaddingTop.IsEmpty && PaddingBottom.IsEmpty && PaddingLeft.IsEmpty && PaddingRight.IsEmpty)
                         return true;
                 }
 
@@ -193,7 +193,7 @@ namespace ESWCtrls
                 attributes.Add(HtmlTextWriterStyle.PaddingTop, PaddingTop.ToString());
 
             if(!PaddingBottom.IsEmpty)
-                attributes.Add(HtmlTextWriterStyle.PaddingBottom, PaddingTop.ToString());
+                attributes.Add(HtmlTextWriterStyle.PaddingBottom, PaddingBottom.ToString());
 
             if(!PaddingLeft.IsEmpty)
                 attributes.Add(HtmlTextWriterStyle.PaddingLeft, PaddingLeft.ToString());

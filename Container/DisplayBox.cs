@@ -254,28 +254,6 @@ namespace ESWCtrls
         }
 
         /// <summary>
-        /// he color to use for IE 6 and below, if none is specified will default to square simple boxes
-        /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(Color), ""), NotifyParentProperty(true), TypeConverter(typeof(WebColorConverter))]
-        public Color IEFixColor
-        {
-            get
-            {
-                if(ViewState["IEFixColor"] == null)
-                    return Color.Empty;
-                else
-                    return (Color)ViewState["IEFixColor"];
-            }
-            set
-            {
-                if(value == Color.Transparent)
-                    ViewState.Remove("IEFixColor");
-                else
-                    ViewState["IEFixColor"] = value;
-            }
-        }
-
-        /// <summary>
         /// The style to apply to the header of the control
         /// </summary>
         [Bindable(true), Category("Appearance"), DefaultValue(typeof(PaddingStyle), null), DesignerSerializationVisibility(DesignerSerializationVisibility.Content), PersistenceMode(PersistenceMode.InnerProperty), NotifyParentProperty(true)]
@@ -417,40 +395,51 @@ namespace ESWCtrls
         protected override void Render(System.Web.UI.HtmlTextWriter writer)
         {
             CalculateBoxes();
+
+            if(DropShadow.ShadowColor.IsEmpty && OuterGlow.GlowColor.IsEmpty && RadiusCorner == 0)
+            {
+                RenderCSSVersion(writer, null, null);
+                return;
+            }
+                
+
             HttpBrowserCapabilities br = Page.Request.Browser;
 
-            if(DropShadow.ShadowColor.IsEmpty && OuterGlow.GlowColor.IsEmpty)
+            if(br.Browser == "IE")
             {
-                if(RadiusCorner > 0)
+                if(br.MajorVersion >= 9)
+                    RenderCSSVersion(writer, "border-{0}-{1}-radius", "box-shadow");
+                else
+                    RenderImgVersion(writer);
+            }
+            else if(br.Browser == "Firefox")
+            {
+                if(br.MajorVersion > 3)
+                    RenderCSSVersion(writer, "border-{0}-{1}-radius", "box-shadow");
+                else if(br.MajorVersion == 3)
                 {
-                    if(br.Browser == "IE" && br.MajorVersion < 7)
-                    {
-                        if(IEFixColor.IsEmpty)
-                            RenderCSSVersion(writer, null, null);
-                        else
-                            RenderImgVersion(writer);
-                    }
-                    else if(br.Browser == "Firefox" && br.MajorVersion >= 3)
+                    if(br.MinorVersion >= 5)
                         RenderCSSVersion(writer, "-moz-border-radius-{0}{1}", "-moz-box-shadow");
-                    else if(br.Browser.Contains("Safari") && Page.Request.UserAgent.Contains("Version/4"))
-                        RenderCSSVersion(writer, "-webkit-border-{0}-{1}-radius", "-webkit-box-shadow");
+                    else if(DropShadow.ShadowColor.IsEmpty && OuterGlow.GlowColor.IsEmpty)
+                        RenderCSSVersion(writer, "-moz-border-radius-{0}{1}", "-moz-box-shadow");
                     else
                         RenderImgVersion(writer);
                 }
                 else
-                    RenderCSSVersion(writer, null, null);
+                    RenderImgVersion(writer);
+
             }
-            else if(br.Browser == "IE" && br.MajorVersion < 7)
+            else if(br.Browser.Contains("Safari"))
             {
-                if(IEFixColor.IsEmpty)
-                    RenderCSSVersion(writer, null, null);
+                if(br.MajorVersion > 3)
+                    RenderCSSVersion(writer, "-webkit-border-{0}-{1}-radius", "-webkit-box-shadow");
                 else
                     RenderImgVersion(writer);
             }
-            else if(br.Browser == "Firefox" && (br.MajorVersion > 3 || (br.MajorVersion == 3 && br.MinorVersion >= 0.5)))
-                RenderCSSVersion(writer, "-moz-border-radius-{0}{1}", "-moz-box-shadow");
-            else if(br.Browser.Contains("Safari") && br.MajorVersion > 3)
+            else if (br.Browser == "Chrome")
                 RenderCSSVersion(writer, "-webkit-border-{0}-{1}-radius", "-webkit-box-shadow");
+            else if( br.Browser == "Opera" && br.MajorVersion > 10)
+                RenderCSSVersion(writer, "border-{0}-{1}-radius", "box-shadow");
             else
                 RenderImgVersion(writer);
         }
@@ -525,18 +514,36 @@ namespace ESWCtrls
             if(!string.IsNullOrEmpty(CssClass)) css += " " + CssClass;
             writer.AddAttribute(HtmlTextWriterAttribute.Class, css);
 
+            string shadowValue = string.Empty;
+            int marginTop = 0, marginBot = 0, marginLeft = 0, marginRight = 0;
+
             if(!DropShadow.ShadowColor.IsEmpty)
             {
-                writer.AddStyleAttribute(shadowPrefix, string.Format("{0}px {1}px {2}px {3}", DropShadow.XOffset, DropShadow.YOffset, DropShadow.Blend, ColorTranslator.ToHtml(DropShadow.ShadowColor)));
+                shadowValue = string.Format("{0}px {1}px {2}px {3}", DropShadow.XOffset, DropShadow.YOffset, DropShadow.Blend, ColorTranslator.ToHtml(DropShadow.ShadowColor));
                 if(DropShadow.YOffset > 0)
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.MarginBottom, string.Format("{0}px", DropShadow.YOffset + DropShadow.Blend));
+                    marginBot = DropShadow.YOffset + DropShadow.Blend;
                 else if(DropShadow.YOffset < 0)
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.MarginTop, string.Format("{0}px", (0 - DropShadow.YOffset) + DropShadow.Blend));
+                    marginTop = (0 - DropShadow.YOffset) + DropShadow.Blend;
+
                 if(DropShadow.XOffset > 0)
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.MarginRight, string.Format("{0}px", DropShadow.XOffset + DropShadow.Blend));
+                    marginRight = DropShadow.XOffset + DropShadow.Blend;
                 else if(DropShadow.XOffset < 0)
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.MarginLeft, string.Format("{0}px", (0 - DropShadow.XOffset) + DropShadow.Blend));
+                    marginLeft = (0 - DropShadow.XOffset) + DropShadow.Blend;
             }
+
+            if(!OuterGlow.GlowColor.IsEmpty)
+            {
+                shadowValue = (string.IsNullOrEmpty(shadowValue) ? "" : shadowValue + ",") + string.Format("0 0 {0}px {1}", OuterGlow.Blend, ColorTranslator.ToHtml(OuterGlow.GlowColor));
+                marginTop = Math.Max(marginTop, OuterGlow.Blend);
+                marginBot = Math.Max(marginBot, OuterGlow.Blend);
+                marginLeft = Math.Max(marginLeft, OuterGlow.Blend);
+                marginRight = Math.Max(marginRight, OuterGlow.Blend);
+            }
+
+            writer.AddStyleAttribute(shadowPrefix, shadowValue);
+            if(marginTop != 0 || marginBot != 0 || marginLeft != 0 || marginRight != 0)
+                writer.AddStyleAttribute(HtmlTextWriterStyle.Margin, string.Format("{0}px {1}px {2}px {3}px", marginTop, marginRight, marginBot, marginLeft));
+
             if(!string.IsNullOrEmpty(prefixFormat) && RadiusCorner > 0)
             {
                 writer.AddStyleAttribute(string.Format(prefixFormat, "top", "left"), RadiusTopLeft.ToString() + "px");
@@ -838,11 +845,6 @@ namespace ESWCtrls
                 else
                     _boxColor = box.ContentColor;
 
-                if(box.Page.Request.Browser.Browser == "IE" && box.Page.Request.Browser.MajorVersion < 7)
-                    _fixColor = box.IEFixColor;
-                else
-                    _fixColor = Color.Empty;
-
                 _radTL = box.RadiusTopLeft;
                 _radTR = box.RadiusTopRight;
                 _radBL = box.RadiusBottomLeft;
@@ -934,8 +936,6 @@ namespace ESWCtrls
                 string name = _radTL.ToString() + "x" + _radTR.ToString() + "x" + _radBL.ToString() + "x" + _radBR.ToString();
                 name += "_C" + ColorTranslator.ToOle(_boxColor).ToString();
                 name += _ds.FileString() + _og.FileString();
-                if(_fixColor != Color.Empty)
-                    name += "_F" + _fixColor.ToString();
                 if(_borderColor != Color.Empty && _borderWidth > 0)
                 {
                     name += "_B" + ColorTranslator.ToOle(_borderColor).ToString();
@@ -997,10 +997,7 @@ namespace ESWCtrls
 
                     using(Graphics gfx = Graphics.FromImage(img))
                     {
-                        if(_fixColor != Color.Empty)
-                            gfx.Clear(_fixColor);
-                        else
-                            gfx.Clear(Color.Transparent);
+                        gfx.Clear(Color.Transparent);
 
                         if(!_ds.ShadowColor.IsEmpty)
                             gfx.DrawImageUnscaled(shdImg, _shdRect.X, _shdRect.Y);
@@ -1093,7 +1090,6 @@ namespace ESWCtrls
             private Position _position;
             private int _radTL, _radTR, _radBL, _radBR;
             private Color _boxColor;
-            private Color _fixColor;
             private Color _borderColor;
             private int _borderWidth;
             private DropShadow _ds;

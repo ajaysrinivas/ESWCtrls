@@ -512,7 +512,10 @@ namespace ESWCtrls
             if(HideEffect != null)
                 opts.Add("hideeffect:" + HideEffect.Render(Page));
 
-            Script.AddStartupScript(this, "ls_popup", opts);
+            if(TriggerInUpdatePanel(_openTriggers) || TriggerInUpdatePanel(_closeTriggers))
+                Script.AddStartupScriptSM(this, "ls_popup", opts);
+            else
+                Script.AddStartupScript(this, "ls_popup", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_shown", Shown.ToString().ToLower());
         }
 
@@ -597,6 +600,29 @@ namespace ESWCtrls
                 }
             }
             return string.Format("{0}:[{1}]", name, string.Join(",", trigs));
+        }
+
+        private bool TriggerInUpdatePanel(TriggerList triggers)
+        {
+            if(triggers != null)
+            {
+                List<string> trigs = new List<string>();
+                foreach(ServerSideTrigger trig in triggers)
+                {
+                    ClientSideTrigger cst = trig as ClientSideTrigger;
+                    if(cst != null)
+                    {
+                        Control ctrl = Util.FindControlRecursiveOut(this, cst.ControlID, null);
+                        if(ctrl != null)
+                        {
+                            if(Util.InUpdatePanel(ctrl))
+                                return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         private LimitCollection ChildControls

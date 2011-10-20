@@ -205,7 +205,7 @@ namespace ESWCtrls
         internal static void AddStartupScript(Control ctrl, string script)
         {
             if (Internal.Util.InUpdatePanel(ctrl))
-                ScriptManager.RegisterStartupScript(ctrl, ctrl.GetType(), ctrl.ClientID, script, true);
+                ScriptManager.RegisterStartupScript(ctrl.Page, ctrl.GetType(), ctrl.ClientID, script, true);
             else
             {
                 Script s = Current(ctrl.Page);
@@ -217,12 +217,18 @@ namespace ESWCtrls
         {
             string scrText = string.Format("$(\"#{0}\").{1}({{{2}}});", ctrl.ClientID, jQueryFunction, string.Join(",", opts));
             if (Internal.Util.InUpdatePanel(ctrl))
-                ScriptManager.RegisterStartupScript(ctrl, ctrl.GetType(), ctrl.ClientID, scrText, true);
+                ScriptManager.RegisterStartupScript(ctrl.Page, ctrl.GetType(), ctrl.ClientID, scrText, true);
             else
             {
                 Script s = Current(ctrl.Page);
                 s._startScripts.Add(scrText);
             }
+        }
+
+        internal static void AddStartupScriptSM(Control ctrl, string jQueryFunction, List<string> opts)
+        {
+            string scrText = string.Format("$(\"#{0}\").{1}({{{2}}});", ctrl.ClientID, jQueryFunction, string.Join(",", opts));
+            ScriptManager.RegisterStartupScript(ctrl.Page, ctrl.GetType(), ctrl.ClientID, scrText, true);
         }
 
         #endregion
