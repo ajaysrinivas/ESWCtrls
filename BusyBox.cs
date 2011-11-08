@@ -113,10 +113,10 @@ namespace ESWCtrls
             {
                 if(states[0] != null)
                     base.LoadViewState(states[0]);
-                if(states[1] != null)
-                    ((IStateManager)_postback).LoadViewState(states[1]);
-                if(states[2] != null)
-                    ((IStateManager)_ajax).LoadViewState(states[2]);
+                if(states[1] != null && _postback != null)
+                    _postback.LoadViewState(states[1]);
+                if(states[2] != null && _ajax != null)
+                    _ajax.LoadViewState(states[2]);
             }
         }
 
@@ -449,17 +449,20 @@ namespace ESWCtrls
         /// <summary>
         /// The position of the graphics box
         /// </summary>
-        [Category("Appearance"), DefaultValue(Position.CenterCenter)]
-        public Position BoxPosition
+        [Category("Appearance"), DefaultValue(null), PersistenceMode(PersistenceMode.InnerProperty), NotifyParentProperty(true)]
+        public Positioning BoxPosition
         {
             get
             {
-                if(ViewState["BoxPosition"] == null)
-                    return Position.CenterCenter;
-                else
-                    return (Position)ViewState["BoxPosition"];
+                if(_pos == null)
+                {
+                    _pos = new Positioning();
+                    if(IsTrackingViewState)
+                        _pos.TrackViewState();
+                }
+
+                return _pos;
             }
-            set { ViewState["BoxPosition"] = value; }
         }
 
         /// <summary>
@@ -555,10 +558,9 @@ namespace ESWCtrls
                     ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "GFXPostFix", GfxPostFix, false);
                     ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "GFXFrameCount", GfxFrameCount.ToString(), false);
                 }
-                ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "position", Constants.PositionStrings[(int)BoxPosition], false);
-                ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "margin", BoxMargin.ToString(), false);
+                //ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "position", BoxPosition.JSOption(parent),true);
+                ScriptManager.RegisterClientScriptBlock(parent, parent.GetType(), parent.ClientID + "_pb", string.Format( "{0}_pb = {1};", parent.ClientID, BoxPosition.JSOption(parent)), true);
                 ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "modal", Modal.ToString().ToLower(), false);
-                ScriptManager.RegisterExpandoAttribute(parent, parent.ClientID + "_pb", "relativeTo", "", false);
 
                 if(!string.IsNullOrEmpty(SubmitButton))
                 {
@@ -619,6 +621,49 @@ namespace ESWCtrls
 
             writer.RenderEndTag();
         }
+
+        #region Viewstate
+
+        /// <summary>
+        /// Sets if we are tracking view state
+        /// </summary>
+        protected internal override void TrackViewState()
+        {
+            base.TrackViewState();
+            if(_pos != null) _pos.TrackViewState();
+        }
+
+        /// <summary>
+        /// Loads the state of the view.
+        /// </summary>
+        /// <param name="savedState">State of the saved.</param>
+        protected internal override void LoadViewState(object savedState)
+        {
+            object[] state = (object[])savedState;
+            if(state != null)
+            {
+                if(state[0] != null) base.LoadViewState(state[0]);
+                if(state[1] != null) BoxPosition.LoadViewState(state[1]);
+            }
+        }
+
+        /// <summary>
+        /// Saves the view state
+        /// </summary>
+        /// <returns>
+        /// The object containing the viewstate
+        /// </returns>
+        protected internal override object SaveViewState()
+        {
+            object[] state = new object[2];
+            state[0] = base.SaveViewState();
+            if(_pos != null) state[1] = _pos.SaveViewState();
+            return state;
+        }
+
+        #endregion
+
+        private Positioning _pos;
     }
 
 }

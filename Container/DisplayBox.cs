@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -351,22 +353,6 @@ namespace ESWCtrls
         public override sealed ControlCollection Controls
         {
             get { return base.Controls; }
-        }
-
-        /// <summary>
-        /// whether to cache the generated images and under what name
-        /// </summary>
-        [Bindable(true), Category("Behaviour"), DefaultValue(typeof(string), null), NotifyParentProperty(true)]
-        public string CacheName
-        {
-            get
-            {
-                if(ViewState["CacheName"] == null)
-                    return null;
-                else
-                    return (string)ViewState["CacheName"];
-            }
-            set { ViewState["CacheName"] = value; }
         }
 
         #endregion
@@ -851,7 +837,6 @@ namespace ESWCtrls
                 _radBR = box.RadiusBottomRight;
                 _ds = box.DropShadow;
                 _og = box.OuterGlow;
-                _cacheName = box.CacheName;
                 _borderColor = box.BorderColor;
                 _borderWidth = box.BorderWidth;
 
@@ -941,12 +926,15 @@ namespace ESWCtrls
                     name += "_B" + ColorTranslator.ToOle(_borderColor).ToString();
                     name += "-" + _borderWidth.ToString();
                 }
-                return name;
+
+                SHA1Managed hash = new SHA1Managed();
+                byte[] bytes = hash.ComputeHash(Encoding.UTF8.GetBytes(name));
+                return Convert.ToBase64String(bytes).Replace("+", "-").Replace("/", "_").Replace("=", "a");
             }
 
             private Bitmap GenImage()
             {
-                string imagePath = Path.GetTempPath() + _cacheName + "\\" + CacheFileName() + ".png";
+                string imagePath = Path.GetTempPath() + "esw_dispbox\\" + CacheFileName() + ".png";
                 if(File.Exists(imagePath))
                     return new Bitmap(imagePath);
                 else
@@ -1016,12 +1004,9 @@ namespace ESWCtrls
 
                     if(!File.Exists(imagePath))
                     {
-                        if(!string.IsNullOrEmpty(_cacheName))
-                        {
-                            if(!Directory.Exists(Path.GetTempPath() + _cacheName))
-                                Directory.CreateDirectory(Path.GetTempPath() + _cacheName);
-                            img.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
-                        }
+                        if(!Directory.Exists(Path.GetTempPath() + "esw_dispbox"))
+                            Directory.CreateDirectory(Path.GetTempPath() + "esw_dispbox");
+                        img.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
                     }
                     return img;
                 }
@@ -1094,7 +1079,6 @@ namespace ESWCtrls
             private int _borderWidth;
             private DropShadow _ds;
             private OuterGlow _og;
-            private string _cacheName;
             private Size _imageSize;
             private Rectangle _boxRect;
             private Rectangle _glwRect;

@@ -7,7 +7,7 @@ function ESW_SetupBusyBox( busyBox )
 {
     if( busyBox.PB_Enabled == "true" )
     {
-        var bb = document.getElementById( busyBox.id + "_pb" );
+        var bb = document.getElementById(busyBox.id + "_pb");
         if( bb.SubmitButton != "" )
         {
             var ctrl = document.getElementById( bb.SubmitButton );
@@ -62,13 +62,13 @@ function ESW_SetupBusyBox( busyBox )
 
 // Postback busy Box
 
-function ESW_ShowBusyBox()
+function ESW_ShowBusyBox(ctrl)
 {
-    if( ESW_BB_PB == null )
+    if( ESW_BB_PB == null && ctrl != null )
         ESW_BB_PB = ctrl.busyBox;
 
-    $(ESW_BB_PB).ls_popup({modal:ESW_BB_PB.modal,position:ESW_BB_PB.position,relativeto:ESW_BB_PB.reativeTo,margin:ESW_BB_PB.margin,open:true});
-    ESW_BB_GfxShow( 0 );
+    $(ESW_BB_PB).ls_popup({modal:ESW_BB_PB.modal,position:eval(ESW_BB_PB.position),open:true});
+    ESW_BB_GfxShow(0);
 }
 
 function ESW_BB_GfxShow( frame )

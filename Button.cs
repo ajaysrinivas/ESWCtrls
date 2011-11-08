@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
@@ -912,11 +914,12 @@ namespace ESWCtrls
                         if (!_defSize.IsEmpty)
                             name += "_" + _defSize.Width.ToString() + "x" + _defSize.Height.ToString();
 
-                        ViewState["FileName"] = name;
-                        return name;
+                        SHA1Managed hash = new SHA1Managed();
+                        byte[] bytes = hash.ComputeHash(Encoding.UTF8.GetBytes(name));
+                        ViewState["FileName"] = Convert.ToBase64String(bytes).Replace("+", "-").Replace("/", "_").Replace("=", "a");
                     }
-                    else
-                        return (string)ViewState["FileName"];
+
+                    return (string)ViewState["FileName"];
                 }
             }
 
