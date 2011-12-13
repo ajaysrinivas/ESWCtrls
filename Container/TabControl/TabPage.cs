@@ -56,8 +56,20 @@ namespace ESWCtrls
         [Bindable(true),DefaultValue(true)]
         public bool Visible
         {
-            get { return ContentTemplateContainer.Visible; }
-            set { ContentTemplateContainer.Visible = value; }
+            get
+            {
+                if(ViewState["Visible"] != null)
+                    return (bool)ViewState["Visible"];
+                else
+                    return true;
+            }
+            set
+            {
+                if(!value)
+                    ViewState["Visible"] = value;
+                else
+                    ViewState.Remove("Visible");
+            }
         }
 
         #region Data Properties
@@ -122,20 +134,28 @@ namespace ESWCtrls
 
         internal void PreRender()
         {
-            int idx = _owner.Pages.IndexOf(this);
-            if (_owner.ActivePageIndex != idx)
+            if(!Visible)
+                ContentTemplateContainer.Visible = false;
+            else
             {
-                if (_owner.TabStyle == TabStyle.ServerSide)
-                    ContentTemplateContainer.Visible = false;
+                int idx = _owner.Pages.IndexOf(this);
+                if(_owner.ActivePageIndex != idx)
+                {
+                    if(_owner.TabStyle == TabStyle.ServerSide)
+                        ContentTemplateContainer.Visible = false;
+                    else
+                        ContentTemplateContainer.Visible = true;
+                }
                 else
                     ContentTemplateContainer.Visible = true;
             }
-            else
-                ContentTemplateContainer.Visible = true;
         }
 
         internal void RenderButton(HtmlTextWriter writer, int idx)
         {
+            if(!Visible)
+                return;
+
             if (_owner.UsejQueryStyle || _owner.TabStyle == TabStyle.jQuery)
             {
                 if (_owner.ActivePageIndex == idx)
@@ -250,11 +270,11 @@ namespace ESWCtrls
 
         internal void RenderPage(HtmlTextWriter writer, int idx)
         {
-            if (_owner.ActivePageIndex != idx && _owner.TabStyle == TabStyle.ClientSide)
-                writer.AddStyleAttribute(HtmlTextWriterStyle.Display, "none");
-
             if (ContentTemplateContainer.Visible)
             {
+                if(_owner.ActivePageIndex != idx && _owner.TabStyle == TabStyle.ClientSide)
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.Display, "none");
+
                 if (_owner.UsejQueryStyle || _owner.TabStyle == TabStyle.jQuery)
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, "ui-tabs-panel ui-widget-content ui-corner-bottom");
 
