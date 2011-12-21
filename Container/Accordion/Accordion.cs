@@ -23,67 +23,51 @@ namespace ESWCtrls
         /// <summary>
         /// The icon to use for unselected headers
         /// </summary>
-        [Category("Appearance"),DefaultValue("ui-icon-triangle-1-e")]
+        [Category("Appearance"), DefaultValue("ui-icon-triangle-1-e")]
         public string HeaderUnselectedIcon
         {
             get
             {
                 if(ViewState["HeaderUnselectedIcon"] != null)
-                    return(string)ViewState["HeaderUnselectedIcon"];
+                    return (string)ViewState["HeaderUnselectedIcon"];
                 else
                     return "ui-icon-triangle-1-e";
             }
-            set
-            {
-                if(value != "ui-icon-triangle-1-e")
-                    ViewState["HeaderUnselectedIcon"] = value;
-                else
-                    ViewState.Remove("HeaderUnselectedIcon");
-            }
+            set { ViewState["HeaderUnselectedIcon"] = value; }
         }
 
         /// <summary>
         /// The icon to use for selected headers
         /// </summary>
-        [Category("Appearance"),DefaultValue("ui-icon-triangle-1-s")]
+        [Category("Appearance"), DefaultValue("ui-icon-triangle-1-s")]
         public string HeaderSelectedIcon
         {
             get
             {
                 if(ViewState["HeaderSelectedIcon"] != null)
-                    return(string)ViewState["HeaderSelectedIcon"];
+                    return (string)ViewState["HeaderSelectedIcon"];
                 else
                     return "ui-icon-triangle-1-s";
             }
             set
-            {
-                if(value != "ui-icon-triangle-1-s")
-                    ViewState["HeaderSelectedIcon"] = value;
-                else
-                    ViewState.Remove("HeaderSelectedIcon");
-            }
+            { ViewState["HeaderSelectedIcon"] = value; }
         }
 
         /// <summary>
         /// The animation effect to use
         /// </summary>
-        [Category("Appearance"),DefaultValue(Effect.EffectType.Slide)]
+        [Category("Appearance"), DefaultValue(Effect.EffectType.Slide)]
         public Effect.EffectType Animation
         {
             get
             {
                 if(ViewState["Animation"] != null)
-                    return(Effect.EffectType)ViewState["Animation"];
+                    return (Effect.EffectType)ViewState["Animation"];
                 else
                     return Effect.EffectType.Slide;
             }
             set
-            {
-                if(value != Effect.EffectType.Slide)
-                    ViewState["Animation"] = value;
-                else
-                    ViewState.Remove("Animation");
-            }
+            { ViewState["Animation"] = value; }
         }
 
         #endregion
@@ -93,133 +77,97 @@ namespace ESWCtrls
         /// <summary>
         /// If true highest content part is used as height reference for all other parts
         /// </summary>
-        [Category("Behaviour"),DefaultValue(true)]
+        [Category("Behaviour"), DefaultValue(true)]
         public bool AutoHeight
         {
             get
             {
                 if(ViewState["AutoHeight"] != null)
-                    return(bool)ViewState["AutoHeight"];
+                    return (bool)ViewState["AutoHeight"];
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["AutoHeight"] = value;
-                else
-                    ViewState.Remove("AutoHeight");
-            }
+            set { ViewState["AutoHeight"] = value; }
         }
 
         /// <summary>
         /// If set, clears height and overflow styles, after animation. Won't work with AutoHeight.
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool ClearStyle
         {
             get
             {
                 if(ViewState["ClearStyle"] != null)
-                    return(bool)ViewState["ClearStyle"];
+                    return (bool)ViewState["ClearStyle"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["ClearStyle"] = value;
-                else
-                    ViewState.Remove("ClearStyle");
-            }
+            set { ViewState["ClearStyle"] = value; }
         }
 
         /// <summary>
         /// Whether all sections can be closed at once
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool Collapsible
         {
             get
             {
                 if(ViewState["Collapsible"] != null)
-                    return(bool)ViewState["Collapsible"];
+                    return (bool)ViewState["Collapsible"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["Collapsible"] = value;
-                else
-                    ViewState.Remove("Collapsible");
-            }
+            set { ViewState["Collapsible"] = value; }
         }
 
         /// <summary>
         /// If set the Accordion will fill the height of the parent element, overrides AutoHeight
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool FillSpace
         {
             get
             {
                 if(ViewState["FillSpace"] != null)
-                    return(bool)ViewState["FillSpace"];
+                    return (bool)ViewState["FillSpace"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["FillSpace"] = value;
-                else
-                    ViewState.Remove("FillSpace");
-            }
+            set { ViewState["FillSpace"] = value; }
         }
 
         /// <summary>
         /// The event to use to activate the header (default "click")
         /// </summary>
-        [Category("Behaviour"),DefaultValue("click")]
+        [Category("Behaviour"), DefaultValue("click")]
         public string Event
         {
             get
             {
                 if(ViewState["Event"] != null)
-                    return(string)ViewState["Event"];
+                    return (string)ViewState["Event"];
                 else
                     return "click";
             }
-            set
-            {
-                if(value != "click")
-                    ViewState["Event"] = value;
-                else
-                    ViewState.Remove("Event");
-            }
+            set { ViewState["Event"] = value; }
         }
 
         /// <summary>
         /// Whether the Accordion is sortable
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool Sortable
         {
             get
             {
                 if(ViewState["Sortable"] != null)
-                    return(bool)ViewState["Sortable"];
+                    return (bool)ViewState["Sortable"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["Sortable"] = value;
-                else
-                    ViewState.Remove("Sortable");
-            }
+            set { ViewState["Sortable"] = value; }
         }
 
         /// <summary>
@@ -242,45 +190,33 @@ namespace ESWCtrls
         /// <summary>
         /// Post back when the Active Section changed
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool AutoPostBackActiveChanged
         {
             get
             {
-                if (ViewState["APBActive"] != null)
+                if(ViewState["APBActive"] != null)
                     return (bool)ViewState["APBActive"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["APBActive"] = value;
-                else
-                    ViewState.Remove("APBActive");
-            }
+            set { ViewState["APBActive"] = value; }
         }
 
         /// <summary>
         /// Auto post back when the order of the sections change
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool AutoPostBackOrderChanged
         {
             get
             {
-                if (ViewState["APBOrder"] != null)
+                if(ViewState["APBOrder"] != null)
                     return (bool)ViewState["APBOrder"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["APBOrder"] = value;
-                else
-                    ViewState.Remove("APBOrder");
-            }
+            set { ViewState["APBOrder"] = value; }
         }
 
         #endregion
@@ -304,23 +240,17 @@ namespace ESWCtrls
         /// <summary>
         /// The active sections index
         /// </summary>
-        [Category("Data"),DefaultValue(0)]
+        [Category("Data"), DefaultValue(0)]
         public int ActiveSectionIndex
         {
             get
             {
                 if(ViewState["ActiveSectionIndex"] != null)
-                    return(int)ViewState["ActiveSectionIndex"];
+                    return (int)ViewState["ActiveSectionIndex"];
                 else
                     return 0;
             }
-            set
-            {
-                if(value != 0)
-                    ViewState["ActiveSectionIndex"] = value;
-                else
-                    ViewState.Remove("ActiveSectionIndex");
-            }
+            set { ViewState["ActiveSectionIndex"] = value; }
         }
 
         /// <summary>

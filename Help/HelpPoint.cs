@@ -25,7 +25,7 @@ namespace ESWCtrls
         /// <summary>
         /// Gets or sets the display type.
         /// </summary>
-        [Bindable(true),Category("Appearance"),DefaultValue(ImageText.Both)]
+        [Bindable(true), Category("Appearance"), DefaultValue(ImageText.Both)]
         public ImageText DisplayType
         {
             get
@@ -35,13 +35,7 @@ namespace ESWCtrls
                 else
                     return ImageText.Both;
             }
-            set
-            {
-                if(value != ImageText.Both)
-                    ViewState["DisplayType"] = value;
-                else
-                    ViewState.Remove("DisplayType");
-            }
+            set { ViewState["DisplayType"] = value; }
         }
 
         /// <summary>
@@ -57,13 +51,7 @@ namespace ESWCtrls
                 else
                     return "help";
             }
-            set
-            {
-                if(value != "help")
-                    ViewState["Text"] = value;
-                else
-                    ViewState.Remove("Text");
-            }
+            set { ViewState["Text"] = value; }
         }
 
         /// <summary>
@@ -79,13 +67,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(!string.IsNullOrEmpty(value))
-                    ViewState["ImageURL"] = value;
-                else
-                    ViewState.Remove("ImageURL");
-            }
+            set { ViewState["ImageURL"] = value; }
         }
 
         /// <summary>
@@ -170,13 +152,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(!string.IsNullOrEmpty(value))
-                    ViewState["ForCtrl"] = value;
-                else
-                    ViewState.Remove("ForCtrl");
-            }
+            set { ViewState["ForCtrl"] = value; }
         }
 
         #endregion
@@ -187,7 +163,7 @@ namespace ESWCtrls
         /// Gets or sets the help id.
         /// </summary>
         /// <remarks>If not manually set builds a unqiue id from the page and forcontrol, or its own Id</remarks>
-        [Bindable(true),Category("Data"), DefaultValue(null)]
+        [Bindable(true), Category("Data"), DefaultValue(null)]
         public string HelpId
         {
             get
@@ -216,13 +192,7 @@ namespace ESWCtrls
 
                 return (string)ViewState["HelpId"];
             }
-            set
-            {
-                if(value != null)
-                    ViewState["HelpId"] = value;
-                else
-                    ViewState.Remove("HelpId");
-            }
+            set { ViewState["HelpId"] = value; }
         }
 
         /// <summary>
@@ -240,13 +210,9 @@ namespace ESWCtrls
             }
             set
             {
-                if(!string.IsNullOrEmpty(value))
-                {
-                    ViewState["HoverHelp"] = value;
+                ViewState["HoverHelp"] = value;
+                if(!string.IsNullOrEmpty(value))                    
                     HasHoverHelp = true;
-                }
-                else
-                    ViewState.Remove("HoverHelp");
             }
         }
 
@@ -265,20 +231,16 @@ namespace ESWCtrls
             }
             set
             {
-                if(!string.IsNullOrEmpty(value))
-                {
-                    ViewState["ClickHelp"] = value;
+                ViewState["ClickHelp"] = value;
+                if(!string.IsNullOrEmpty(value))                    
                     HasClickHelp = true;
-                }
-                else
-                    ViewState.Remove("ClickHelp");
             }
         }
 
         /// <summary>
         /// Whether the control has help on hover
         /// </summary>
-        [Bindable(true),Category("Data"), DefaultValue(false)]
+        [Bindable(true), Category("Data"), DefaultValue(false)]
         public bool HasHoverHelp
         {
             get
@@ -288,13 +250,7 @@ namespace ESWCtrls
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["HasHoverHelp"] = value;
-                else
-                    ViewState.Remove("HasHoverHelp");
-            }
+            set { ViewState["HasHoverHelp"] = value; }
         }
 
         /// <summary>
@@ -310,13 +266,7 @@ namespace ESWCtrls
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["HasClickHelp"] = value;
-                else
-                    ViewState.Remove("HasClickHelp");
-            }
+            set { ViewState["HasClickHelp"] = value; }
         }
 
         #endregion

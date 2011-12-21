@@ -104,18 +104,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["UsejQueryStyle"] != null)
+                if(ViewState["UsejQueryStyle"] != null)
                     return (bool)ViewState["UsejQueryStyle"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["UsejQueryStyle"] = value;
-                else
-                    ViewState.Remove("UsejQueryStyle");
-            }
+            set { ViewState["UsejQueryStyle"] = value; }
         }
 
         #endregion
@@ -287,18 +281,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Collapsible"] != null)
+                if(ViewState["Collapsible"] != null)
                     return (bool)ViewState["Collapsible"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["Collapsible"] = value;
-                else
-                    ViewState.Remove("Collapsible");
-            }
+            set { ViewState["Collapsible"] = value; }
         }
 
         /// <summary>
@@ -309,18 +297,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Sortable"] != null)
+                if(ViewState["Sortable"] != null)
                     return (bool)ViewState["Sortable"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["Sortable"] = value;
-                else
-                    ViewState.Remove("Sortable");
-            }
+            set { ViewState["Sortable"] = value; }
         }
 
         #endregion

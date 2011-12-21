@@ -19,18 +19,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["ControlID"] == null)
+                if(ViewState["ControlID"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["ControlID"];
             }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    ViewState.Remove("ControlID");
-                else
-                    ViewState["ControlID"] = value;
-            }
+            set { ViewState["ControlID"] = value; }
         }
 
         /// <summary>
@@ -41,7 +35,7 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Event"] == null)
+                if(ViewState["Event"] == null)
                 {
                     return string.Empty;
                 }
@@ -50,17 +44,7 @@ namespace ESWCtrls
                     return (string)ViewState["Event"];
                 }
             }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    ViewState.Remove("Event");
-                }
-                else
-                {
-                    ViewState["Event"] = value;
-                }
-            }
+            set { ViewState["Event"] = value; }
         }
 
     }
@@ -79,18 +63,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["CancelEvent"] == null)
+                if(ViewState["CancelEvent"] == null)
                     return false;
                 else
                     return (bool)ViewState["CancelEvent"];
             }
-            set
-            {
-                if (!value)
-                    ViewState.Remove("CancelEvent");
-                else
-                    ViewState["CancelEvent"] = value;
-            }
+            set { ViewState["CancelEvent"] = value; }
         }
 
     }

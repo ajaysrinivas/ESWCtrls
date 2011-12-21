@@ -28,7 +28,7 @@ namespace ESWCtrls
         /// <summary>
         /// Top Left Radius for rounded corner
         /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(int), null), NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(0), NotifyParentProperty(true)]
         public int RadiusTopLeft
         {
             get
@@ -38,19 +38,13 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["TopLeft"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("TopLeft");
-                else
-                    ViewState["TopLeft"] = value;
-            }
+            set { ViewState["TopLeft"] = value; }
         }
 
         /// <summary>
         /// Top Right Radius for rounded corner
         /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(int), null), NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(0), NotifyParentProperty(true)]
         public int RadiusTopRight
         {
             get
@@ -60,19 +54,13 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["TopRight"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("TopRight");
-                else
-                    ViewState["TopRight"] = value;
-            }
+            set { ViewState["TopRight"] = value; }
         }
 
         /// <summary>
         /// Bottom Left Radius for rounded corner
         /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(int), null), NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(0), NotifyParentProperty(true)]
         public int RadiusBottomLeft
         {
             get
@@ -82,19 +70,13 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["BottomLeft"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("BottomLeft");
-                else
-                    ViewState["BottomLeft"] = value;
-            }
+            set { ViewState["BottomLeft"] = value; }
         }
 
         /// <summary>
         /// Bottom Right Radius for rounded corner
         /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(int), null), NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(0), NotifyParentProperty(true)]
         public int RadiusBottomRight
         {
             get
@@ -104,19 +86,13 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["BottomRight"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("BottomRight");
-                else
-                    ViewState["BottomRight"] = value;
-            }
+            set { ViewState["BottomRight"] = value; }
         }
 
         /// <summary>
         /// Radius for rounded corners
         /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(int), null), NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(0), NotifyParentProperty(true)]
         public int RadiusCorner
         {
             get { return Math.Max(RadiusTopLeft, Math.Max(RadiusTopRight, Math.Max(RadiusBottomLeft, RadiusBottomRight))); }
@@ -170,7 +146,7 @@ namespace ESWCtrls
         /// <summary>
         /// The width of the border to use
         /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(int), null), NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(0), NotifyParentProperty(true)]
         public new int BorderWidth
         {
             get
@@ -180,13 +156,7 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["BorderWidth"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("BorderWidth");
-                else
-                    ViewState["BorderWidth"] = value;
-            }
+            set { ViewState["BorderWidth"] = value; }
         }
 
         /// <summary>
@@ -202,13 +172,7 @@ namespace ESWCtrls
                 else
                     return (Color)ViewState["BorderColor"];
             }
-            set
-            {
-                if(value == Color.Transparent)
-                    ViewState.Remove("BorderColor");
-                else
-                    ViewState["BorderColor"] = value;
-            }
+            set { ViewState["BorderColor"] = value; }
         }
 
         /// <summary>
@@ -224,13 +188,7 @@ namespace ESWCtrls
                 else
                     return (Color)ViewState["HeaderColor"];
             }
-            set
-            {
-                if(value == Color.Transparent)
-                    ViewState.Remove("HeaderColor");
-                else
-                    ViewState["HeaderColor"] = value;
-            }
+            set { ViewState["HeaderColor"] = value; }
         }
 
         /// <summary>
@@ -246,13 +204,7 @@ namespace ESWCtrls
                 else
                     return (Color)ViewState["ContentColor"];
             }
-            set
-            {
-                if(value == Color.Transparent)
-                    ViewState.Remove("ContentColor");
-                else
-                    ViewState["ContentColor"] = value;
-            }
+            set { ViewState["ContentColor"] = value; }
         }
 
         /// <summary>
@@ -1143,13 +1095,7 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["XOffset"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("XOffset");
-                else
-                    ViewState["XOffset"] = value;
-            }
+            set { ViewState["XOffset"] = value; }
         }
 
         /// <summary>
@@ -1165,13 +1111,7 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["YOffset"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("YOffset");
-                else
-                    ViewState["YOffset"] = value;
-            }
+            set { ViewState["YOffset"] = value; }
         }
 
         /// <summary>
@@ -1187,13 +1127,7 @@ namespace ESWCtrls
                 else
                     return (Color)ViewState["ShadowColor"];
             }
-            set
-            {
-                if(value == Color.Empty)
-                    ViewState.Remove("ShadowColor");
-                else
-                    ViewState["ShadowColor"] = value;
-            }
+            set { ViewState["ShadowColor"] = value; }
         }
 
         /// <summary>
@@ -1209,13 +1143,7 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["Blend"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("Blend");
-                else
-                    ViewState["Blend"] = value;
-            }
+            set { ViewState["Blend"] = value; }
         }
 
         internal string FileString()
@@ -1248,13 +1176,7 @@ namespace ESWCtrls
                 else
                     return (Color)ViewState["GlowColor"];
             }
-            set
-            {
-                if(value == Color.Empty)
-                    ViewState.Remove("GlowColor");
-                else
-                    ViewState["GlowColor"] = value;
-            }
+            set { ViewState["GlowColor"] = value; }
         }
 
         /// <summary>
@@ -1272,13 +1194,8 @@ namespace ESWCtrls
             }
             set
             {
-                if(value == 0)
-                    ViewState.Remove("Blend");
-                else
-                {
-                    if(value < 0) value = 0;
-                    ViewState["Blend"] = value;
-                }
+                if(value < 0) value = 0;
+                ViewState["Blend"] = value;
             }
         }
 

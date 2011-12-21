@@ -31,13 +31,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["ShowEffect"] = value;
-                else
-                    ViewState.Remove("ShowEffect");
-            }
+            set { ViewState["ShowEffect"] = value; }
         }
 
         /// <summary>
@@ -53,13 +47,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["HideEffect"] = value;
-                else
-                    ViewState.Remove("HideEffect");
-            }
+            set { ViewState["HideEffect"] = value; }
         }
 
         /// <summary>

@@ -27,17 +27,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["autoOpen"] != null)
-                    return(bool)ViewState["autoOpen"];
+                    return (bool)ViewState["autoOpen"];
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["autoOpen"] = value;
-                else
-                    ViewState.Remove("autoOpen");
-            }
+            set { ViewState["autoOpen"] = value; }
         }
 
         /// <summary>
@@ -49,17 +43,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["closeOnEscape"] != null)
-                    return(bool)ViewState["closeOnEscape"];
+                    return (bool)ViewState["closeOnEscape"];
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["closeOnEscape"] = value;
-                else
-                    ViewState.Remove("closeOnEscape");
-            }
+            set { ViewState["closeOnEscape"] = value; }
         }
 
         /// <summary>
@@ -71,17 +59,12 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Draggable"] != null)
-                    return(bool)ViewState["Draggable"];
+                    return (bool)ViewState["Draggable"];
                 else
                     return true;
             }
             set
-            {
-                if(value != true)
-                    ViewState["Draggable"] = value;
-                else
-                    ViewState.Remove("Draggable");
-            }
+            { ViewState["Draggable"] = value; }
         }
 
         /// <summary>
@@ -93,17 +76,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Resizeable"] != null)
-                    return(bool)ViewState["Resizeable"];
+                    return (bool)ViewState["Resizeable"];
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["Resizeable"] = value;
-                else
-                    ViewState.Remove("Resizeable");
-            }
+            set { ViewState["Resizeable"] = value; }
         }
         
         /// <summary>
@@ -115,17 +92,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Modal"] != null)
-                    return(bool)ViewState["Modal"];
+                    return (bool)ViewState["Modal"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["Modal"] = value;
-                else
-                    ViewState.Remove("Modal");
-            }
+            set { ViewState["Modal"] = value; }
         }
         
         /// <summary>
@@ -137,17 +108,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Stackable"] != null)
-                    return(bool)ViewState["Stackable"];
+                    return (bool)ViewState["Stackable"];
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["Stackable"] = value;
-                else
-                    ViewState.Remove("Stackable");
-            }
+            set { ViewState["Stackable"] = value; }
         }
 
         /// <summary>
@@ -231,17 +196,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Title"] != null)
-                    return(string)ViewState["Title"];
+                    return (string)ViewState["Title"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["Title"] = value;
-                else
-                    ViewState.Remove("Title");
-            }
+            set { ViewState["Title"] = value; }
         }
 
         /// <summary>
@@ -253,17 +212,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["CloseText"] != null)
-                    return(string)ViewState["CloseText"];
+                    return (string)ViewState["CloseText"];
                 else
                     return "close";
             }
-            set
-            {
-                if(value != "close")
-                    ViewState["CloseText"] = value;
-                else
-                    ViewState.Remove("CloseText");
-            }
+            set { ViewState["CloseText"] = value; }
         }
 
         /// <summary>
@@ -275,17 +228,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["DialogClass"] != null)
-                    return(string)ViewState["DialogClass"];
+                    return (string)ViewState["DialogClass"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["DialogClass"] = value;
-                else
-                    ViewState.Remove("DialogClass");
-            }
+            set { ViewState["DialogClass"] = value; }
         }
 
         /// <summary>
@@ -297,17 +244,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Position"] != null)
-                    return(Position)ViewState["Position"];
+                    return (Position)ViewState["Position"];
                 else
                     return Position.CenterCenter;
             }
-            set
-            {
-                if(value != Position.CenterCenter)
-                    ViewState["Position"] = value;
-                else
-                    ViewState.Remove("Position");
-            }
+            set { ViewState["Position"] = value; }
         }
 
         /// <summary>
@@ -320,17 +261,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["PositionPixel"] != null)
-                    return(System.Drawing.Point)ViewState["PositionPixel"];
+                    return (System.Drawing.Point)ViewState["PositionPixel"];
                 else
                     return System.Drawing.Point.Empty;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["PositionPixel"] = System.Drawing.Point.Empty;
-                else
-                    ViewState.Remove("PositionPixel");
-            }
+            set { ViewState["PositionPixel"] = value; }
         }
 
         /// <summary>
@@ -342,17 +277,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["height"] != null)
-                    return(int)ViewState["height"];
+                    return (int)ViewState["height"];
                 else
                     return 0;
             }
-            set
-            {
-                if(value != 0)
-                    ViewState["height"] = value;
-                else
-                    ViewState.Remove("height");
-            }
+            set { ViewState["height"] = value; }
         }
 
         /// <summary>
@@ -364,17 +293,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["MaxHeight"] != null)
-                    return(int)ViewState["MaxHeight"];
+                    return (int)ViewState["MaxHeight"];
                 else
                     return 0;
             }
-            set
-            {
-                if(value != 0)
-                    ViewState["MaxHeight"] = value;
-                else
-                    ViewState.Remove("MaxHeight");
-            }
+            set { ViewState["MaxHeight"] = value; }
         }
 
         /// <summary>
@@ -386,17 +309,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["MinHeight"] != null)
-                    return(int)ViewState["MinHeight"];
+                    return (int)ViewState["MinHeight"];
                 else
                     return 150;
             }
-            set
-            {
-                if(value != 150)
-                    ViewState["MinHeight"] = value;
-                else
-                    ViewState.Remove("MinHeight");
-            }
+            set { ViewState["MinHeight"] = value; }
         }
 
         /// <summary>
@@ -408,17 +325,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["Width"] != null)
-                    return(int)ViewState["Width"];
+                    return (int)ViewState["Width"];
                 else
                     return 300;
             }
-            set
-            {
-                if(value != 300)
-                    ViewState["Width"] = value;
-                else
-                    ViewState.Remove("Width");
-            }
+            set { ViewState["Width"] = value; }
         }
 
         /// <summary>
@@ -430,17 +341,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["MaxWidth"] != null)
-                    return(int)ViewState["MaxWidth"];
+                    return (int)ViewState["MaxWidth"];
                 else
                     return 0;
             }
-            set
-            {
-                if(value != 0)
-                    ViewState["MaxWidth"] = value;
-                else
-                    ViewState.Remove("MaxWidth");
-            }
+            set { ViewState["MaxWidth"] = value; }
         }
 
         /// <summary>
@@ -452,17 +357,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["MinWidth"] != null)
-                    return(int)ViewState["MinWidth"];
+                    return (int)ViewState["MinWidth"];
                 else
                     return 150;
             }
-            set
-            {
-                if(value != 150)
-                    ViewState["MinWidth"] = value;
-                else
-                    ViewState.Remove("MinWidth");
-            }
+            set { ViewState["MinWidth"] = value; }
         }
 
         /// <summary>
@@ -474,17 +373,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["ZIndex"] != null)
-                    return(int)ViewState["ZIndex"];
+                    return (int)ViewState["ZIndex"];
                 else
                     return 1000;
             }
-            set
-            {
-                if(value != 1000)
-                    ViewState["ZIndex"] = value;
-                else
-                    ViewState.Remove("ZIndex");
-            }
+            set { ViewState["ZIndex"] = value; }
         }
 
         /// <summary>
@@ -500,13 +393,7 @@ namespace ESWCtrls
                 else
                     return Effect.EffectType.None;
             }
-            set
-            {
-                if(value != Effect.EffectType.None)
-                    ViewState["HideEffect"] = value;
-                else
-                    ViewState.Remove("HideEffect");
-            }
+            set { ViewState["HideEffect"] = value; }
         }
 
         /// <summary>
@@ -522,13 +409,7 @@ namespace ESWCtrls
                 else
                     return Effect.EffectType.None;
             }
-            set
-            {
-                if(value != Effect.EffectType.None)
-                    ViewState["ShowEffect"] = value;
-                else
-                    ViewState.Remove("ShowEffect");
-            }
+            set { ViewState["ShowEffect"] = value; }
         }
 
         #endregion
@@ -1165,29 +1046,23 @@ namespace ESWCtrls
         /// <summary>
         /// The text of the button
         /// </summary>
-        [Bindable(true),DefaultValue(null)]
+        [Bindable(true), DefaultValue(null)]
         public string Text
         {
             get
             {
                 if(ViewState["Text"] != null)
-                    return(string)ViewState["Text"];
+                    return (string)ViewState["Text"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["Text"] = value;
-                else
-                    ViewState.Remove("Text");
-            }
+            set { ViewState["Text"] = value; }
         }
 
         /// <summary>
         /// The Client side event to execute
         /// </summary>
-        [Bindable(true),DefaultValue(null)]
+        [Bindable(true), DefaultValue(null)]
         public string ClientSide
         {
             get
@@ -1197,35 +1072,23 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["ClientSide"] = value;
-                else
-                    ViewState.Remove("ClientSide");
-            }
+            set { ViewState["ClientSide"] = value; }
         }
 
         /// <summary>
         /// Whether to do a postback
         /// </summary>
-        [Bindable(true),DefaultValue(null)]
+        [Bindable(true), DefaultValue(null)]
         public string PostbackArgument
         {
             get
             {
                 if(ViewState["Postback"] != null)
-                    return(string)ViewState["Postback"];
+                    return (string)ViewState["Postback"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["Postback"] = value;
-                else
-                    ViewState.Remove("Postback");
-            }
+            set { ViewState["Postback"] = value; }
         }
     }
 

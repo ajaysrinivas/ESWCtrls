@@ -24,23 +24,17 @@ namespace ESWCtrls
         /// When a button is used, only show the datepicker when its clicked, not
         /// with focus
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool ShowOnButtonOnly
         {
             get
             {
                 if(ViewState["ShowOnButtonOnly"] != null)
-                    return(bool)ViewState["ShowOnButtonOnly"];
+                    return (bool)ViewState["ShowOnButtonOnly"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["ShowOnButtonOnly"] = value;
-                else
-                    ViewState.Remove("ShowOnButtonOnly");
-            }
+            set { ViewState["ShowOnButtonOnly"] = value; }
         }
 
         /// <summary>
@@ -136,13 +130,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(!string.IsNullOrEmpty(value))
-                    ViewState["minDateCtrl"] = value;
-                else
-                    ViewState.Remove("minDateCtrl");
-            }
+            set { ViewState["minDateCtrl"] = value; }
         }
 
         /// <summary>
@@ -158,13 +146,7 @@ namespace ESWCtrls
                 else
                     return DateRangeMode.Fixed;
             }
-            set
-            {
-                if(value != DateRangeMode.Fixed)
-                    ViewState["MinDateControlMode"] = value;
-                else
-                    ViewState.Remove("MinDateControlMode");
-            }
+            set { ViewState["MinDateControlMode"] = value; }
         }
 
         /// <summary>
@@ -180,13 +162,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(!string.IsNullOrEmpty(value))
-                    ViewState["maxDateCtrl"] = value;
-                else
-                    ViewState.Remove("maxDateCtrl");
-            }
+            set { ViewState["maxDateCtrl"] = value; }
         }
 
         /// <summary>
@@ -202,13 +178,7 @@ namespace ESWCtrls
                 else
                     return DateRangeMode.Fixed;
             }
-            set
-            {
-                if(value != DateRangeMode.Fixed)
-                    ViewState["MaxDateControlMode"] = value;
-                else
-                    ViewState.Remove("MaxDateControlMode");
-            }
+            set { ViewState["MaxDateControlMode"] = value; }
         }
 
         /// <summary>
@@ -230,17 +200,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["DefaultDate"] != null)
-                    return(DateTime?)ViewState["DefaultDate"];
+                    return (DateTime?)ViewState["DefaultDate"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["DefaultDate"] = value;
-                else
-                    ViewState.Remove("DefaultDate");
-            }
+            set { ViewState["DefaultDate"] = value; }
         }
 
         /// <summary>
@@ -256,13 +220,7 @@ namespace ESWCtrls
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["AllowBlank"] = value;
-                else
-                    ViewState.Remove("AllowBlank");
-            }
+            set { ViewState["AllowBlank"] = value; }
         }
 
         /// <summary>
@@ -278,13 +236,7 @@ namespace ESWCtrls
                 else
                     return true;
             }
-            set
-            {
-                if(value != true)
-                    ViewState["AllowManualEntry"] = value;
-                else
-                    ViewState.Remove("AllowManualEntry");
-            }
+            set { ViewState["AllowManualEntry"] = value; }
         }
 
         /// <summary>
@@ -296,39 +248,28 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["DateFormat"] != null)
-                    return(string)ViewState["DateFormat"];
+                    return (string)ViewState["DateFormat"];
                 else
                     return "dd/MM/yyyy";
             }
             set
-            {
-                if(value != "dd/MM/yyyy")
-                    ViewState["DateFormat"] = value;
-                else
-                    ViewState.Remove("DateFormat");
-            }
+            { ViewState["DateFormat"] = value; }
         }
 
         /// <summary>
         /// Whether to postback when a date is picked
         /// </summary>
-        [Category("Behaviour"),DefaultValue(false)]
+        [Category("Behaviour"), DefaultValue(false)]
         public bool AutoPostBack
         {
             get
             {
                 if(ViewState["AutoPostBack"] != null)
-                    return(bool)ViewState["AutoPostBack"];
+                    return (bool)ViewState["AutoPostBack"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["AutoPostBack"] = value;
-                else
-                    ViewState.Remove("AutoPostBack");
-            }
+            set { ViewState["AutoPostBack"] = value; }
         }
 
         /// <summary>
@@ -388,118 +329,88 @@ namespace ESWCtrls
         /// <summary>
         /// The number of months to show
         /// </summary>
-        [Category("Appearance"),DefaultValue(1)]
+        [Category("Appearance"), DefaultValue(1)]
         public int NumberOfMonths
         {
             get
             {
                 if(ViewState["NumberOfMonths"] != null)
-                    return(int)ViewState["NumberOfMonths"];
+                    return (int)ViewState["NumberOfMonths"];
                 else
                     return 1;
             }
-            set
-            {
-                if(value != 1)
-                    ViewState["NumberOfMonths"] = value;
-                else
-                    ViewState.Remove("NumberOfMonths");
-            }
+            set { ViewState["NumberOfMonths"] = value; }
         }
 
         /// <summary>
         /// Whether to show the button panel
         /// </summary>
-        [Category("Appearance"),DefaultValue(false)]
+        [Category("Appearance"), DefaultValue(false)]
         public bool ShowButtonPanel
         {
             get
             {
                 if(ViewState["ShowButtonPanel"] != null)
-                    return(bool)ViewState["ShowButtonPanel"];
+                    return (bool)ViewState["ShowButtonPanel"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["ShowButtonPanel"] = value;
-                else
-                    ViewState.Remove("ShowButtonPanel");
-            }
+            set { ViewState["ShowButtonPanel"] = value; }
         }
 
         /// <summary>
         /// In a multi-month display, where the current month should appear
         /// </summary>
-        [Category("Appearance"),DefaultValue(0)]
+        [Category("Appearance"), DefaultValue(0)]
         public int ShowCurrentMonthAtPosition
         {
             get
             {
                 if(ViewState["ShowCurrentMonthAtPosition"] != null)
-                    return(int)ViewState["ShowCurrentMonthAtPosition"];
+                    return (int)ViewState["ShowCurrentMonthAtPosition"];
                 else
                     return 0;
             }
-            set
-            {
-                if(value != 0)
-                    ViewState["ShowCurrentMonthAtPosition"] = value;
-                else
-                    ViewState.Remove("ShowCurrentMonthAtPosition");
-            }
+            set { ViewState["ShowCurrentMonthAtPosition"] = value; }
         }
 
         /// <summary>
         /// Whether to show the current week numbers
         /// </summary>
-        [Category("Appearance"),DefaultValue(false)]
+        [Category("Appearance"), DefaultValue(false)]
         public bool ShowWeek
         {
             get
             {
                 if(ViewState["ShowWeek"] != null)
-                    return(bool)ViewState["ShowWeek"];
+                    return (bool)ViewState["ShowWeek"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["ShowWeek"] = value;
-                else
-                    ViewState.Remove("ShowWeek");
-            }
+            set { ViewState["ShowWeek"] = value; }
         }
 
         /// <summary>
         /// The year range to use in dropdown. has no effect on selectable dates
         /// </summary>
-        [Category("Appearance"),DefaultValue(10)]
+        [Category("Appearance"), DefaultValue(10)]
         public int YearRange
         {
             get
             {
                 if(ViewState["YearRange"] != null)
-                    return(int)ViewState["YearRange"];
+                    return (int)ViewState["YearRange"];
                 else
                     return 10;
             }
-            set
-            {
-                if(value != 10)
-                    ViewState["YearRange"] = value;
-                else
-                    ViewState.Remove("YearRange");
-            }
+            set { ViewState["YearRange"] = value; }
         }
 
         /// <summary>
         /// The way the datepicker appears/disappears
         /// </summary>
         /// <remarks>Speed and callback are ignored</remarks>
-        [Category("Appearance"),DefaultValue(null),MergableProperty(false),PersistenceMode(PersistenceMode.InnerProperty)]
+        [Category("Appearance"), DefaultValue(null), MergableProperty(false), PersistenceMode(PersistenceMode.InnerProperty)]
         public Effect Effect
         {
             get
@@ -509,13 +420,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["Effect"] = value;
-                else
-                    ViewState.Remove("Effect");
-            }
+            set { ViewState["Effect"] = value; }
         }
         
         #endregion
@@ -525,23 +430,17 @@ namespace ESWCtrls
         /// <summary>
         /// The current date value
         /// </summary>
-        [Bindable(true),Category("Data"),DefaultValue(typeof(DateTime?), null)]
+        [Bindable(true), Category("Data"), DefaultValue(typeof(DateTime?), null)]
         public DateTime? CurrentDate
         {
             get
             {
                 if(ViewState["CurrentDate"] != null)
-                    return(DateTime?)ViewState["CurrentDate"];
+                    return (DateTime?)ViewState["CurrentDate"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["CurrentDate"] = value;
-                else
-                    ViewState.Remove("CurrentDate");
-            }
+            set { ViewState["CurrentDate"] = value; }
         }
 
         #endregion

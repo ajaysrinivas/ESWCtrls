@@ -53,18 +53,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["TryCDN"] != null)
+                if(ViewState["TryCDN"] != null)
                     return (bool)ViewState["TryCDN"];
                 else
                     return true;
             }
-            set
-            {
-                if (value != true)
-                    ViewState["TryCDN"] = value;
-                else
-                    ViewState.Remove("TryCDN");
-            }
+            set { ViewState["TryCDN"] = value; }
         }
 
         #region Render

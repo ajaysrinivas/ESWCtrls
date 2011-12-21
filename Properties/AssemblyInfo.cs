@@ -74,7 +74,7 @@ using System.Web.UI;
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.slide.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.transfer.js", "text/javascript")]
 
-//My Jquery Layout
+//My Jquery
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.panels.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.sortcolumn.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.helpbox.js", "text/javascript")]
@@ -107,8 +107,9 @@ using System.Web.UI;
 //DispBox
 [assembly: WebResource("ESWCtrls.ResEmbed.Styles.DispBox.css", "text/css")]
 
-//Drop Down Menu
+//Menu
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.dropdownmenu.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.panelmenu.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Gfxs.arrow_down.gif", "img/gif")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Gfxs.arrow_right.gif", "img/gif")]
 

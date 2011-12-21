@@ -28,13 +28,7 @@ namespace ESWCtrls
                 else
                     return Position.CenterCenter;
             }
-            set
-            {
-                if(value != Position.CenterCenter)
-                    ViewState["My"] = value;
-                else
-                    ViewState.Remove("My");
-            }
+            set { ViewState["My"] = value; }
         }
 
         /// <summary>
@@ -51,12 +45,7 @@ namespace ESWCtrls
                     return Position.CenterCenter;
             }
             set
-            {
-                if(value != Position.CenterCenter)
-                    ViewState["At"] = value;
-                else
-                    ViewState.Remove("At");
-            }
+            { ViewState["At"] = value; }
         }
 
         /// <summary>
@@ -72,13 +61,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["Of"] = value;
-                else
-                    ViewState.Remove("Of");
-            }
+            set { ViewState["Of"] = value; }
         }
     
         /// <summary>
@@ -95,13 +78,7 @@ namespace ESWCtrls
                 else
                     return Collision.None;
             }
-            set
-            {
-                if(value != Collision.None)
-                    ViewState["Collision"] = value;
-                else
-                    ViewState.Remove("Collision");
-            }
+            set { ViewState["Collision"] = value; }
         }
 
         /// <summary>
@@ -117,12 +94,7 @@ namespace ESWCtrls
                 else
                     return new Point();
             }
-            set{
-                if(value != null && !value.IsEmpty)
-                    ViewState["Offset"] = value;
-                else
-                    ViewState.Remove("Offset");
-            }
+            set { ViewState["Offset"] = value; }
         }
 
         /// <summary>

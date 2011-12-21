@@ -29,13 +29,7 @@ namespace ESWCtrls
                 else
                     return (string)ViewState["Text"];
             }
-            set
-            {
-                if(value != "↑↓")
-                    ViewState["Text"] = value;
-                else
-                    ViewState.Remove("Text");
-            }
+            set { ViewState["Text"] = value; }
         }
 
         /// <summary>
@@ -51,19 +45,13 @@ namespace ESWCtrls
                 else
                     return (string)ViewState["ImageUrl"];
             }
-            set
-            {
-                if(string.IsNullOrEmpty(value))
-                    ViewState.Remove("ImageUrl");
-                else
-                    ViewState["ImageUrl"] = value;
-            }
+            set { ViewState["ImageUrl"] = value; }
         }
 
         /// <summary>
         /// Whether to show the image or the text
         /// </summary>
-        [Bindable(true),Category("Appearance"),DefaultValue(ImageText.Both)]
+        [Bindable(true), Category("Appearance"), DefaultValue(ImageText.Both)]
         public ImageText ImageText
         {
             get
@@ -73,13 +61,7 @@ namespace ESWCtrls
                 else
                     return (ImageText)ViewState["ImageText"];
             }
-            set
-            {
-                if(value != ImageText.Both)
-                    ViewState["ImageText"] = value;
-                else
-                    ViewState.Remove("ImageText");
-            }
+            set { ViewState["ImageText"] = value; }
         }
     
         ///        

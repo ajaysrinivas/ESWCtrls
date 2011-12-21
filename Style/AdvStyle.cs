@@ -103,24 +103,18 @@ namespace ESWCtrls
         /// <summary>
         /// Display Property
         /// </summary>
-        [Category("Appearance"), DefaultValue(Display.NotSet),NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(Display.NotSet), NotifyParentProperty(true)]
         public Display Display
-		{
-			get
-			{
-				if(ViewState["Display"] != null)
-					return(Display)ViewState["Display"];
-				else
-					return Display.NotSet;
-			}
-			set
-			{
-				if(value != Display.NotSet)
-					ViewState["Display"] = value;
-				else
-					ViewState.Remove("Display");
-			}
-		}
+        {
+            get
+            {
+                if(ViewState["Display"] != null)
+                    return (Display)ViewState["Display"];
+                else
+                    return Display.NotSet;
+            }
+            set { ViewState["Display"] = value; }
+        }
 
         /// <summary>
         /// This css positioning
@@ -224,88 +218,64 @@ namespace ESWCtrls
         /// </summary>
         [Category("Appearance"), DefaultValue(ElementFloat.NotSet), NotifyParentProperty(true)]
         public virtual ElementFloat Float
-		{
-			get
-			{
-				if(ViewState["Float"] != null)
-					return(ElementFloat)ViewState["Float"];
-				else
-					return ElementFloat.NotSet;
-			}
-			set
-			{
-				if(value != ElementFloat.NotSet)
-					ViewState["Float"] = value;
-				else
-					ViewState.Remove("Float");
-			}
-		}
+        {
+            get
+            {
+                if(ViewState["Float"] != null)
+                    return (ElementFloat)ViewState["Float"];
+                else
+                    return ElementFloat.NotSet;
+            }
+            set { ViewState["Float"] = value; }
+        }
 
         /// <summary>
         /// The list style type
         /// </summary>
         [Category("Appearance"), DefaultValue(ListStyleType.NotSet), NotifyParentProperty(true)]
         public virtual ListStyleType ListStyleType
-		{
-			get
-			{
-				if(ViewState["ListStyleType"] != null)
-					return(ListStyleType)ViewState["ListStyleType"];
-				else
-					return ListStyleType.NotSet;
-			}
-			set
-			{
-				if(value != ListStyleType.NotSet)
-					ViewState["ListStyleType"] = value;
-				else
-					ViewState.Remove("ListStyleType");
-			}
-		}
+        {
+            get
+            {
+                if(ViewState["ListStyleType"] != null)
+                    return (ListStyleType)ViewState["ListStyleType"];
+                else
+                    return ListStyleType.NotSet;
+            }
+            set { ViewState["ListStyleType"] = value; }
+        }
 
         /// <summary>
         /// The list style position
         /// </summary>
-        [Category("Appearance"),DefaultValue(ListStylePosition.NotSet),NotifyParentProperty(true)]
+        [Category("Appearance"), DefaultValue(ListStylePosition.NotSet), NotifyParentProperty(true)]
         public virtual ListStylePosition ListStylePosition
-		{
-			get
-			{
-				if(ViewState["ListStylePosition"] != null)
-					return(ListStylePosition)ViewState["ListStylePosition"];
-				else
-					return ListStylePosition.NotSet;
-			}
-			set
-			{
-				if(value != ListStylePosition.NotSet)
-					ViewState["ListStylePosition"] = value;
-				else
-					ViewState.Remove("ListStylePosition");
-			}
-		}
+        {
+            get
+            {
+                if(ViewState["ListStylePosition"] != null)
+                    return (ListStylePosition)ViewState["ListStylePosition"];
+                else
+                    return ListStylePosition.NotSet;
+            }
+            set { ViewState["ListStylePosition"] = value; }
+        }
 
         /// <summary>
         /// Specifies the image to use for a marker in a list
         /// </summary>
         [Category("Appearance"), DefaultValue(null), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor)), NotifyParentProperty(true)]
         public virtual string ListStyleImage
-		{
-			get
-			{
-				if(ViewState["ListStyleImage"] != null)
-					return(string)ViewState["ListStyleImage"];
-				else
-					return null;
-			}
-			set
-			{
-				if(value != null)
-					ViewState["ListStyleImage"] = value;
-				else
-					ViewState.Remove("ListStyleImage");
-			}
-		}
+        {
+            get
+            {
+                if(ViewState["ListStyleImage"] != null)
+                    return (string)ViewState["ListStyleImage"];
+                else
+                    return null;
+            }
+            set { ViewState["ListStyleImage"] = value; }
+        }
         
         /// <summary>
         /// True if nothing is set within the style

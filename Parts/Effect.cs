@@ -86,13 +86,7 @@ namespace ESWCtrls
                 else
                     return EffectType.None;
             }
-            set
-            {
-                if(value != EffectType.None)
-                    ViewState["Type"] = value;
-                else
-                    ViewState.Remove("Type");
-            }
+            set { ViewState["Type"] = value; }
         }
 
         /// <summary>
@@ -126,13 +120,7 @@ namespace ESWCtrls
                 else
                     return EffectSpeed.Normal;
             }
-            set
-            {
-                if(value != EffectSpeed.Normal)
-                    ViewState["Speed"] = value;
-                else
-                    ViewState.Remove("Speed");
-            }
+            set { ViewState["Speed"] = value; }
         }
 
         /// <summary>
@@ -148,13 +136,7 @@ namespace ESWCtrls
                 else
                     return 0;
             }
-            set
-            {
-                if(value != 0)
-                    ViewState["SpeedMillisecond"] = value;
-                else
-                    ViewState.Remove("SpeedMillisecond");
-            }
+            set { ViewState["SpeedMillisecond"] = value; }
         }
 
         /// <summary>
@@ -170,13 +152,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["Callback"] = value;
-                else
-                    ViewState.Remove("Callback");
-            }
+            set { ViewState["Callback"] = value; }
         }
 
         #endregion

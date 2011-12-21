@@ -62,7 +62,7 @@ namespace ESWCtrls
         /// <summary>
         /// Gets or sets a value indicating whether the click box is modal.
         /// </summary>
-        [Category("Appearance"),DefaultValue(false)]
+        [Category("Appearance"), DefaultValue(false)]
         public bool ClickModal
         {
             get
@@ -72,13 +72,7 @@ namespace ESWCtrls
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["ClickModal"] = value;
-                else
-                    ViewState.Remove("ClickModal");
-            }
+            set { ViewState["ClickModal"] = value; }
         }
 
         #endregion
@@ -88,7 +82,7 @@ namespace ESWCtrls
         /// <summary>
         /// Gets or sets a value indicating whether to pre load hover help.
         /// </summary>
-        [Bindable(true),DefaultValue(false)]
+        [Bindable(true), DefaultValue(false)]
         public bool PreLoadHoverHelp
         {
             get
@@ -98,13 +92,7 @@ namespace ESWCtrls
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["PreLoadHover"] = value;
-                else
-                    ViewState.Remove("PreLoadHover");
-            }
+            set { ViewState["PreLoadHover"] = value; }
         }
 
         /// <summary>
@@ -120,13 +108,7 @@ namespace ESWCtrls
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["PreLoadClick"] = value;
-                else
-                    ViewState.Remove("PreLoadClick");
-            }
+            set { ViewState["PreLoadClick"] = value; }
         }
 
         /// <summary>

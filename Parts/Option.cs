@@ -20,13 +20,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["name"] = value;
-                else
-                    ViewState.Remove("name");
-            }
+            set { ViewState["name"] = value; }
         }
 
         /// <summary>The value of the option</summary>
@@ -40,13 +34,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["value"] = value;
-                else
-                    ViewState.Remove("value");
-            }
+            set { ViewState["value"] = value; }
         }
     }
 

@@ -287,13 +287,7 @@ namespace ESWCtrls
                 else
                     return (int)ViewState["MinLen"];
             }
-            set
-            {
-                if(value == 0)
-                    ViewState.Remove("MinLen");
-                else
-                    ViewState["MinLen"] = value;
-            }
+            set { ViewState["MinLen"] = value; }
         }
 
         #endregion

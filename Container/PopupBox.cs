@@ -33,13 +33,7 @@ namespace ESWCtrls
                 else
                     return (bool)ViewState["Modal"];
             }
-            set
-            {
-                if(!value)
-                    ViewState.Remove("Modal");
-                else
-                    ViewState["Modal"] = value;
-            }
+            set { ViewState["Modal"] = value; }
         }
 
         /// <summary>
@@ -51,17 +45,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["UseJQueryOverlay"] != null)
-                    return(bool)ViewState["UseJQueryOverlay"];
+                    return (bool)ViewState["UseJQueryOverlay"];
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["UseJQueryOverlay"] = value;
-                else
-                    ViewState.Remove("UseJQueryOverlay");
-            }
+            set { ViewState["UseJQueryOverlay"] = value; }
         }
         
         /// <summary>
@@ -97,13 +85,9 @@ namespace ESWCtrls
             }
             set
             {
-                if(!value)
-                    ViewState.Remove("Shown");
-                else
-                {
-                    Visible = true;
-                    ViewState["Shown"] = true;
-                }
+                if(VisibleAsShown)
+                    Visible = value;
+                ViewState["Shown"] = value;
             }
         }
 
@@ -132,23 +116,17 @@ namespace ESWCtrls
         /// <summary>
         /// The effect to run on show
         /// </summary>
-        [Bindable(true), Category("Appearance"), DefaultValue(null),MergableProperty(false),PersistenceMode(PersistenceMode.InnerProperty)]
+        [Bindable(true), Category("Appearance"), DefaultValue(null), MergableProperty(false), PersistenceMode(PersistenceMode.InnerProperty)]
         public Effect ShowEffect
         {
             get
             {
                 if(ViewState["ShowEffect"] != null)
-                    return(Effect)ViewState["ShowEffect"];
+                    return (Effect)ViewState["ShowEffect"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["ShowEffect"] = value;
-                else
-                    ViewState.Remove("ShowEffect");
-            }
+            set { ViewState["ShowEffect"] = value; }
         }
 
         /// <summary>
@@ -160,17 +138,11 @@ namespace ESWCtrls
             get
             {
                 if(ViewState["HideEffect"] != null)
-                    return(Effect)ViewState["HideEffect"];
+                    return (Effect)ViewState["HideEffect"];
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["HideEffect"] = value;
-                else
-                    ViewState.Remove("HideEffect");
-            }
+            set { ViewState["HideEffect"] = value; }
         }
 
 

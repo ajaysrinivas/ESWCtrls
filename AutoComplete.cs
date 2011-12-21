@@ -59,13 +59,7 @@ namespace ESWCtrls
                 else
                     return "body";
             }
-            set
-            {
-                if(value != "body")
-                    ViewState["AppendTo"] = value;
-                else
-                    ViewState.Remove("AppendTo");
-            }
+            set { ViewState["AppendTo"] = value; }
         }
 
         /// <summary>
@@ -81,13 +75,7 @@ namespace ESWCtrls
                 else
                     return false;
             }
-            set
-            {
-                if(value != false)
-                    ViewState["AutoFocus"] = value;
-                else
-                    ViewState.Remove("AutoFocus");
-            }
+            set { ViewState["AutoFocus"] = value; }
         }
 
         /// <summary>
@@ -103,13 +91,7 @@ namespace ESWCtrls
                 else
                     return 300;
             }
-            set
-            {
-                if(value != 300)
-                    ViewState["Delay"] = value;
-                else
-                    ViewState.Remove("Delay");
-            }
+            set { ViewState["Delay"] = value; }
         }
 
         /// <summary>
@@ -125,13 +107,7 @@ namespace ESWCtrls
                 else
                     return 1;
             }
-            set
-            {
-                if(value != 1)
-                    ViewState["MinLength"] = value;
-                else
-                    ViewState.Remove("MinLength");
-            }
+            set { ViewState["MinLength"] = value; }
         }
 
         /// <summary>
@@ -182,14 +158,7 @@ namespace ESWCtrls
                         throw new ArgumentOutOfRangeException("When you have specified items, you must select one of the values.");
                 }
                 else
-                {
-                    if(value != null)
-                        ViewState["Value"] = value;
-                    else
-                    {
-                        ViewState.Remove("Value");
-                    }
-                }
+                    ViewState["Value"] = value;
             }
         }
 
@@ -220,14 +189,7 @@ namespace ESWCtrls
                         throw new ArgumentOutOfRangeException("When you have specified items, you must select one of the values.");
                 }
                 else
-                {
-                    if(value != null)
-                        ViewState["Text"] = value;
-                    else
-                    {
-                        ViewState.Remove("Text");
-                    }
-                }
+                    ViewState["Text"] = value;
             }
         }
 
@@ -289,13 +251,7 @@ namespace ESWCtrls
                 else
                     return null;
             }
-            set
-            {
-                if(value != null)
-                    ViewState["SourceURL"] = value;
-                else
-                    ViewState.Remove("SourceURL");
-            }
+            set { ViewState["SourceURL"] = value; }
         }
 
         /// <summary>

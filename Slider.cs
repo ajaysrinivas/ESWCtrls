@@ -27,18 +27,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Orientation"] != null)
+                if(ViewState["Orientation"] != null)
                     return (Orientation)ViewState["Orientation"];
                 else
                     return Orientation.Horizontal;
             }
-            set
-            {
-                if (value != Orientation.Horizontal)
-                    ViewState["Orientation"] = value;
-                else
-                    ViewState.Remove("Orientation");
-            }
+            set { ViewState["Orientation"] = value; }
         }
 
         /// <summary>
@@ -49,18 +43,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Animate"] != null)
+                if(ViewState["Animate"] != null)
                     return (bool)ViewState["Animate"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["Animate"] = value;
-                else
-                    ViewState.Remove("Animate");
-            }
+            set { ViewState["Animate"] = value; }
         }
 
         /// <summary>
@@ -71,18 +59,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["AnimateSpeed"] != null)
+                if(ViewState["AnimateSpeed"] != null)
                     return (Effect.EffectSpeed)ViewState["AnimateSpeed"];
                 else
                     return Effect.EffectSpeed.Normal;
             }
-            set
-            {
-                if (value != Effect.EffectSpeed.Normal)
-                    ViewState["AnimateSpeed"] = value;
-                else
-                    ViewState.Remove("AnimateSpeed");
-            }
+            set { ViewState["AnimateSpeed"] = value; }
         }
 
         /// <summary>
@@ -93,18 +75,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["AnimateSpeedMillisecond"] != null)
+                if(ViewState["AnimateSpeedMillisecond"] != null)
                     return (int)ViewState["AnimateSpeedMillisecond"];
                 else
                     return 0;
             }
-            set
-            {
-                if (value != 0)
-                    ViewState["AnimateSpeedMillisecond"] = value;
-                else
-                    ViewState.Remove("AnimateSpeedMillisecond");
-            }
+            set { ViewState["AnimateSpeedMillisecond"] = value; }
         }
 
         #endregion
@@ -119,18 +95,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["MaxValue"] != null)
+                if(ViewState["MaxValue"] != null)
                     return (int)ViewState["MaxValue"];
                 else
                     return 100;
             }
-            set
-            {
-                if (value != 100)
-                    ViewState["MaxValue"] = value;
-                else
-                    ViewState.Remove("MaxValue");
-            }
+            set { ViewState["MaxValue"] = value; }
         }
 
         /// <summary>
@@ -141,18 +111,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["MinValue"] != null)
+                if(ViewState["MinValue"] != null)
                     return (int)ViewState["MinValue"];
                 else
                     return 0;
             }
-            set
-            {
-                if (value != 0)
-                    ViewState["MinValue"] = value;
-                else
-                    ViewState.Remove("MinValue");
-            }
+            set { ViewState["MinValue"] = value; }
         }
 
         /// <summary>
@@ -163,18 +127,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Step"] != null)
+                if(ViewState["Step"] != null)
                     return (int)ViewState["Step"];
                 else
                     return 1;
             }
-            set
-            {
-                if (value != 1)
-                    ViewState["Step"] = value;
-                else
-                    ViewState.Remove("Step");
-            }
+            set { ViewState["Step"] = value; }
         }
 
         /// <summary>
@@ -185,18 +143,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["Range"] != null)
+                if(ViewState["Range"] != null)
                     return (RangeType)ViewState["Range"];
                 else
                     return RangeType.None;
             }
-            set
-            {
-                if (value != RangeType.None)
-                    ViewState["Range"] = value;
-                else
-                    ViewState.Remove("Range");
-            }
+            set { ViewState["Range"] = value; }
         }
 
         /// <summary>
@@ -224,18 +176,12 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["AutoPostback"] != null)
+                if(ViewState["AutoPostback"] != null)
                     return (bool)ViewState["AutoPostback"];
                 else
                     return false;
             }
-            set
-            {
-                if (value != false)
-                    ViewState["AutoPostback"] = value;
-                else
-                    ViewState.Remove("AutoPostback");
-            }
+            set { ViewState["AutoPostback"] = value; }
         }
 
         #endregion
