@@ -24,13 +24,7 @@ namespace ESWCtrls
                 else
                     return string.Empty;
             }
-            set
-            {
-                if(!string.IsNullOrEmpty(value))
-                    ViewState["Id"] = value;
-                else
-                    ViewState.Remove("Id");
-            }
+            set { ViewState["Id"] = value; }
         }
 
 
@@ -63,13 +57,7 @@ namespace ESWCtrls
                 else
                     return true;
             }
-            set
-            {
-                if(!value)
-                    ViewState["Visible"] = value;
-                else
-                    ViewState.Remove("Visible");
-            }
+            set { ViewState["Visible"] = value; }
         }
 
         #region Data Properties
