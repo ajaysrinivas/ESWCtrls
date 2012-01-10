@@ -171,10 +171,10 @@ namespace ESWCtrls
                 opts.Add(string.Format("arrowDisplayType:\"{0}\"", ArrowDisplay.ToString().ToLower()));
 
             if(!string.IsNullOrEmpty(DownArrowImage))
-                opts.Add(string.Format("arrowDown:{{image:\"{0}\",class:\"{1}\"}}", Page.ResolveUrl(DownArrowImage), DownArrowStyle.RenderClass));
+                opts.Add(string.Format("arrowDown:{{image:\"{0}\",cssClass:\"{1}\"}}", Page.ResolveUrl(DownArrowImage), DownArrowStyle.RenderClass));
 
             if(!string.IsNullOrEmpty(RightArrowImage))
-                opts.Add(string.Format("arrowRight:{{image:\"{0}\",class:\"{1}\"}}", Page.ResolveUrl(RightArrowImage), RightArrowStyle.RenderClass));
+                opts.Add(string.Format("arrowRight:{{image:\"{0}\",cssClass:\"{1}\"}}", Page.ResolveUrl(RightArrowImage), RightArrowStyle.RenderClass));
 
             if(ShowEffect != null)
                 opts.Add("showEffect:" + ShowEffect.Render(Page));
