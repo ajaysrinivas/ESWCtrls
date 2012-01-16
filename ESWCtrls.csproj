@@ -88,6 +88,7 @@
     <Compile Include="Container\TabControl\TabControl.cs" />
     <Compile Include="Help\HelpBox.cs" />
     <Compile Include="Help\HelpPoint.cs" />
+    <Compile Include="JButton.cs" />
     <Compile Include="Menu\PanelMenu.cs" />
     <Compile Include="Parts\Effect.cs" />
     <Compile Include="Parts\Option.cs" />

@@ -242,7 +242,375 @@ namespace ESWCtrls
         /// <summary>Draws the button in a oxygen style</summary>
         Oxygen,
         /// <summary>Draws the button in the Calypso style</summary>
-        Calypso
+        Calypso,
+        /// <summary>Uses the custom images provided</summary>
+        Custom
+    }
+
+    /// <summary>The Icons available for the jQuery button</summary>
+    public enum JButtonIcon
+    {
+        /// <summary>No icon</summary>
+        None,
+
+        /// <summary>Carat Icon North or ^</summary>
+        Carat,
+        /// <summary>Carat North East</summary>
+        CaratNE,
+        /// <summary>Carat East or Greater Than</summary>
+        CaratE,
+        /// <summary>Carat South East</summary>
+        CaratSE,
+        /// <summary>Carat South</summary>
+        CaratS,
+        /// <summary>Carat South West</summary>
+        CaratSW,
+        /// <summary>Carat West or Less Than</summary>
+        CaratW,
+        /// <summary>Carat North West</summary>
+        CaratNW,
+        /// <summary>Carats North - South</summary>
+        CaratN_S,
+        /// <summary>Carats East - West or Greater Than and Less Than</summary>
+        CaratE_W,
+
+        /// <summary>Triangle North</summary>
+        TriangleN,
+        /// <summary>Triangle North East</summary>
+        TriangleNE,
+        /// <summary>Triangle East</summary>
+        TriangleE,
+        /// <summary>Triangle South East</summary>
+        TriangleSE,
+        /// <summary>Triangle South</summary>
+        TriangleS,
+        /// <summary>Triangle South West</summary>
+        TriangleSW,
+        /// <summary>Triangle West</summary>
+        TriangleW,
+        /// <summary>Triangle North West</summary>
+        TriangleNW,
+        /// <summary>Triangles North - South</summary>
+        TriangleN_S,
+        /// <summary>Triagnles East - West</summary>
+        TriangleE_W,
+
+        /// <summary>Arrow North</summary>
+        ArrowN,
+        /// <summary>Arrow North East</summary>
+        ArrowNE,
+        /// <summary>Arrow East</summary>
+        ArrowE,
+        /// <summary>Arrow South East</summary>
+        ArrowSE,
+        /// <summary>Arrow South</summary>
+        ArrowS,
+        /// <summary>Arrow South West</summary>
+        ArrowSW,
+        /// <summary>Arrow West</summary>
+        ArrowW,
+        /// <summary>Arrow North West</summary>
+        ArrowNW,
+        /// <summary>Arrow North - South</summary>
+        ArrowN_S,
+        /// <summary>Arrow NE - SW</summary>
+        ArrowNE_SW,
+        /// <summary>Arrow East - West</summary>
+        ArrowE_W,
+        /// <summary>Arrow SE - NW</summary>
+        ArrowSE_NW,
+        /// <summary>Arrow Stop North</summary>
+        ArrowStopN,
+        /// <summary>Arrow Stop East</summary>
+        ArrowStopE,
+        /// <summary>Arrow Stop South</summary>
+        ArrowStopS,
+        /// <summary>Arrow Stop West</summary>
+        ArrowStopW,
+        /// <summary>Arrow Return North</summary>
+        ArrowReturnN,
+        /// <summary>Arrow Return East</summary>
+        ArrowReturnE,
+        /// <summary>Arrow Return West</summary>
+        ArrowReturnW,
+        /// <summary>Arrow Return South</summary>
+        ArrowReturnS,
+
+
+        /// <summary>Arrow Thick North</summary>
+        ArrowThickN,
+        /// <summary>Arrow Thick North East</summary>
+        ArrowThickNE,
+        /// <summary>Arrow Thick East</summary>
+        ArrowThickE,
+        /// <summary>Arrow Thick South East</summary>
+        ArrowThickSE,
+        /// <summary>Arrow Thick South</summary>
+        ArrowThickS,
+        /// <summary>Arrow Thick South West</summary>
+        ArrowThickSW,
+        /// <summary>Arrow Thick West</summary>
+        ArrowThickW,
+        /// <summary>Arrow Thick North West</summary>
+        ArrowThickNW,
+        /// <summary>Arrow Thick North - South</summary>
+        ArrowThickN_S,
+        /// <summary>Arrow Thick NE - SW</summary>
+        ArrowThickNE_SW,
+        /// <summary>Arrow Thick East - West</summary>
+        ArrowThickE_W,
+        /// <summary>Arrow Thick SE - NW</summary>
+        ArrowThickSE_NW,
+        /// <summary>Arrow Thick Stop North</summary>
+        ArrowThickStopN,
+        /// <summary>Arrow Thick Stop East</summary>
+        ArrowThickStopE,
+        /// <summary>Arrow Thick Stop South</summary>
+        ArrowThickStopS,
+        /// <summary>Arrow Thick Stop West</summary>
+        ArrowThickStopW,
+        /// <summary>Arrow Thick Return North</summary>
+        ArrowThickReturnN,
+        /// <summary>Arrow Thick Return East</summary>
+        ArrowThickReturnE,
+        /// <summary>Arrow Thick Return West</summary>
+        ArrowThickReturnW,
+        /// <summary>Arrow Thick Return South</summary>
+        ArrowThickReturnS,
+
+        /// <summary>Arrow Refresh North</summary>
+        ArrowRefreshN,
+        /// <summary>Arrow Refresh East</summary>
+        ArrowRefreshE,
+        /// <summary>Arrow Refresh South</summary>
+        ArrowRefreshS,
+        /// <summary>Arrow Refresh West</summary>
+        ArrowRefreshW,
+        /// <summary>Arrow All NSEW</summary>
+        ArrowAll,
+        /// <summary>Arrow All 4 Diag</summary>
+        ArrowAllDiag,
+
+        /// <summary>External Link</summary>
+        ExtLink,
+        /// <summary>New Window</summary>
+        NewWindow,
+        /// <summary>refresh</summary>
+        Refresh,
+        /// <summary>Shuffle</summary>
+        Shuffle,
+        /// <summary>Transfer</summary>
+        Transfer,
+        /// <summary>Transfer Thick</summary>
+        TransferThick,
+        /// <summary>Folder Collapsed</summary>
+        FolderCollapsed,
+        /// <summary>Folder Open</summary>
+        FolderOpen,
+        /// <summary>Document</summary>
+        Document,
+        /// <summary>Document B</summary>
+        DocumentB,
+        /// <summary>Note</summary>
+        Note,
+        /// <summary>Mail Closed</summary>
+        MailClosed,
+        /// <summary>Mail Open</summary>
+        MailOpen,
+        /// <summary>Suitcase</summary>
+        Suitcase,
+        /// <summary>Comment</summary>
+        Comment,
+        /// <summary>Person</summary>
+        Person,
+        /// <summary>Print</summary>
+        Print,
+        /// <summary>Trash</summary>
+        Trash,
+        /// <summary>Locked</summary>
+        Locked,
+        /// <summary>Unlocked</summary>
+        Unlocked,
+        /// <summary>bookmark</summary>
+        Bookmark,
+        /// <summary>Tag</summary>
+        Tag,
+        /// <summary>Home</summary>
+        Home,
+        /// <summary>Flag</summary>
+        Flag,
+        /// <summary>Calculator</summary>
+        Calculator,
+        /// <summary>Cart</summary>
+        Cart,
+        /// <summary>Pencil</summary>
+        Pencil,
+        /// <summary>Clock</summary>
+        Clock,
+        /// <summary>Disk</summary>
+        Disk,
+        /// <summary>Calendar</summary>
+        Calendar,
+        /// <summary>Zoom In</summary>
+        ZoomIn,
+        /// <summary>Zoom Out</summary>
+        ZoomOut,
+        /// <summary>Search</summary>
+        Search,
+        /// <summary>Wrench</summary>
+        Wrench,
+        /// <summary>Spanner</summary>
+        Spanner,
+        /// <summary>Gear</summary>
+        Gear,
+        /// <summary>Heart</summary>
+        Heart,
+        /// <summary>Star</summary>
+        Star,
+        /// <summary>Link</summary>
+        Link,
+        /// <summary>Cancel</summary>
+        Cancel,
+        /// <summary>Plus</summary>
+        Plus,
+        /// <summary>Plus Thick</summary>
+        PlusThick,
+        /// <summary>Minus</summary>
+        Minus,
+        /// <summary>Minus Thick</summary>
+        MinusThick,
+        /// <summary>Close</summary>
+        Close,
+        /// <summary>Close Thick</summary>
+        CloseThink,
+        /// <summary>Key</summary>
+        Key,
+        /// <summary>Light Bulb</summary>
+        LightBulb,
+        /// <summary>Scissors</summary>
+        Scissors,
+        /// <summary>Clipboard</summary>
+        Clipboard,
+        /// <summary>Copy</summary>
+        Copy,
+        /// <summary>Contact</summary>
+        Contact,
+        /// <summary>Image</summary>
+        Image,
+        /// <summary>Video</summary>
+        Video,
+        /// <summary>Script</summary>
+        Script,
+        /// <summary>Alert</summary>
+        Alert,
+        /// <summary>Information</summary>
+        Info,
+        /// <summary>Notice</summary>
+        Notice,
+        /// <summary>Help</summary>
+        Help,
+        /// <summary>Check</summary>
+        Check,
+        /// <summary>Bullet</summary>
+        Bullet,
+        /// <summary>Radio Off</summary>
+        RadioOff,
+        /// <summary>Radio On</summary>
+        RadioOn,
+        /// <summary>Pin West</summary>
+        PinWest,
+        /// <summary>Pin South</summary>
+        PinSouth,
+        /// <summary>Play</summary>
+        Play,
+        /// <summary>Pause</summary>
+        Pause,
+        /// <summary>Seek Next</summary>
+        SeekNext,
+        /// <summary>Seek Previous</summary>
+        SeekPrev,
+        /// <summary>Seek End</summary>
+        SeekEnd,
+        /// <summary>Seek First</summary>
+        SeekFirst,
+        /// <summary>Stop</summary>
+        Stop,
+        /// <summary>Eject</summary>
+        Eject,
+        /// <summary>Volume Off</summary>
+        VolumeOff,
+        /// <summary>volume On</summary>
+        VolumeOn,
+        /// <summary>Power</summary>
+        Power,
+        /// <summary>Signal Diagonal</summary>
+        SignalDiag,
+        /// <summary>Signal</summary>
+        Signal,
+        /// <summary>Battery 0</summary>
+        Battery0,
+        /// <summary>Battery 1</summary>
+        Battery1,
+        /// <summary>Battery 2</summary>
+        Battery2,
+        /// <summary>Battery 3</summary>
+        Battery3,
+
+        /// <summary>Circle Plus</summary>
+        CirclePlus,
+        /// <summary>Circle Minus</summary>
+        CircleMinus,
+        /// <summary>Circle Close</summary>
+        CircleClose,
+        /// <summary>Circle Triangle North</summary>
+        CircleTriangleNorth,
+        /// <summary>Circle Triangle East</summary>
+        CircleTriangleEast,
+        /// <summary>Circle Triangle West</summary>
+        CircleTriangleWest,
+        /// <summary>Circle Triangle South</summary>
+        CircleTriangleSouth,
+        /// <summary>Circle Arrow North</summary>
+        CircleArrowNorth,
+        /// <summary>Circle Arrow East</summary>
+        CircleArrowEast,
+        /// <summary>Circle Arrow South</summary>
+        CircleArrowSouth,
+        /// <summary>Circle Arrow West</summary>
+        CircleArrowWest,
+        /// <summary>Circle Zoom In</summary>
+        CircleZoomIn,
+        /// <summary>Circle Zoom Out</summary>
+        CircleZoomOut,
+        /// <summary>Circle Check</summary>
+        CircleCheck,
+
+        /// <summary>Circle Small Plus</summary>
+        CircleSmallPlus,
+        /// <summary>Circle Small Minus</summary>
+        CircleSmallMinus,
+        /// <summary>Circle Small Close</summary>
+        CircleSmallClose,
+
+        /// <summary>Square Small Plus</summary>
+        SquareSmallPlus,
+        /// <summary>Square Small Minus</summary>
+        SquareSmallMinus,
+        /// <summary>Square Small Close</summary>
+        SquareSmallClose,
+
+        /// <summary>Grip Dotted Vertical</summary>
+        GripDottedVertical,
+        /// <summary>Grip Dotted Horizontal</summary>
+        GripDottedHorizontal,
+        /// <summary>Grip Solid Vertical</summary>
+        GripSolidVertical,
+        /// <summary>Grip Solid Horizontal</summary>
+        GripSolidHorizontal,
+        /// <summary>Grip Small Diagonal</summary>
+        GripSmallDiagonal,
+        /// <summary>Grip Diagonal</summary>
+        GripDiagonal
     }
 
     #endregion
@@ -418,6 +786,38 @@ namespace ESWCtrls
     {
         internal static string[] PositionStrings = new string[] { "top", "center", "bottom", "left top", "left", "left bottom", "right top", "right", "right bottom" };
         internal static string[] CollisionStrings = new string[] { "none", "flip", "fit", "none flip", "none fit", "flip none", "flip fit", "fit none", "fit flip" };
+        internal static string[] IconStrings = new string[] 
+        {
+            "",
+            "carat-1-n", "carat-1-ne", "carat-1-e", "carat-1-se", "carat-1-s", "carat-1-sw", "carat-1-w", "carat-1-nw", "carat-2-n-s", "carat-2-e-w",
+            "triangle-1-n", "triangle-1-ne", "triangle-1-e", "triangle-1-se", "triangle-1-s", "triangle-1-sw", "triangle-1-w", "triangle-1-nw", "triangle-2-n-s", "triangle-2-e-w",
+
+            "arrow-1-n", "arrow-1-ne", "arrow-1-e", "arrow-1-se", "arrow-1-s", "arrow-1-sw", "arrow-1-w", "arrow-1-nw", 
+            "arrow-2-n-s", "arrow-2-ne-sw", "arrow-2-e-w", "arrow-2-se-nw", 
+            "arrowstop-1-n", "arrowstop-1-e", "arrowstop-1-s", "arrowstop-1-w", 
+            "arrowreturn-1-n", "arrowreturn-1-e", "arrowreturn-1-s", "arrowreturn-1-w",
+
+            "arrowthick-1-n", "arrowthick-1-ne", "arrowthick-1-e", "arrowthick-1-se", "arrowthick-1-s", "arrowthick-1-sw", "arrowthick-1-w", "arrowthick-1-nw", 
+            "arrowthick-2-n-s", "arrowthick-2-ne-sw", "arrowthick-2-e-w", "arrowthick-2-se-nw", 
+            "arrowthickstop-1-n", "arrowthickstop-1-e", "arrowthickstop-1-s", "arrowthickstop-1-w", 
+            "arrowthickreturn-1-n", "arrowthickreturn-1-e", "arrowthickreturn-1-s", "arrowthickreturn-1-w",
+
+            "arrowrefresh-1-n", "arrowrefresh-1-e", "arrowrefresh-1-s", "arrowrefresh-1-w", "arrow-4", "arrow-4-diag",
+
+            "extlink", "newwin", "refresh", "shuffle", "transfer-e-w", "transferthick-e-w", "folder-collapsed", "folder-open", "document", "document-b", "note", "mail-closed", "mail-open",
+            "suitcase", "comment", "person", "print", "trash", "locked", "unlocked", "bookmark", "tag", "home", "flag", "calculator", "cart", "pencil", "clock", "disk", "calendar",
+            "zoomin", "zoomout", "search", "wrench", "wrench", "gear", "heart", "star", "link", "cancel", "plus", "plusthick", "minus", "minusthick", "close", "closethick", "key",
+            "lightbulb", "scissors", "clipboard", "copy", "contact", "image", "video", "script", "alert", "info", "notice", "help", "check", "bullet", "radio-off", "radio-on", 
+            "pin-w", "pin-s", "play", "pause", "seek-next", "seek-prev", "seek-end", "seek-first", "stop", "eject", "volume-off", "volume-on", "power", "signal-diag", "signal", 
+            "battery-0", "battery-1", "battery-2", "battery-3",
+
+            "circle-plus", "circle-minus", "circle-close", "circle-triangle-n", "circle-triangle-e", "circle-triangle-s", "circle-triangle-w",
+            "circle-arrow-n", "circle-arrow-e", "circle-arrow-s", "circle-arrow-w", "circle-zoomin", "circle-zoomout", "circle-check", 
+
+            "circlsmall-plus", "circlesmall-minus", "circlesmall-close", "squaresmall-plus", "squaresmall-minus", "squaresmall-close", 
+
+            "grip-dotted-vertical", "grip-dotted-horizontal", "grid-solid-vertical", "grip-solid-horizontal", "gripsmall-diagonal-se", "grip-diagonal-se"
+        };
     }
 
 #endregion

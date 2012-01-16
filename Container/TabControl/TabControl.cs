@@ -367,9 +367,9 @@ namespace ESWCtrls
                     if (!string.IsNullOrEmpty(ActiveTabStyle.BackImage))
                     {
                         opts.Add("useImages:true");
-                        opts.Add(string.Format("left:{{active:\"{0}{2}\",inactive:\"{1}{2}\"}}", _leftGfxAct.FileName, _leftGfxInact.FileName, Graphic.WebGfx.Extension));
-                        opts.Add(string.Format("middle:{{active:\"{0}{2}\",inactive:\"{1}{2}\"}}", _midGfxAct.FileName, _midGfxInact.FileName, Graphic.WebGfx.Extension));
-                        opts.Add(string.Format("right:{{active:\"{0}{2}\",inactive:\"{1}{2}\"}}", _rightGfxAct.FileName, _rightGfxInact.FileName, Graphic.WebGfx.Extension));
+                        opts.Add(string.Format("left:{{active:\"{0}\",inactive:\"{1}\"}}", _leftGfxAct.FullPath, _leftGfxInact.FullPath));
+                        opts.Add(string.Format("middle:{{active:\"{0}\",inactive:\"{1}\"}}", _midGfxAct.FullPath, _midGfxInact.FullPath));
+                        opts.Add(string.Format("right:{{active:\"{0}\",inactive:\"{1}\"}}", _rightGfxAct.FullPath, _rightGfxInact.FullPath));
                     }
 
 

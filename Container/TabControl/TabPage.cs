@@ -199,21 +199,21 @@ namespace ESWCtrls
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, _owner.ActiveTabStyle.RenderClass);
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
                     writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingLeft, _owner._leftGfxAct.ImageSize.ToString() + "px");
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._leftGfxAct.FileName + Graphic.WebGfx.Extension);
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._leftGfxAct.FullPath);
                     writer.AddStyleAttribute("background-repeat", "no-repeat");
                     writer.AddStyleAttribute("float", "left");
                     writer.AddAttribute(HtmlTextWriterAttribute.Id, _owner.ClientID + "_ld_" + idx.ToString());
                     writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
                     writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingRight, _owner._rightGfxAct.ImageSize.ToString() + "px");
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._rightGfxAct.FileName + Graphic.WebGfx.Extension);
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._rightGfxAct.FullPath);
                     writer.AddStyleAttribute("background-position", "right top");
                     writer.AddStyleAttribute("background-repeat", "no-repeat");
                     writer.AddStyleAttribute("float", "left");
                     writer.AddAttribute(HtmlTextWriterAttribute.Id, _owner.ClientID + "_rd_" + idx.ToString());
                     writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._midGfxAct.FileName + Graphic.WebGfx.Extension);
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._midGfxAct.FullPath);
                     writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingTop, _owner.ActiveTabStyle.ImageTopSize.ToString() + "px");
                     writer.AddStyleAttribute("float", "left");
                     writer.AddAttribute(HtmlTextWriterAttribute.Href, "#");
@@ -223,21 +223,21 @@ namespace ESWCtrls
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, _owner.InactiveTabStyle.RenderClass);
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
                     writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingLeft, _owner._leftGfxInact.ImageSize.ToString() + "px");
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._leftGfxInact.FileName + Graphic.WebGfx.Extension);
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._leftGfxInact.FullPath);
                     writer.AddStyleAttribute("background-repeat", "no-repeat");
                     writer.AddStyleAttribute("float", "left");
                     writer.AddAttribute(HtmlTextWriterAttribute.Id, _owner.ClientID + "_ld_" + idx.ToString());
                     writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
                     writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingRight, _owner._rightGfxInact.ImageSize.ToString() + "px");
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._rightGfxInact.FileName + Graphic.WebGfx.Extension);
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._rightGfxInact.FullPath);
                     writer.AddStyleAttribute("background-repeat", "no-repeat");
                     writer.AddStyleAttribute("background-position", "right top");
                     writer.AddStyleAttribute("float", "left");
                     writer.AddAttribute(HtmlTextWriterAttribute.Id, _owner.ClientID + "_rd_" + idx.ToString());
                     writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
-                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._midGfxInact.FileName + Graphic.WebGfx.Extension);
+                    writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, _owner._midGfxInact.FullPath);
                     writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingTop, _owner.InactiveTabStyle.ImageTopSize.ToString() + "px");
                     writer.AddStyleAttribute("float", "left");
                     writer.AddAttribute(HtmlTextWriterAttribute.Href, _owner.Page.ClientScript.GetPostBackClientHyperlink(_owner, idx.ToString()));

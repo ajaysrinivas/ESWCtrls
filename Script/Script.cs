@@ -137,7 +137,7 @@ namespace ESWCtrls
                     }
                     
                     writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                    writer.AddAttribute(HtmlTextWriterAttribute.Src, filename + Extension);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Src, UrlPath + filename + Extension);
                     writer.RenderBeginTag(HtmlTextWriterTag.Script);
                     writer.RenderEndTag();
                 }
@@ -322,37 +322,70 @@ namespace ESWCtrls
             get
             {
                 if(_wscExt == null)
-                {
-                    // Not using system.configuration as its a bit cumbersome, and doesn't work with iis7, and there is no equivalent for iis7
-                    // that can be used everywhere, since they decided not to put the dll's in .net but with iis7 itself. which makes them almost
-                    // completly useless to everyone. I don't think they're even in the test server.
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(HttpContext.Current.Server.MapPath("~/web.config"));
+                    GetExtPath();
+                return _wscExt;
+            }
+        }
 
-                    // look for iis6 and below section
-                    XmlNodeList nodes = doc.SelectNodes("//system.web/httpHandlers/add[@type='ESWCtrls.ScriptHandler, ESWCtrls']");
-                    if(nodes.Count == 0) // now check iis7
-                        nodes = doc.SelectNodes("//system.webServer/handlers/add[@type='ESWCtrls.ScriptHandler, ESWCtrls']");
-                        
-                    if(nodes.Count > 0)
+        /// <summary>
+        /// The path to use for the scripts
+        /// </summary>
+        public static string UrlPath
+        {
+            get
+            {
+                if(_wscPath == null)
+                    GetExtPath();
+                return _wscPath;
+            }
+        }
+
+        #region Private
+
+        private static void GetExtPath()
+        {
+            // Not using system.configuration as its a bit cumbersome, and doesn't work with iis7, and there is no equivalent for iis7
+            // that can be used everywhere, since they decided not to put the dll's in .net but with iis7 itself. which makes them almost
+            // completly useless to everyone. I don't think they're even in the test server.
+            XmlDocument doc = new XmlDocument();
+            doc.Load(HttpContext.Current.Server.MapPath("~/web.config"));
+
+            // look for iis6 and below section
+            XmlNodeList nodes = doc.SelectNodes("//system.web/httpHandlers/add[@type='ESWCtrls.ScriptHandler, ESWCtrls']");
+            if(nodes.Count == 0) // now check iis7
+                nodes = doc.SelectNodes("//system.webServer/handlers/add[@type='ESWCtrls.ScriptHandler, ESWCtrls']");
+
+            if(nodes.Count > 0)
+            {
+                XmlAttribute a = nodes[0].Attributes["path"];
+                if(a != null)
+                {
+                    if(a.Value.StartsWith("*"))
                     {
-                        XmlAttribute a = nodes[0].Attributes["path"];
-                        if(a != null)
-                            _wscExt = a.Value.Substring(1);
+                        _wscExt = a.Value.Substring(1);
+                        _wscPath = "";
                     }
                     else
                     {
-                        // Can't find them mark as unknown
-                        _wscExt = "";
+                        _wscExt = System.IO.Path.GetExtension(a.Value);
+                        _wscPath = a.Value.Replace("*", "").Replace(_wscExt, "");
                     }
-                        
                 }
-                return _wscExt;
+
+            }
+            else
+            {
+                // Can't find them mark as unknown
+                _wscExt = "";
+                _wscPath = "";
             }
         }
 
         private List<String> _resScripts;
         private List<string> _startScripts;
         private static string _wscExt = null;
+        private static string _wscPath = null;
+
+        #endregion
     }
 }

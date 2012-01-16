@@ -69,6 +69,17 @@ namespace ESWCtrls.Graphic
         }
 
         /// <summary>
+        /// The full path of the image with path and extenstion
+        /// </summary>
+        public string FullPath
+        {
+            get
+            {
+                return UrlPath + FileName + Extension;
+            }
+        }
+
+        /// <summary>
         /// The image format that should be used to send the image in
         /// </summary>
         public virtual ImageFormat ImageFormat
@@ -196,40 +207,69 @@ namespace ESWCtrls.Graphic
             get
             {
                 if(s_wgxExt == null)
-                {
-                    // Not using system.configuration as its a bit cumbersome, and doesn't work with iis7, and there is no equivalent for iis7
-                    // that can be used everywhere, since they decided not to put the dll's in .net but with iis7 itself. which makes them almost
-                    // completly useless to everyone. I don't think they're even in the test server.
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(HttpContext.Current.Server.MapPath("~/web.config"));
-
-                    // look for iis6 and below section
-                    XmlNodeList nodes = doc.SelectNodes("//system.web/httpHandlers/add[@type='ESWCtrls.Graphic.WebGfxHandler, ESWCtrls']");
-                    if(nodes.Count == 0) // now check iis7
-                        nodes = doc.SelectNodes("//system.webServer/handlers/add[@type='ESWCtrls.Graphic.WebGfxHandler, ESWCtrls']");
-
-                    if(nodes.Count > 0)
-                    {
-                        XmlAttribute a = nodes[0].Attributes["path"];
-                        if(a != null)
-                            s_wgxExt = a.Value.Substring(1);
-                    }
-                    else
-                    {
-                        // Can't find them mark as unknown
-                        s_wgxExt = "";
-                    }
-
-                }
+                    GetExtPath();
                 return s_wgxExt;
+            }
+        }
+
+        /// <summary>
+        /// The path to use for the graphic, defaults to ""
+        /// </summary>
+        public static string UrlPath
+        {
+            get
+            {
+                if(s_wgxPath == null)
+                    GetExtPath();
+                return s_wgxPath;
             }
         }
 
         #region Private
 
+        private static void GetExtPath()
+        {
+            // Not using system.configuration as its a bit cumbersome, and doesn't work with iis7, and there is no equivalent for iis7
+            // that can be used everywhere, since they decided not to put the dll's in .net but with iis7 itself. which makes them almost
+            // completly useless to everyone. I don't think they're even in the test server.
+            XmlDocument doc = new XmlDocument();
+            doc.Load(HttpContext.Current.Server.MapPath("~/web.config"));
+
+            // look for iis6 and below section
+            XmlNodeList nodes = doc.SelectNodes("//system.web/httpHandlers/add[@type='ESWCtrls.Graphic.WebGfxHandler, ESWCtrls']");
+            if(nodes.Count == 0) // now check iis7
+                nodes = doc.SelectNodes("//system.webServer/handlers/add[@type='ESWCtrls.Graphic.WebGfxHandler, ESWCtrls']");
+
+            if(nodes.Count > 0)
+            {
+                XmlAttribute a = nodes[0].Attributes["path"];
+                if(a != null)
+                {
+                    if(a.Value.StartsWith("*"))
+                    {
+                        s_wgxExt = a.Value.Substring(1);
+                        s_wgxPath = "";
+                    }
+                    else
+                    {
+                        s_wgxExt = System.IO.Path.GetExtension(a.Value);
+                        s_wgxPath = a.Value.Replace("*", "").Replace(s_wgxExt, "");
+                    }
+                }
+
+            }
+            else
+            {
+                // Can't find them mark as unknown
+                s_wgxExt = "";
+                s_wgxPath = "";
+            }
+        }
+
         private string _guid;
         private DateTime _saveTime;
-        private static string s_wgxExt = ".wgx";
+        private static string s_wgxExt = null;
+        private static string s_wgxPath = null;
 
         #endregion
     }

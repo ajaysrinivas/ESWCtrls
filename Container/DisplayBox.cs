@@ -568,19 +568,19 @@ namespace ESWCtrls
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             DispBoxImage gfxTR = new DispBoxImage(this, DispBoxImage.Position.TopRight);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxTR.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxTR.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_head");
             writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingRight, _padRect.Right + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             DispBoxImage gfxTL = new DispBoxImage(this, DispBoxImage.Position.TopLeft);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxTL.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxTL.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_headLeft");
             writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingLeft, _padRect.Left + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             DispBoxImage gfxT = new DispBoxImage(this, DispBoxImage.Position.Top);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxT.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxT.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_headCtr");
 
             if(HeaderTemplateContainer.Controls.Count == 0)
@@ -618,13 +618,13 @@ namespace ESWCtrls
             //head
 
             DispBoxImage gfxR = new DispBoxImage(this, DispBoxImage.Position.Right);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxR.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxR.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_body");
             writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingRight, _padRect.Right + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             DispBoxImage gfxL = new DispBoxImage(this, DispBoxImage.Position.Left);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxL.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxL.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_bodyLeft");
             writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingLeft, _padRect.Left + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
@@ -651,19 +651,19 @@ namespace ESWCtrls
             //body
 
             DispBoxImage gfxBR = new DispBoxImage(this, DispBoxImage.Position.BotRight);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxBR.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxBR.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_foot");
             writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingRight, _padRect.Right + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             DispBoxImage gfxBL = new DispBoxImage(this, DispBoxImage.Position.BotLeft);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxBL.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxBL.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_footLeft");
             writer.AddStyleAttribute(HtmlTextWriterStyle.PaddingLeft, _padRect.Left + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             DispBoxImage gfxB = new DispBoxImage(this, DispBoxImage.Position.Bottom);
-            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxB.FileName + WebGfx.Extension);
+            writer.AddStyleAttribute(HtmlTextWriterStyle.BackgroundImage, gfxB.FullPath);
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "ESW_DispBox_footCtr");
             writer.AddStyleAttribute(HtmlTextWriterStyle.Height, _padRect.Bottom + "px");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);

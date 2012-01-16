@@ -74,57 +74,6 @@ namespace ESWCtrls
             set { ViewState["ActiveText"] = value; }
         }
 
-        /// <summary>
-        /// The text to display when the button is hovered over
-        /// </summary>
-        /// <remarks>When not set returns blank, and no hover occurs</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue("")]
-        public string HoverText
-        {
-            get
-            {
-                if (ViewState["HoverText"] == null)
-                    return "";
-                else
-                    return (string)ViewState["HoverText"];
-            }
-            set { ViewState["HoverText"] = value; }
-        }
-
-        /// <summary>
-        /// The text to display when the button is disabled
-        /// </summary>
-        /// <remarks>When not set takes the value of the normal text</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue("")]
-        public string DisabledText
-        {
-            get
-            {
-                if (ViewState["DisabledText"] == null)
-                    return Text;
-                else
-                    return (string)ViewState["DisabledText"];
-            }
-            set { ViewState["DisabledText"] = value; }
-        }
-
-        /// <summary>
-        /// The test to display when the button is disbaled but active
-        /// </summary>
-        /// <remarks>When not set defaults to the active text</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue("")]
-        public string DisabledActiveText
-        {
-            get
-            {
-                if (ViewState["DisabledActiveText"] == null)
-                    return ActiveText;
-                else
-                    return (string)ViewState["DisabledActiveText"];
-            }
-            set { ViewState["DisabledActiveText"] = value; }
-        }
-
 
         /// <summary>
         /// The alternative text to display when an image is unavailable
@@ -160,57 +109,6 @@ namespace ESWCtrls
         }
 
         /// <summary>
-        /// The image to display when hovered over
-        /// </summary>
-        /// <remarks>When not set returns empty, and no hover occurs, unless where generating then the normal image is used</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
-        public string HoverImageUrl
-        {
-            get
-            {
-                if (ViewState["HoverImageUrl"] == null)
-                    return "";
-                else
-                    return (string)ViewState["HoverImageUrl"];
-            }
-            set { ViewState["HoverImageUrl"] = value; }
-        }
-
-        /// <summary>
-        /// The image to display when the button is clicked
-        /// </summary>
-        /// <remarks>When not set returns empty, and no click occurs, unless where generating then the hover image is used</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
-        public string ClickedImageUrl
-        {
-            get
-            {
-                if (ViewState["ClickedImageUrl"] == null)
-                    return "";
-                else
-                    return (string)ViewState["ClickedImageUrl"];
-            }
-            set { ViewState["ClickedImageUrl"] = value; }
-        }
-
-        /// <summary>
-        /// The image to display when disabled
-        /// </summary>
-        /// <remarks>When not set returns the normal imageurl</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
-        public string DisabledImageUrl
-        {
-            get
-            {
-                if (ViewState["DisabledImageUrl"] == null)
-                    return ImageUrl;
-                else
-                    return (string)ViewState["DisabledImageUrl"];
-            }
-            set { ViewState["DisabledImageUrl"] = value; }
-        }
-
-        /// <summary>
         /// The image to display when the button is active
         /// </summary>
         /// <remarks>When not set returns the normal imageurl</remarks>
@@ -228,57 +126,6 @@ namespace ESWCtrls
         }
 
         /// <summary>
-        /// The image to display when hovered over
-        /// </summary>
-        /// <remarks>When not set returns empty, and no hover occurs, unless where generating then the normal image is used</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
-        public string ActiveHoverImageUrl
-        {
-            get
-            {
-                if (ViewState["ActiveHoverImageUrl"] == null)
-                    return "";
-                else
-                    return (string)ViewState["ActiveHoverImageUrl"];
-            }
-            set { ViewState["ActiveHoverImageUrl"] = value; }
-        }
-
-        /// <summary>
-        /// The image to display when the button is clicked
-        /// </summary>
-        /// <remarks>When not set returns empty, and no click occurs, unless where generating then the hover image is used</remarks>
-        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
-        public string ActiveClickedImageUrl
-        {
-            get
-            {
-                if (ViewState["ActiveClickedImageUrl"] == null)
-                    return "";
-                else
-                    return (string)ViewState["ActiveClickedImageUrl"];
-            }
-            set { ViewState["ActiveClickedImageUrl"] = value; }
-        }
-
-        /// <summary>
-        /// Sets the image to display when disabled but active
-        /// </summary>
-        /// <returns>Returns the active image when not set</returns>
-        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
-        public string DisabledActiveImageUrl
-        {
-            get
-            {
-                if (ViewState["DiabledActiveImageUrl"] == null)
-                    return ActiveImageUrl;
-                else
-                    return (string)ViewState["DiabledActiveImageUrl"];
-            }
-            set { ViewState["DiabledActiveImageUrl"] = value; }
-        }
-
-        /// <summary>
         /// Sets the image alignment
         /// </summary>
         [Bindable(true), Category("Appearance"), DefaultValue(ImageAlign.NotSet)]
@@ -292,6 +139,86 @@ namespace ESWCtrls
                     return (ImageAlign)ViewState["ImageAlign"];
             }
             set { ViewState["ImageAlign"] = value; }
+        }
+
+        /// <summary>
+        /// The custom normal background image
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
+        public string CustomNormalImageUrl
+        {
+            get
+            {
+                if(ViewState["CustomNormalImageUrl"] == null)
+                    return "";
+                else
+                    return (string)ViewState["CustomNormalImageUrl"];
+            }
+            set { ViewState["CustomNormalImageUrl"] = value; }
+        }
+
+        /// <summary>
+        /// The custom hover background image
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
+        public string CustomHoverImageUrl
+        {
+            get
+            {
+                if(ViewState["CustomHoverImageUrl"] == null)
+                    return CustomNormalImageUrl;
+                else
+                    return (string)ViewState["CustomHoverImageUrl"];
+            }
+            set { ViewState["CustomHoverImageUrl"] = value; }
+        }
+
+        /// <summary>
+        /// The custom clicked background image
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
+        public string CustomClickedImageUrl
+        {
+            get
+            {
+                if(ViewState["CustomClickedImageUrl"] == null)
+                    return CustomNormalImageUrl;
+                else
+                    return (string)ViewState["CustomClickedImageUrl"];
+            }
+            set { ViewState["CustomClickedImageUrl"] = value; }
+        }
+
+        /// <summary>
+        /// The custom disabled background image
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue(""), UrlProperty(), Editor(typeof(ImageUrlEditor), typeof(UITypeEditor))]
+        public string CustomDisabledImageUrl
+        {
+            get
+            {
+                if(ViewState["CustomDisabledImageUrl"] == null)
+                    return CustomNormalImageUrl;
+                else
+                    return (string)ViewState["CustomDisabledImageUrl"];
+            }
+            set { ViewState["CustomDisabledImageUrl"] = value; }
+        }
+
+        /// <summary>
+        /// Custom disabled overlay color
+        /// </summary>
+        [Bindable(true), Category("Appearance"),DefaultValue(typeof(Color), null)]
+        public Color CustomDisabledOverlayColor
+        {
+            get
+            {
+                if(ViewState["CustomDisabledOverlayColor"] == null)
+                    return Color.Empty;
+                else
+                    return (Color)ViewState["CustomDisabledOverlayColor"];
+            }
+            set { ViewState["CustomDisabledOverlayColor"] = value; }
         }
 
         #endregion
@@ -461,26 +388,11 @@ namespace ESWCtrls
         private void RenderButton(HtmlTextWriter writer)
         {
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "submit");
-            if (this.IsEnabled)
-            {
-                string str = Text;
-                if (Active)
-                    str = ActiveText;
+            string str = Text;
+            if (Active)
+                str = ActiveText;
 
-                writer.AddAttribute(HtmlTextWriterAttribute.Value, str);
-                if (!string.IsNullOrEmpty(HoverText))
-                {
-                    writer.AddAttribute("onmouseover", "this.value='" + HoverText + "');");
-                    writer.AddAttribute("onmouseout", "this.value='" + str + "');");
-                }
-            }
-            else
-            {
-                if (Active == true)
-                    writer.AddAttribute(HtmlTextWriterAttribute.Value, DisabledText);
-                else
-                    writer.AddAttribute(HtmlTextWriterAttribute.Value, DisabledActiveText);
-            }
+            writer.AddAttribute(HtmlTextWriterAttribute.Value, str);
         }
 
         /// <summary>
@@ -493,44 +405,18 @@ namespace ESWCtrls
             if (ImageAlign != ImageAlign.NotSet) writer.AddAttribute(HtmlTextWriterAttribute.Align, ImageAlign.ToString());
 
             string altText = "";
-            if (this.IsEnabled)
+            string curImg = ImageUrl;
+            altText = AlternateText;
+            if (Active)
             {
-                string curImg = ImageUrl;
-                altText = AlternateText;
-                if (Active)
-                {
-                    curImg = ActiveImageUrl;
-                    altText = ActiveText;
-                }
-
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, Page.ResolveUrl(curImg));
-                if (!string.IsNullOrEmpty(HoverImageUrl))
-                {
-                    writer.AddAttribute("onmouseout", "this.src='" + Page.ResolveUrl(curImg) + "';");
-                    writer.AddAttribute("onmouseover", "this.src='" + Page.ResolveUrl(HoverImageUrl) + "';");
-                    if (!string.IsNullOrEmpty(ClickedImageUrl))
-                        writer.AddAttribute("onmousedown", "this.src='" + Page.ResolveUrl(ClickedImageUrl) + "';");
-                }
-            }
-            else
-            {
-                if (Active)
-                {
-                    writer.AddAttribute(HtmlTextWriterAttribute.Src, Page.ResolveUrl(DisabledActiveImageUrl));
-                    altText = DisabledActiveText;
-                }
-                else
-                {
-                    writer.AddAttribute(HtmlTextWriterAttribute.Src, Page.ResolveUrl(DisabledImageUrl));
-                    altText = DisabledText;
-                }
+                curImg = ActiveImageUrl;
+                altText = ActiveText;
             }
 
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, Page.ResolveUrl(curImg));
             if (!string.IsNullOrEmpty(altText))
-            {
                 writer.AddAttribute(HtmlTextWriterAttribute.Alt, altText);
 
-            }
         }
 
         /// <summary>
@@ -586,69 +472,41 @@ namespace ESWCtrls
             }
 
             string altText = AlternateText;
+            string text = Text;
+            string imgPath = string.Empty;
+
+            if(Active)
+            {
+                if(!string.IsNullOrEmpty(ActiveImageUrl))
+                    imgPath = Page.Server.MapPath(ActiveImageUrl);
+
+                if(string.IsNullOrEmpty(altText))
+                    altText = ActiveText;
+
+                    text = ActiveText;
+            }
+            else
+            {
+                if(!string.IsNullOrEmpty(ImageUrl))
+                    imgPath = Page.Server.MapPath(ImageUrl);
+
+                if(string.IsNullOrEmpty(altText))
+                    altText = Text;
+            }
+
             Font textfont = Util.ConvertFont(Font);
             if (this.IsEnabled)
             {
 
-                string foreImagePath = string.Empty;
-                string hoverImagePath = string.Empty;
-                string clickedImagePath = string.Empty;
-                string hovText = HoverText;
-                if (Active)
-                {
-                    if (!string.IsNullOrEmpty(ActiveImageUrl))
-                        foreImagePath = Page.Server.MapPath(ActiveImageUrl);
+                GenerateImage normImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Normal, size, text, textfont, fColor, imgPath, CacheName,Page.Server.MapPath(CustomNormalImageUrl), Color.Empty);
+                writer.AddAttribute(HtmlTextWriterAttribute.Src, normImg.FullPath);
+                writer.AddAttribute("onmouseout", "this.src='" + normImg.FullPath + "';");
 
-                    if (!string.IsNullOrEmpty(ActiveHoverImageUrl))
-                        hoverImagePath = Page.Server.MapPath(ActiveHoverImageUrl);
-                    else
-                        hoverImagePath = foreImagePath;
+                GenerateImage hovImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Hover, size, text, textfont, fColor, imgPath, CacheName, Page.Server.MapPath(CustomHoverImageUrl), Color.Empty);
+                writer.AddAttribute("onmouseover", "this.src='" + hovImg.FullPath + "';");
 
-                    if (!string.IsNullOrEmpty(ActiveClickedImageUrl))
-                        clickedImagePath = Page.Server.MapPath(ActiveClickedImageUrl);
-                    else
-                        clickedImagePath = hoverImagePath;
-
-                    if (string.IsNullOrEmpty(altText))
-                        altText = ActiveText;
-
-                    if (string.IsNullOrEmpty(hovText))
-                        hovText = ActiveText;
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(ImageUrl))
-                        foreImagePath = Page.Server.MapPath(ImageUrl);
-
-                    if (!string.IsNullOrEmpty(HoverImageUrl))
-                        hoverImagePath = Page.Server.MapPath(hoverImagePath);
-                    else
-                        hoverImagePath = foreImagePath;
-
-                    if (!string.IsNullOrEmpty(ClickedImageUrl))
-                        clickedImagePath = Page.Server.MapPath(ClickedImageUrl);
-                    else
-                        clickedImagePath = hoverImagePath;
-
-                    if (string.IsNullOrEmpty(altText))
-                        altText = Text;
-
-                    if (string.IsNullOrEmpty(hovText))
-                        hovText = Text;
-                }
-
-                GenerateImage normImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Normal, size, Text, textfont, fColor, foreImagePath, CacheName);
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, normImg.FileName + WebGfx.Extension);
-                writer.AddAttribute("onmouseout", "this.src='" + normImg.FileName + WebGfx.Extension + "';");
-
-                GenerateImage hovImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Hover, size, hovText, textfont, fColor, hoverImagePath, CacheName);
-                writer.AddAttribute("onmouseover", "this.src='" + hovImg.FileName + WebGfx.Extension + "';");
-
-                GenerateImage clickImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Clicked, size, hovText, textfont, fColor, clickedImagePath, CacheName);
-                writer.AddAttribute("onmousedown", "this.src='" + clickImg.FileName + WebGfx.Extension + "';");
-
-                // IE Doesn't handle properly, still everything looks good though
-                // writer.AddAttribute("onmouseup", "this.src='" + hovImg.FileName + WebGfx.Extension + "';");
+                GenerateImage clickImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Clicked, size, text, textfont, fColor, imgPath, CacheName, Page.Server.MapPath(CustomClickedImageUrl), Color.Empty);
+                writer.AddAttribute("onmousedown", "this.src='" + clickImg.FullPath + "';");
 
                 if (!string.IsNullOrEmpty(OnClientClick))
                     writer.AddAttribute(HtmlTextWriterAttribute.Onclick, OnClientClick);
@@ -657,34 +515,10 @@ namespace ESWCtrls
             }
             else
             {
-                if (Active)
-                {
-                    string imgPath = string.Empty;
-                    if (!string.IsNullOrEmpty(DisabledActiveImageUrl))
-                        imgPath = Page.Server.MapPath(DisabledActiveImageUrl);
+                GenerateImage disImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Disabled, size, text, textfont, fColor, imgPath, CacheName,  Page.Server.MapPath(CustomDisabledImageUrl), CustomDisabledOverlayColor);
+                writer.AddAttribute(HtmlTextWriterAttribute.Src, disImg.FullPath);
 
-                    GenerateImage disImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Disabled, size, DisabledActiveText, textfont, fColor, imgPath, CacheName);
-                    writer.AddAttribute(HtmlTextWriterAttribute.Src, disImg.FileName + WebGfx.Extension);
-
-                    if (string.IsNullOrEmpty(altText))
-                        altText = DisabledActiveText;
-
-                    size = disImg.Size;
-                }
-                else
-                {
-                    string imgPath = string.Empty;
-                    if (!string.IsNullOrEmpty(DisabledImageUrl))
-                        imgPath = Page.Server.MapPath(DisabledImageUrl);
-
-                    GenerateImage disImg = new GenerateImage(GenerateStyle, GenerateImage.ButtonState.Disabled, size, DisabledText, textfont, fColor, imgPath, CacheName);
-                    writer.AddAttribute(HtmlTextWriterAttribute.Src, disImg.FileName + WebGfx.Extension);
-
-                    if (string.IsNullOrEmpty(altText))
-                        altText = DisabledText;
-
-                    size = disImg.Size;
-                }
+                size = disImg.Size;
             }
 
             if (writeWidth)
@@ -847,8 +681,11 @@ namespace ESWCtrls
             private string _foreImagePath;
             private string _cacheName;
 
+            private string _customBgd;
+            private Color _customDisOverlay;
 
-            public GenerateImage(GenerateStyle generateStyle, ButtonState buttonState, Size size, string text, Font font, Color foreColor, string foreImagePath, string cacheName)
+
+            public GenerateImage(GenerateStyle generateStyle, ButtonState buttonState, Size size, string text, Font font, Color foreColor, string foreImagePath, string cacheName, string customBgdPath, Color customDisOverlay)
             {
                 _genStyle = generateStyle;
                 _btnState = buttonState;
@@ -858,7 +695,14 @@ namespace ESWCtrls
                 _foreImagePath = foreImagePath;
                 _defSize = size;
                 _cacheName = cacheName;
+                _customBgd = customBgdPath;
+                _customDisOverlay = customDisOverlay;
+
+                if(generateStyle == GenerateStyle.Custom && string.IsNullOrEmpty(_customBgd))
+                    _genStyle = GenerateStyle.XP;
+
                 calculateSize();
+
                 if (!size.IsEmpty)
                 {
                     if (size.Width > 0)
@@ -867,11 +711,12 @@ namespace ESWCtrls
                     if (size.Height > 0)
                         _size.Height = size.Height;
                 }
+
                 Image();
                 ExpireSpan = TimeSpan.FromMinutes(20);
                 Save();
             }
-
+            
             public override System.Drawing.Imaging.ImageFormat ImageFormat
             {
                 get { return System.Drawing.Imaging.ImageFormat.Png; }
@@ -884,6 +729,10 @@ namespace ESWCtrls
                     if (ViewState["FileName"] == null)
                     {
                         string name = _genStyle.ToString() + _btnState;
+
+                        if(_genStyle == GenerateStyle.Custom)
+                            name += _customBgd.Replace(" ", "");
+
                         if (!string.IsNullOrEmpty(_text))
                         {
                             if (!string.IsNullOrEmpty(_foreImagePath))
@@ -1014,6 +863,9 @@ namespace ESWCtrls
                                 break;
                         }
                         break;
+                    case GenerateStyle.Custom:
+                        bgdImage = new Bitmap(_customBgd);
+                        break;
                 }
 
 
@@ -1095,6 +947,8 @@ namespace ESWCtrls
                             Rectangle area = new Rectangle(pos.X - 1, pos.Y - 1, _txtMseSize.Width + 1, _txtMseSize.Height + 1);
                             if (_genStyle == GenerateStyle.XP || _genStyle == GenerateStyle.XPSilver)
                                 gfx.FillRectangle(new SolidBrush(Color.FromArgb(165, 245, 244, 234)), area);
+                            else if(_genStyle == GenerateStyle.Custom)
+                                gfx.FillRectangle(new SolidBrush(_customDisOverlay), area);
                             else
                                 gfx.FillRectangle(new SolidBrush(Color.FromArgb(165, 79, 79, 79)), area);
                         }
