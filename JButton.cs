@@ -382,6 +382,14 @@ namespace ESWCtrls
             }
         }
 
+        /// <summary>
+        /// When implemented by a class, processes postback data for an ASP.NET server control.
+        /// </summary>
+        /// <param name="postDataKey">The key identifier for the control.</param>
+        /// <param name="postCollection">The collection of all incoming name values.</param>
+        /// <returns>
+        /// true if the server control's state changes as a result of the postback; otherwise, false.
+        /// </returns>
         public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
             if(postCollection[postDataKey + "_act"] != null)
@@ -394,6 +402,9 @@ namespace ESWCtrls
             return false;
         }
 
+        /// <summary>
+        /// When implemented by a class, signals the server control to notify the ASP.NET application that the state of the control has changed.
+        /// </summary>
         public void RaisePostDataChangedEvent()
         {
             // Nothing To Do Here

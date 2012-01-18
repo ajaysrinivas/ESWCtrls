@@ -193,6 +193,22 @@ namespace ESWCtrls
             }
         }
 
+        /// <summary>An additional value to use with the callbacks</summary>
+        /// <remarks>
+        /// This is for use in the SourcePageAddValMethod instead if the SourcePageMethod, provides this as a second value.
+        /// </remarks>
+        [Category("Data"), DefaultValue(null)]
+        public string AdditionalValue
+        {
+            get
+            {
+                if(ViewState["AddValue"] == null)
+                    return null;
+                else
+                    return (string)ViewState["AddValue"];
+            }
+            set { ViewState["AddValue"] = value; }
+        }
 
         /// <summary>
         /// Convenience function for setting value and text together
@@ -255,16 +271,28 @@ namespace ESWCtrls
         }
 
         /// <summary>
-        /// Delgate for Page Method soures
+        /// Delgate for Page Method sources
         /// </summary>
         /// <param name="term">The term.</param>
         public delegate ListItemCollection SourcePageMethodHandler(string term);
+
+        /// <summary>
+        /// Delgate for Page Method sources
+        /// </summary>
+        /// <param name="term">The term.</param>
+        /// <param name="addValue">The additional value provided to the control</param>
+        public delegate ListItemCollection SourcePageMethodAddValHandler(string term, string addValue);
 
 
         /// <summary>
         /// PageMethod Source event, must be a static webMethod to be called from ajax
         /// </summary>
         public event SourcePageMethodHandler SourcePageMethod;
+
+        /// <summary>
+        /// PageMethod Source event, with additional value, must be a static webMethod to be called from ajax
+        /// </summary>
+        public event SourcePageMethodAddValHandler SourcePageAddValMethod;
 
         #endregion
 
@@ -330,11 +358,36 @@ namespace ESWCtrls
                         break;
                     }
                 }
+
                 if(!found || !mi.IsStatic || !mi.IsPublic)
                     throw new ArgumentException("SourcePageMethod must be a static public web method.");
-
                 StringBuilder sb = new StringBuilder();
                 sb.AppendFormat("function(req,rsp){{$.ajax({{url:\"{0}/{1}\",data:\"{{{2}:\\\"\"+req.term+\"\\\"}}\",", System.IO.Path.GetFileName(Page.Request.CurrentExecutionFilePath), mi.Name, mi.GetParameters()[0].Name);
+                sb.Append("dataType:\"json\",contentType:\"application/json; charset=utf-8\",type:\"POST\",");
+                sb.Append("success:function(msg){var rst=[];for(var i=0; i<msg.d.length;++i) rst.push({value:msg.d[i].Value,label:msg.d[i].Text});rsp(rst);},");
+                sb.Append("error:function(msg,text){rsp();alert(msg+\"--\"+text);}});}");
+                opts.Add(string.Format("source:{0}", sb.ToString()));
+            }
+            else if(SourcePageAddValMethod != null)
+            {
+                MethodInfo mi = SourcePageAddValMethod.Method;
+                bool found = false;
+                foreach(Attribute a in mi.GetCustomAttributes(true))
+                {
+                    if(a is WebMethodAttribute)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                
+                if(!found || !mi.IsStatic || !mi.IsPublic)
+                    throw new ArgumentException("SourcePageAddValMethod must be a static public web method.");
+
+                ParameterInfo[] pi = mi.GetParameters();
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("function(req,rsp){{$.ajax({{url:\"{0}/{1}\",data:\"{{{2}:\\\"\"+req.term+\"\\\",{3}:\\\"\"+{4}+\"\\\"}}\",", System.IO.Path.GetFileName(Page.Request.CurrentExecutionFilePath), mi.Name, pi[0].Name, pi[1].Name,AdditionalValue);
                 sb.Append("dataType:\"json\",contentType:\"application/json; charset=utf-8\",type:\"POST\",");
                 sb.Append("success:function(msg){var rst=[];for(var i=0; i<msg.d.length;++i) rst.push({value:msg.d[i].Value,label:msg.d[i].Text});rsp(rst);},");
                 sb.Append("error:function(msg,text){rsp();alert(msg+\"--\"+text);}});}");
