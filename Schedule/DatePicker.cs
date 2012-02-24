@@ -531,7 +531,7 @@ namespace ESWCtrls
                     opts.Add(string.Format("showOptions:{0}", Effect.RenderOptions()));
             }
 
-            Script.AddStartupScript(this, "datepicker", opts);
+            Script.AddStartupScript(this, ClientID, "datepicker", opts);
         }
 
         ///

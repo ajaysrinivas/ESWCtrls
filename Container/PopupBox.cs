@@ -484,10 +484,8 @@ namespace ESWCtrls
             if(HideEffect != null)
                 opts.Add("hideeffect:" + HideEffect.Render(Page));
 
-            if(TriggerInUpdatePanel(_openTriggers) || TriggerInUpdatePanel(_closeTriggers))
-                Script.AddStartupScriptSM(this, "ls_popup", opts);
-            else
-                Script.AddStartupScript(this, "ls_popup", opts);
+
+            Script.AddStartupScript(this, ClientID, "ls_popup", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_shown", Shown.ToString().ToLower());
         }
 

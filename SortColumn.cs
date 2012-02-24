@@ -76,7 +76,7 @@ namespace ESWCtrls
                 opts.Add("hasHeader:false");
             if(Owner.ShowFooter)
                 opts.Add("hasFooter:true");
-            Script.AddStartupScript(Owner, "ls_sortcol", opts);
+            Script.AddStartupScript(Owner, Owner.ClientID + "_" + Owner.Columns.IndexOf(this).ToString(), "ls_sortcol", opts);
             
         }
 

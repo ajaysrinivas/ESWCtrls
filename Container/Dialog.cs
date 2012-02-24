@@ -550,7 +550,7 @@ namespace ESWCtrls
             ProcessButtons(opts);
             ProcessClientSideEvents(opts);
 
-            Script.AddStartupScript(this, "dialog", opts);
+            Script.AddStartupScript(this, ClientID, "dialog", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_shown", AutoOpen.ToString().ToLower());
 
             ProcessClientSideTriggers();
@@ -724,7 +724,7 @@ namespace ESWCtrls
                         ClientSideTrigger cst = (ClientSideTrigger)t;
                         Control webCtrl = Util.FindControlRecursiveOut(this, cst.ControlID, null);
                         if (webCtrl != null)
-                            Script.AddStartupScript(this, string.Format("$(\"#{0}\").bind(\"{1}\",function(){{$(\"#{2}\").dialog(\"open\");return {3};}});", webCtrl.ClientID, cst.Event, this.ClientID, (!cst.CancelEvent).ToString().ToLower()));
+                            Script.AddStartupScript(this, ClientID + "_open_" + webCtrl.ClientID, string.Format("$(\"#{0}\").bind(\"{1}\",function(){{$(\"#{2}\").dialog(\"open\");return {3};}});", webCtrl.ClientID, cst.Event, this.ClientID, (!cst.CancelEvent).ToString().ToLower()));
                     }
                 }
             }
@@ -738,7 +738,7 @@ namespace ESWCtrls
                         ClientSideTrigger cst = (ClientSideTrigger)t;
                         Control webCtrl = Util.FindControlRecursiveOut(this, cst.ControlID, null);
                         if (webCtrl != null)
-                            Script.AddStartupScript(this, string.Format("$(\"#{0}\").bind(\"{1}\",function(){{$(\"#{2}\").dialog(\"close\");return {3};}});", webCtrl.ClientID, cst.Event, this.ClientID, (!cst.CancelEvent).ToString().ToLower()));
+                            Script.AddStartupScript(this, ClientID + "_close_" + webCtrl.ClientID, string.Format("$(\"#{0}\").bind(\"{1}\",function(){{$(\"#{2}\").dialog(\"close\");return {3};}});", webCtrl.ClientID, cst.Event, this.ClientID, (!cst.CancelEvent).ToString().ToLower()));
                     }
                 }
             }

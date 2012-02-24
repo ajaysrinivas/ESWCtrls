@@ -351,7 +351,7 @@ namespace ESWCtrls
             if((base.RenderUplevel))
             {
                 Script.AddResourceScript(Page, "NumberValidator.js");
-                Script.AddStartupScript(this,string.Format("ESW_NumberValidatorSetup({0});", ClientID));
+                Script.AddStartupScript(this, ClientID,string.Format("ESW_NumberValidatorSetup({0});", ClientID));
             }
         }
 

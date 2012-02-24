@@ -195,7 +195,7 @@
         popup.css("display","block");
         popup.css("position","absolute");
         
-        popup.position(opts.position);
+        setPosition();
         
         if(opts.modal)
             setBackground();
@@ -213,11 +213,11 @@
             var shownHid = $("#" + popup.attr("id") + "_shown");
             shownHid.val("true");
 
-            $(window).bind("resize.ls_popup_" + popup.attr("id"), function(event) { popup.position(opts.position); });
-            popup.bind("resize", function(event) { popup.position(opts.position); });
+            $(window).bind("resize.ls_popup_" + popup.attr("id"), function(event) {setPosition(); });
+            popup.bind("resize", function(event) { setPosition(); });
             
             if(opts.scrolling)
-                $(window).bind("scroll.ls_popup_" + popup.attr("id"), function(event) { popup.position(opts.position); });
+                $(window).bind("scroll.ls_popup_" + popup.attr("id"), function(event) { setPosition(); });
             
             if(opts.showeffect != null && opts.showeffect.callback != null)
                 opts.showeffect.callback();
@@ -357,6 +357,17 @@
                 }
             }
         };
+
+        function setPosition()
+        {
+            popup.position(opts.position);
+            var os = popup.offset();
+            if(os.top < 0)
+                os.top = 0;
+            if(os.left < 0)
+                os.left = 0;
+            popup.offset(os);
+        }
     };
     
     $.fn.ls_popup = function(method) {

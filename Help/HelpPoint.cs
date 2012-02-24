@@ -282,7 +282,6 @@ namespace ESWCtrls
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-
             HelpBox.Current(this);
         }
 

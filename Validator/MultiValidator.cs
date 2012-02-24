@@ -216,7 +216,7 @@ namespace ESWCtrls
             if((base.RenderUplevel))
             {
                 Script.AddResourceScript(Page, "Validators.js");
-                Script.AddStartupScript(this, string.Format("ESW_MultiValidatorSetup({0});", ClientID));
+                Script.AddStartupScript(this, ClientID, string.Format("ESW_MultiValidatorSetup({0});", ClientID));
             }
         }
 

@@ -182,7 +182,7 @@ namespace ESWCtrls
             if(HideEffect != null)
                 opts.Add("hideEffect:" + HideEffect.Render(Page));
 
-            Script.AddStartupScript(this, "ls_dropmenu", opts);
+            Script.AddStartupScript(this, ClientID, "ls_dropmenu", opts);
 
             AdvStyle style = new AdvStyle();
             style.Display = Display.None;

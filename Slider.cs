@@ -301,7 +301,7 @@ namespace ESWCtrls
             else
                 opts.Add(string.Format("change:function(event,ui){{{0}}}", setVals));
 
-            Script.AddStartupScript(this, "slider", opts);
+            Script.AddStartupScript(this, ClientID, "slider", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_vals", string.Join(",", Values));
         }
 

@@ -267,7 +267,7 @@ namespace ESWCtrls
             }
 
             //Popup for Click
-            Script.AddStartupScript(this, "ls_helpbox", opts);
+            Script.AddStartupScript(this, ClientID, "ls_helpbox", opts);
         }
 
         /// <summary>

@@ -76,7 +76,7 @@ namespace ESWCtrls
             PostBack.PreRender(this);
             Ajax.PreRender(this);
 
-            Script.AddStartupScript(this, string.Format("ESW_SetupBusyBox({0});", ClientID));
+            Script.AddStartupScript(this, ClientID, string.Format("ESW_SetupBusyBox({0});", ClientID));
         }
 
         ///

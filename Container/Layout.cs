@@ -200,7 +200,7 @@ namespace ESWCtrls
             if(_right != null)
                 _right.OnPreRender(opts);
 
-            Script.AddStartupScript(this, "ls_panels", opts);
+            Script.AddStartupScript(this, ClientID, "ls_panels", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_store", "");
         }
 

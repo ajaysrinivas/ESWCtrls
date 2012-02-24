@@ -180,6 +180,24 @@ namespace ESWCtrls.Internal
             return false;
         }
 
+        //Checks to see if this control contains an updatepanel
+        public static bool ContainsUpdatePanel(Control ctrl)
+        {
+            foreach(Control c in ctrl.Controls)
+            {
+                if(c is UpdatePanel)
+                    return true;
+                else
+                {
+                    if(c.Controls.Count > 0)
+                        if(ContainsUpdatePanel(c))
+                            return true;
+                }
+            }
+
+            return false;
+        }
+
         public static string BuildVirtPath(Control ctrl)
         {
             string rst = string.Empty;

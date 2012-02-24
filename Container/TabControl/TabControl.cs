@@ -377,7 +377,7 @@ namespace ESWCtrls
                     opts.Add("inactiveClass:\"" + InactiveTabStyle.RenderClass + "\"");
                 }
 
-                Script.AddStartupScript(this, "ls_tabctrl", opts);
+                Script.AddStartupScript(this, ClientID, "ls_tabctrl", opts);
                 ScriptManager.RegisterHiddenField(Page, ClientID + "_actIdx", ActivePageIndex.ToString());
             }
             else if (TabStyle == TabStyle.jQuery)
@@ -395,7 +395,7 @@ namespace ESWCtrls
 
                 opts.Add(string.Format("select:function(event,ui) {{ $(\"#{0}_actIdx\").val($(ui.tab).attr(\"oa\")); }}", ClientID));
 
-                Script.AddStartupScript(this, "tabs", opts);
+                Script.AddStartupScript(this, ClientID, "tabs", opts);
                 ScriptManager.RegisterHiddenField(Page, ClientID + "_actIdx", ActivePageIndex.ToString());
             }
 
@@ -410,7 +410,7 @@ namespace ESWCtrls
                 sb.Append("ord=ord.slice(0,-1);");
                 sb.Append("hid.val(ord);");
                 sb.Append("}");
-                Script.AddStartupScript(this, string.Format("$(\"#{0}_tabbar\").sortable({{{1}}});", ClientID, sb.ToString()));
+                Script.AddStartupScript(this, ClientID + "_sort", string.Format("$(\"#{0}_tabbar\").sortable({{{1}}});", ClientID, sb.ToString()));
                 sb.Clear();
                 sb.Append(string.Join(";", SortOrder));
                 ScriptManager.RegisterHiddenField(Page, ClientID + "_order", sb.ToString());

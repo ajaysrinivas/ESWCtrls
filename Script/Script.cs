@@ -11,6 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
 using System.Linq;
+using System.Collections;
 
 namespace ESWCtrls
 {
@@ -26,7 +27,7 @@ namespace ESWCtrls
         public Script()
         {
             _resScripts = new List<string>();
-            _startScripts = new List<string>();
+            _startScripts = new StartUpScriptList();
         }
 
         /// <summary>
@@ -60,6 +61,63 @@ namespace ESWCtrls
             }
             set { ViewState["TryCDN"] = value; }
         }
+
+        /// <summary>
+        /// Force the use of script manager rather than jquery document.ready for start up scripts
+        /// </summary>
+        [Bindable(true), Category("Behaviour"), DefaultValue(false)]
+        public bool UseScriptManager
+        {
+            get
+            {
+                if(ViewState["UseScriptManager"] == null)
+                    return false;
+                else
+                    return (bool)ViewState["UseScriptManager"];
+            }
+            set
+            {
+                ViewState["UseScriptManager"] = value;
+            }
+        }
+
+        #region Public Functions
+
+        /// <summary>
+        /// Add a startup script to document.ready
+        /// </summary>
+        /// <param name="ctrl">The control the script is for</param>
+        /// <param name="key">The key to use for the script</param>
+        /// <param name="script">The script itself</param>
+        /// <param name="priority">The priorit of the script Lower Means sooner, default to zero</param>
+        public static void AddStartupScript(Control ctrl, string key, string script, int priority = 0)
+        {
+            Script s = Current(ctrl.Page);
+            //if(!s._startScripts.ContainsKey(key))
+            //{
+            //    s._startScripts.Add(new StartUpScript(ctrl, key, script, priority));
+            //if(Internal.Util.InUpdatePanel(ctrl))
+                ScriptManager.RegisterStartupScript(ctrl, ctrl.GetType(), key, script, true);
+            //else
+            //    s.Page.ClientScript.RegisterStartupScript(ctrl.GetType(), key, script, true);
+            //}
+        }
+
+        /// <summary>
+        /// Add a startup script to document.ready
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="key"></param>
+        /// <param name="jQueryFunction"></param>
+        /// <param name="opts"></param>
+        /// <param name="priority">The priorit of the script Lower Means sooner, default to zero</param>
+        public static void AddStartupScript(Control ctrl, string key, string jQueryFunction, List<string> opts, int priority = 0)
+        {
+            string scrText = string.Format("$(\"#{0}\").{1}({{{2}}});", ctrl.ClientID, jQueryFunction, string.Join(",", opts));
+            Script.AddStartupScript(ctrl, key, scrText, priority);
+        }
+
+        #endregion
 
         #region Render
 
@@ -155,28 +213,72 @@ namespace ESWCtrls
                     }
                 }
             }
+
             if(_startScripts.Count > 0)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                writer.RenderBeginTag(HtmlTextWriterTag.Script);
+                _startScripts.Sort();
 
-                if(!Context.IsDebuggingEnabled)
+                if(UseScriptManager)
                 {
-                    writer.Write("$(document).ready(function(){");
-                    foreach(string s in _startScripts)
-                        writer.Write(s);
-                    writer.Write("});");
+                    foreach(StartUpScript s in _startScripts)
+                        ScriptManager.RegisterStartupScript(s.Ctrl, s.Ctrl.GetType(), s.Key, s.Text, true);
                 }
                 else
                 {
-                    writer.WriteLine("$(document).ready(function(){");
-                    foreach(string s in _startScripts)
-                        writer.WriteLine(s);
-                    writer.WriteLine("});");
-                }
 
-                
-                writer.RenderEndTag();
+                    writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Script);
+
+                    bool upnl = Internal.Util.ContainsUpdatePanel(Page);
+
+
+                    string endPart = string.Empty;
+                    if(Context.IsDebuggingEnabled)
+                        endPart = "\n";
+
+                    if(upnl)
+                    {
+                        writer.Write("$(document).ready(function(){" + endPart);
+
+                        bool anyUPnl = false;
+                        foreach(StartUpScript s in _startScripts)
+                        {
+                            if(!s.InUpdatePanel)
+                                writer.Write(s.Text + endPart);
+                            else
+                                anyUPnl = true;
+                        }
+
+                        if(anyUPnl)
+                        {
+                            writer.Write("Sys.WebForms.PageRequestManager.getInstance().add_endRequest(esw_script_SMAJAXEnd);" + endPart);
+                            writer.Write("esw_script_SMAJAXEnd();" + endPart);
+                            writer.Write("});" + endPart + endPart);
+                            writer.Write("function esw_script_SMAJAXEnd(s,a){" + endPart);
+
+                            foreach(StartUpScript s in _startScripts)
+                            {
+                                if(s.InUpdatePanel)
+                                    writer.Write(s.Text + endPart);
+                            }
+
+                            writer.Write("}" + endPart);
+                        }
+                        else
+                            writer.Write("});" + endPart);
+                    }
+                    else
+                    {
+                        writer.Write("$(document).ready(function(){" + endPart);
+
+                        foreach(StartUpScript s in _startScripts)
+                            writer.Write(s.Text + endPart);
+
+                        writer.Write("});" + endPart);
+                    }
+
+                    writer.RenderEndTag();
+                }
             }
         }
 
@@ -194,35 +296,6 @@ namespace ESWCtrls
             Script s = Current(page);
             foreach (string n in names)
                 s.AddWithDepends(n);
-        }
-
-        internal static void AddStartupScript(Control ctrl, string script)
-        {
-            if (Internal.Util.InUpdatePanel(ctrl))
-                ScriptManager.RegisterStartupScript(ctrl.Page, ctrl.GetType(), ctrl.ClientID, script, true);
-            else
-            {
-                Script s = Current(ctrl.Page);
-                s._startScripts.Add(script);
-            }
-        }
-
-        internal static void AddStartupScript(Control ctrl, string jQueryFunction, List<string> opts)
-        {
-            string scrText = string.Format("$(\"#{0}\").{1}({{{2}}});", ctrl.ClientID, jQueryFunction, string.Join(",", opts));
-            if (Internal.Util.InUpdatePanel(ctrl))
-                ScriptManager.RegisterStartupScript(ctrl.Page, ctrl.GetType(), ctrl.ClientID, scrText, true);
-            else
-            {
-                Script s = Current(ctrl.Page);
-                s._startScripts.Add(scrText);
-            }
-        }
-
-        internal static void AddStartupScriptSM(Control ctrl, string jQueryFunction, List<string> opts)
-        {
-            string scrText = string.Format("$(\"#{0}\").{1}({{{2}}});", ctrl.ClientID, jQueryFunction, string.Join(",", opts));
-            ScriptManager.RegisterStartupScript(ctrl.Page, ctrl.GetType(), ctrl.ClientID, scrText, true);
         }
 
         #endregion
@@ -382,9 +455,70 @@ namespace ESWCtrls
         }
 
         private List<String> _resScripts;
-        private List<string> _startScripts;
+        private StartUpScriptList _startScripts;
         private static string _wscExt = null;
         private static string _wscPath = null;
+
+        private class StartUpScript : IComparable
+        {
+            public StartUpScript(Control ctrl, string key, string text, int priority = 0)
+            {
+                this.Ctrl = ctrl;
+                this.Text = text;
+                this.Key = key;
+                this.Priority = priority;
+                this.InUpdatePanel = Internal.Util.InUpdatePanel(ctrl);
+            }
+
+            public Control Ctrl;
+            public string Text;
+            public string Key;
+            public int Priority;
+            public bool InUpdatePanel;
+
+            #region IComparable Members
+
+            public int CompareTo(object obj)
+            {
+                if(obj is StartUpScript)
+                {
+                    StartUpScript s2 = (StartUpScript)obj;
+                    if(!Priority.Equals(s2.Priority))
+                        return Comparer.Default.Compare(Priority, s2.Priority);
+                    else
+                        return Comparer.Default.Compare(Key, s2.Key);
+                }
+                else
+                    throw new ArgumentException("The type of obj must be StartupScript");
+            }
+
+            #endregion
+        }
+
+        private class StartUpScriptList : List<StartUpScript>
+        {
+            public new void Add(StartUpScript item)
+            {
+                foreach(StartUpScript s in this)
+                {
+                    if(s.Key == item.Key)
+                        return;
+                }
+
+                base.Add(item);
+            }
+
+            public bool ContainsKey(string key)
+            {
+                foreach(StartUpScript s in this)
+                {
+                    if(s.Key == key)
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         #endregion
     }

@@ -420,12 +420,12 @@ namespace ESWCtrls
                 else
                     sb.Append("hid.val(ord);");
                 sb.Append("}");
-                Script.AddStartupScript(this, string.Format("$(\"#{0}\").sortable({{{1}}});", ClientID, sb.ToString()));
+                Script.AddStartupScript(this, ClientID + "_sort", string.Format("$(\"#{0}\").sortable({{{1}}});", ClientID, sb.ToString()));
                 sb.Clear();
                 sb.AppendFormat("{0}", string.Join(";",SortOrder));
                 ScriptManager.RegisterHiddenField(Page, ClientID + "_order", sb.ToString());
             }
-            Script.AddStartupScript(this, "accordion", opts);
+            Script.AddStartupScript(this, ClientID, "accordion", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_actIdx", ActiveSectionIndex.ToString());
         }
 

@@ -282,7 +282,7 @@ namespace ESWCtrls
                     sb.AppendFormat("$(\"#{0}\").button({{{1}}})", ClientID, string.Join(",", opts));
                     sb.AppendFormat(".click(function(){{var opts;var act;if($(this).text()==\"{0}\"){{opts={{{1}}};act=true;}}else{{opts={{{2}}};act=false;}}$(this).button(\"option\",opts);$(\"#{3}_act\").val(act);return false;}});",
                         Text, string.Join(",", actOpts), string.Join(",", natOpts), UniqueID);
-                    Script.AddStartupScript(this, sb.ToString());
+                    Script.AddStartupScript(this, ClientID + "_tog", sb.ToString());
 
                     Page.ClientScript.RegisterHiddenField(UniqueID + "_act", Active.ToString().ToLower());
                     return;
@@ -300,7 +300,7 @@ namespace ESWCtrls
                 opts.AddRange(CalcOpts(null, Primary, Secondary));
             }
 
-            Script.AddStartupScript(this, "button", opts);
+            Script.AddStartupScript(this, ClientID, "button", opts);
         }
 
         /// <summary>

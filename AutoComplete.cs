@@ -341,7 +341,7 @@ namespace ESWCtrls
                 {
                     itemList.Add(string.Format("{{value:\"{0}\",label:\"{1}\"}}", i.Value, i.Text));
                 }
-                Script.AddStartupScript(this, string.Format("var {0}_src=[{1}];", ClientID, string.Join(",", itemList)));
+                Script.AddStartupScript(this, ClientID + "_src", string.Format("var {0}_src=[{1}];", ClientID, string.Join(",", itemList)));
                 opts.Add(string.Format("source:{0}_src", ClientID));
             }
             else if(!string.IsNullOrEmpty(SourceURL))
@@ -428,7 +428,7 @@ namespace ESWCtrls
                 opts.Add(string.Format("change:function(event,ui){{{0}}}", changeJS));
             }
 
-            Script.AddStartupScript(this, "autocomplete", opts);
+            Script.AddStartupScript(this, ClientID, "autocomplete", opts);
             ScriptManager.RegisterHiddenField(this, ClientID + "_data", SelectedValue);
         }
 
