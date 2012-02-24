@@ -283,6 +283,17 @@
                 }
             }
         };
+
+        function setPosition()
+        {
+            popup.position(opts.position);
+            var os = popup.offset();
+            if(os.top < 0)
+                os.top = 0;
+            if(os.left < 0)
+                os.left = 0;
+            popup.offset(os);
+        };
     };
         
     function hidePopup(popup,opts)
@@ -357,17 +368,6 @@
                 }
             }
         };
-
-        function setPosition()
-        {
-            popup.position(opts.position);
-            var os = popup.offset();
-            if(os.top < 0)
-                os.top = 0;
-            if(os.left < 0)
-                os.left = 0;
-            popup.offset(os);
-        }
     };
     
     $.fn.ls_popup = function(method) {
