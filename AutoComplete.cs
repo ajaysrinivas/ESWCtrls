@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web.UI.WebControls;
-using System.Web.UI;
 using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace ESWCtrls
 {
-    using Internal;
     using System.ComponentModel;
     using System.Reflection;
+    using Internal;
 
     /// <summary>
     /// Autocomplete control, based on jQuery Control
@@ -30,13 +29,13 @@ namespace ESWCtrls
         {
             get
             {
-                if(_pos == null)
+                if (_pos == null)
                 {
                     _pos = new Positioning();
                     _pos.My = ESWCtrls.Position.LeftTop;
                     _pos.At = ESWCtrls.Position.LeftBottom;
                     _pos.Collision = Collision.None;
-                    if(IsTrackingViewState) ((IStateManager)_pos).TrackViewState();
+                    if (IsTrackingViewState) ((IStateManager)_pos).TrackViewState();
                 }
                 return _pos;
             }
@@ -54,7 +53,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["AppendTo"] != null)
+                if (ViewState["AppendTo"] != null)
                     return (string)ViewState["AppendTo"];
                 else
                     return "body";
@@ -70,7 +69,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["AutoFocus"] != null)
+                if (ViewState["AutoFocus"] != null)
                     return (bool)ViewState["AutoFocus"];
                 else
                     return false;
@@ -86,7 +85,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Delay"] != null)
+                if (ViewState["Delay"] != null)
                     return (int)ViewState["Delay"];
                 else
                     return 300;
@@ -102,7 +101,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["MinLength"] != null)
+                if (ViewState["MinLength"] != null)
                     return (int)ViewState["MinLength"];
                 else
                     return 1;
@@ -118,10 +117,10 @@ namespace ESWCtrls
         {
             get
             {
-                if(_clientEvents == null)
+                if (_clientEvents == null)
                 {
                     _clientEvents = new AutoCompleteClientEvents();
-                    if(IsTrackingViewState) ((IStateManager)_clientEvents).TrackViewState();
+                    if (IsTrackingViewState) ((IStateManager)_clientEvents).TrackViewState();
                 }
                 return _clientEvents;
             }
@@ -134,22 +133,22 @@ namespace ESWCtrls
         /// <summary>
         /// Gets or sets the selected value.
         /// </summary>
-        [Category("Data"),DefaultValue(null)]
+        [Category("Data"), DefaultValue(null)]
         public string SelectedValue
         {
             get
             {
-                if(ViewState["Value"] != null)
+                if (ViewState["Value"] != null)
                     return (string)ViewState["Value"];
                 else
                     return null;
             }
             set
             {
-                if(Items.Count > 0)
+                if (Items.Count > 0)
                 {
                     ListItem i = Items.FindByValue(value);
-                    if(i != null)
+                    if (i != null)
                     {
                         ViewState["Value"] = value;
                         ViewState["Text"] = i.Text;
@@ -170,17 +169,17 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Text"] != null)
+                if (ViewState["Text"] != null)
                     return (string)ViewState["Text"];
                 else
                     return null;
             }
             set
             {
-                if(Items.Count > 0)
+                if (Items.Count > 0)
                 {
                     ListItem i = Items.FindByText(value);
-                    if(i != null)
+                    if (i != null)
                     {
                         ViewState["Value"] = i.Value;
                         ViewState["Text"] = value;
@@ -202,7 +201,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["AddValue"] == null)
+                if (ViewState["AddValue"] == null)
                     return null;
                 else
                     return (string)ViewState["AddValue"];
@@ -215,13 +214,13 @@ namespace ESWCtrls
         /// </summary>
         public void setValueText(string value, string text)
         {
-            if(Items.Count > 0)
+            if (Items.Count > 0)
             {
                 ListItem i = Items.FindByValue(value);
-                if(i == null)
+                if (i == null)
                     i = Items.FindByText(text);
 
-                if(i != null)
+                if (i != null)
                 {
                     ViewState["Value"] = i.Value;
                     ViewState["Text"] = i.Text;
@@ -245,10 +244,10 @@ namespace ESWCtrls
         {
             get
             {
-                if(_items == null)
+                if (_items == null)
                 {
                     _items = new ListItemCollection();
-                    if(IsTrackingViewState) ((IStateManager)_items).TrackViewState();
+                    if (IsTrackingViewState) ((IStateManager)_items).TrackViewState();
                 }
                 return _items;
             }
@@ -262,7 +261,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["SourceURL"] != null)
+                if (ViewState["SourceURL"] != null)
                     return (string)ViewState["SourceURL"];
                 else
                     return null;
@@ -310,56 +309,56 @@ namespace ESWCtrls
             Script.AddResourceScript(Page, "jquery.ui.autocomplete.js");
             List<string> opts = new List<string>();
 
-            if(!Enabled)
+            if (!Enabled)
                 opts.Add("disabled:true");
-            if(AutoFocus)
+            if (AutoFocus)
                 opts.Add("autoFocus:true");
-            if(Delay != 300)
+            if (Delay != 300)
                 opts.Add(string.Format("delay:{0}", Delay));
-            if(MinLength != 1)
+            if (MinLength != 1)
                 opts.Add(string.Format("minLength:{0}", MinLength));
 
-            if(_pos != null)
+            if (_pos != null)
             {
-                if(_pos.My != ESWCtrls.Position.LeftTop || _pos.At != ESWCtrls.Position.LeftBottom || _pos.Collision != Collision.None || !string.IsNullOrEmpty(_pos.Of))
+                if (_pos.My != ESWCtrls.Position.LeftTop || _pos.At != ESWCtrls.Position.LeftBottom || _pos.Collision != Collision.None || !string.IsNullOrEmpty(_pos.Of))
                     opts.Add("position:" + _pos.JSOption(this));
             }
 
-            if(AppendTo != "body")
+            if (AppendTo != "body")
             {
                 Control c = Util.FindControlRecursiveOut(this, AppendTo, null);
-                if(c != null)
+                if (c != null)
                     opts.Add(string.Format("appendTo:\"#{0}\"", c.ClientID));
                 else
                     opts.Add(string.Format("appendTo:\"{0}\"", AppendTo));
             }
 
-            if(Items.Count > 0)
+            if (Items.Count > 0)
             {
                 List<string> itemList = new List<string>();
-                foreach(ListItem i in Items)
+                foreach (ListItem i in Items)
                 {
                     itemList.Add(string.Format("{{value:\"{0}\",label:\"{1}\"}}", i.Value, i.Text));
                 }
                 Script.AddStartupScript(this, ClientID + "_src", string.Format("var {0}_src=[{1}];", ClientID, string.Join(",", itemList)));
                 opts.Add(string.Format("source:{0}_src", ClientID));
             }
-            else if(!string.IsNullOrEmpty(SourceURL))
+            else if (!string.IsNullOrEmpty(SourceURL))
                 opts.Add(string.Format("source:\"{0}\"", Page.ResolveUrl(SourceURL)));
-            else if(SourcePageMethod != null)
+            else if (SourcePageMethod != null)
             {
                 MethodInfo mi = SourcePageMethod.Method;
                 bool found = false;
-                foreach(Attribute a in mi.GetCustomAttributes(true))
+                foreach (Attribute a in mi.GetCustomAttributes(true))
                 {
-                    if(a is WebMethodAttribute)
+                    if (a is WebMethodAttribute)
                     {
                         found = true;
                         break;
                     }
                 }
 
-                if(!found || !mi.IsStatic || !mi.IsPublic)
+                if (!found || !mi.IsStatic || !mi.IsPublic)
                     throw new ArgumentException("SourcePageMethod must be a static public web method.");
                 StringBuilder sb = new StringBuilder();
                 sb.AppendFormat("function(req,rsp){{$.ajax({{url:\"{0}/{1}\",data:\"{{{2}:\\\"\"+req.term+\"\\\"}}\",", System.IO.Path.GetFileName(Page.Request.CurrentExecutionFilePath), mi.Name, mi.GetParameters()[0].Name);
@@ -368,26 +367,26 @@ namespace ESWCtrls
                 sb.Append("error:function(msg,text){rsp();alert(msg+\"--\"+text);}});}");
                 opts.Add(string.Format("source:{0}", sb.ToString()));
             }
-            else if(SourcePageAddValMethod != null)
+            else if (SourcePageAddValMethod != null)
             {
                 MethodInfo mi = SourcePageAddValMethod.Method;
                 bool found = false;
-                foreach(Attribute a in mi.GetCustomAttributes(true))
+                foreach (Attribute a in mi.GetCustomAttributes(true))
                 {
-                    if(a is WebMethodAttribute)
+                    if (a is WebMethodAttribute)
                     {
                         found = true;
                         break;
                     }
                 }
-                
-                if(!found || !mi.IsStatic || !mi.IsPublic)
+
+                if (!found || !mi.IsStatic || !mi.IsPublic)
                     throw new ArgumentException("SourcePageAddValMethod must be a static public web method.");
 
                 ParameterInfo[] pi = mi.GetParameters();
 
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("function(req,rsp){{$.ajax({{url:\"{0}/{1}\",data:\"{{{2}:\\\"\"+req.term+\"\\\",{3}:\\\"\"+{4}+\"\\\"}}\",", System.IO.Path.GetFileName(Page.Request.CurrentExecutionFilePath), mi.Name, pi[0].Name, pi[1].Name,AdditionalValue);
+                sb.AppendFormat("function(req,rsp){{$.ajax({{url:\"{0}/{1}\",data:\"{{{2}:\\\"\"+req.term+\"\\\",{3}:\\\"{4}\\\"}}\",", System.IO.Path.GetFileName(Page.Request.CurrentExecutionFilePath), mi.Name, pi[0].Name, pi[1].Name, AdditionalValue);
                 sb.Append("dataType:\"json\",contentType:\"application/json; charset=utf-8\",type:\"POST\",");
                 sb.Append("success:function(msg){var rst=[];for(var i=0; i<msg.d.length;++i) rst.push({value:msg.d[i].Value,label:msg.d[i].Text});rsp(rst);},");
                 sb.Append("error:function(msg,text){rsp();alert(msg+\"--\"+text);}});}");
@@ -399,25 +398,25 @@ namespace ESWCtrls
             string selectJS = string.Format("this.value=ui.item.label;$(\"#{0}_data\").val(ui.item.value);", ClientID);
             string changeJS = string.Format("if(ui.item==null) $(\"#{0}_data\").val(\"\");", ClientID);
 
-            if(_clientEvents != null)
+            if (_clientEvents != null)
             {
-                if(!string.IsNullOrEmpty(ClientSideEvents.Create))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Create))
                     opts.Add("create:function(event,ui){" + ClientSideEvents.Create + "}");
-                if(!string.IsNullOrEmpty(ClientSideEvents.Search))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Search))
                     opts.Add("search:function(event,ui){" + ClientSideEvents.Search + "}");
-                if(!string.IsNullOrEmpty(ClientSideEvents.Open))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Open))
                     opts.Add("open:function(event,ui){" + ClientSideEvents.Open + "}");
-                if(!string.IsNullOrEmpty(ClientSideEvents.Focus))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Focus))
                     opts.Add("focus:function(event,ui){" + ClientSideEvents.Focus + "}");
-                if(!string.IsNullOrEmpty(ClientSideEvents.Close))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Close))
                     opts.Add("close:function(event,ui){" + ClientSideEvents.Close + "}");
 
-                if(!string.IsNullOrEmpty(ClientSideEvents.Select))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Select))
                     opts.Add(string.Format("select:function(event,ui){{{0}{1};return false;}}", selectJS, ClientSideEvents.Select));
                 else
                     opts.Add(string.Format("select:function(event,ui){{{0}return false;}}", selectJS));
 
-                if(!string.IsNullOrEmpty(ClientSideEvents.Change))
+                if (!string.IsNullOrEmpty(ClientSideEvents.Change))
                     opts.Add(string.Format("change:function(event,ui){{{0}{1}}}", changeJS, ClientSideEvents.Change));
                 else
                     opts.Add(string.Format("change:function(event,ui){{{0}}}", changeJS));
@@ -441,7 +440,7 @@ namespace ESWCtrls
             AddAttributesToRender(writer);
             writer.AddAttribute(HtmlTextWriterAttribute.Name, UniqueID);
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text");
-            if(!string.IsNullOrEmpty(SelectedText))
+            if (!string.IsNullOrEmpty(SelectedText))
                 writer.AddAttribute(HtmlTextWriterAttribute.Value, SelectedText);
             writer.RenderBeginTag(HtmlTextWriterTag.Input);
             writer.RenderEndTag();
@@ -458,9 +457,9 @@ namespace ESWCtrls
         protected override void TrackViewState()
         {
             base.TrackViewState();
-            if(_items != null) ((IStateManager)_items).TrackViewState();
-            if(_pos != null) _pos.TrackViewState();
-            if(_clientEvents != null) _clientEvents.TrackViewState();
+            if (_items != null) ((IStateManager)_items).TrackViewState();
+            if (_pos != null) _pos.TrackViewState();
+            if (_clientEvents != null) _clientEvents.TrackViewState();
         }
 
 
@@ -471,12 +470,12 @@ namespace ESWCtrls
         protected override void LoadViewState(object savedState)
         {
             object[] states = (object[])savedState;
-            if(states != null)
+            if (states != null)
             {
-                if(states[0] != null) base.LoadViewState(states[0]);
-                if(states[1] != null) ((IStateManager)Items).LoadViewState(states[1]);
-                if(states[2] != null) Position.LoadViewState(states[2]);
-                if(states[3] != null) ClientSideEvents.LoadViewState(states[3]);
+                if (states[0] != null) base.LoadViewState(states[0]);
+                if (states[1] != null) ((IStateManager)Items).LoadViewState(states[1]);
+                if (states[2] != null) Position.LoadViewState(states[2]);
+                if (states[3] != null) ClientSideEvents.LoadViewState(states[3]);
             }
         }
 
@@ -491,9 +490,9 @@ namespace ESWCtrls
         {
             object[] states = new object[4];
             states[0] = base.SaveViewState();
-            if(_items != null) states[1] = ((IStateManager)Items).SaveViewState();
-            if(_pos != null) states[2] = _pos.SaveViewState();
-            if(_clientEvents != null) states[3] = _clientEvents.SaveViewState();
+            if (_items != null) states[1] = ((IStateManager)Items).SaveViewState();
+            if (_pos != null) states[2] = _pos.SaveViewState();
+            if (_clientEvents != null) states[3] = _clientEvents.SaveViewState();
             return states;
         }
 
@@ -517,27 +516,27 @@ namespace ESWCtrls
         public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
             ListItem oldItem = new ListItem(SelectedText, SelectedValue);
-            if(Items.Count > 0)
+            if (Items.Count > 0)
             {
                 ListItem i = Items.FindByValue(SelectedValue);
-                if(i == null)
+                if (i == null)
                     Items.FindByText(SelectedText);
 
-                if(i != null)
+                if (i != null)
                     oldItem = i;
             }
-            
+
             // Check to see if the main text is set
-            if(postCollection[UniqueID] != null)
+            if (postCollection[UniqueID] != null)
             {
                 // See if we have the data value
-                if(postCollection[ClientID + "_data"] != null)
+                if (postCollection[ClientID + "_data"] != null)
                 {
                     // See if we have items, search for the selected one, and select it, or add it if it doesn't exist
-                    if(Items.Count > 0)
+                    if (Items.Count > 0)
                     {
                         ListItem i = Items.FindByValue(postCollection[ClientID + "_data"]);
-                        if(i != null)
+                        if (i != null)
                         {
                             SelectedValue = i.Value;
                             SelectedText = i.Text;
@@ -545,7 +544,7 @@ namespace ESWCtrls
                         else
                         {
                             i = Items.FindByText(postCollection[UniqueID]);
-                            if(i != null)
+                            if (i != null)
                             {
                                 SelectedValue = i.Value;
                                 SelectedText = i.Text;
@@ -568,10 +567,10 @@ namespace ESWCtrls
                 else
                 {
                     // See if we have items, search for the selected one, and select it, or add it if it doesn't exist
-                    if(Items.Count > 0)
+                    if (Items.Count > 0)
                     {
                         ListItem i = Items.FindByText(postCollection[UniqueID]);
-                        if(i != null)
+                        if (i != null)
                         {
                             SelectedValue = i.Value;
                             SelectedText = i.Text;
@@ -590,12 +589,12 @@ namespace ESWCtrls
                     }
                 }
             }
-            else if(postCollection[ClientID + "_data"] != null)
+            else if (postCollection[ClientID + "_data"] != null)
             {
-                if(Items.Count > 0)
+                if (Items.Count > 0)
                 {
                     ListItem i = Items.FindByValue(postCollection[ClientID + "_data"]);
-                    if(i != null)
+                    if (i != null)
                     {
                         SelectedValue = i.Value;
                         SelectedText = i.Text;
@@ -622,14 +621,14 @@ namespace ESWCtrls
         /// </summary>
         public void RaisePostDataChangedEvent()
         {
-            if(SelectionChanged != null)
+            if (SelectionChanged != null)
                 SelectionChanged(this, new EventArgs());
         }
 
         #endregion
 
         #region Private
-        
+
         private Positioning _pos;
         private AutoCompleteClientEvents _clientEvents;
         private ListItemCollection _items;
@@ -651,7 +650,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Create"] == null)
+                if (ViewState["Create"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Create"];
@@ -667,7 +666,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Search"] == null)
+                if (ViewState["Search"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Search"];
@@ -683,7 +682,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Open"] == null)
+                if (ViewState["Open"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Open"];
@@ -699,7 +698,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Focus"] == null)
+                if (ViewState["Focus"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Focus"];
@@ -715,7 +714,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Select"] == null)
+                if (ViewState["Select"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Select"];
@@ -731,7 +730,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Close"] == null)
+                if (ViewState["Close"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Close"];
@@ -747,7 +746,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Change"] == null)
+                if (ViewState["Change"] == null)
                     return string.Empty;
                 else
                     return (string)ViewState["Change"];
