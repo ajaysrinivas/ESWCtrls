@@ -136,15 +136,15 @@ namespace ESWCtrls
         /// <summary>
         /// The Minimum date mode
         /// </summary>
-        [Category("Behaviour"), DefaultValue(DateRangeMode.Fixed)]
-        public DateRangeMode MinDateControlMode
+        [Category("Behaviour"), DefaultValue(RangeMode.Fixed)]
+        public RangeMode MinDateControlMode
         {
             get
             {
                 if(ViewState["MinDateControlMode"] != null)
-                    return (DateRangeMode)ViewState["MinDateControlMode"];
+                    return (RangeMode)ViewState["MinDateControlMode"];
                 else
-                    return DateRangeMode.Fixed;
+                    return RangeMode.Fixed;
             }
             set { ViewState["MinDateControlMode"] = value; }
         }
@@ -168,15 +168,15 @@ namespace ESWCtrls
         /// <summary>
         /// The Maximum date mode
         /// </summary>
-        [Category("Behaviour"), DefaultValue(DateRangeMode.Fixed)]
-        public DateRangeMode MaxDateControlMode
+        [Category("Behaviour"), DefaultValue(RangeMode.Fixed)]
+        public RangeMode MaxDateControlMode
         {
             get
             {
                 if(ViewState["MaxDateControlMode"] != null)
-                    return (DateRangeMode)ViewState["MaxDateControlMode"];
+                    return (RangeMode)ViewState["MaxDateControlMode"];
                 else
-                    return DateRangeMode.Fixed;
+                    return RangeMode.Fixed;
             }
             set { ViewState["MaxDateControlMode"] = value; }
         }
@@ -611,7 +611,7 @@ namespace ESWCtrls
                 {
                     close.AppendFormat("\"#{0}\",", altCtrl.ClientID);
 
-                    if(MinDateControlMode == DateRangeMode.Fixed)
+                    if(MinDateControlMode == RangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
                             create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, CurrentDate.Value.ToString(DateFormat));
@@ -623,7 +623,7 @@ namespace ESWCtrls
                 {
                     close.AppendFormat("\"{0}\",", MinDateControl);
 
-                    if(MinDateControlMode == DateRangeMode.Fixed)
+                    if(MinDateControlMode == RangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
                             create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, CurrentDate.Value.ToString(DateFormat));
@@ -643,7 +643,7 @@ namespace ESWCtrls
                 if(altCtrl != null)
                 {
                     close.AppendFormat("\"#{0}\",", altCtrl.ClientID);
-                    if(MaxDateControlMode == DateRangeMode.Fixed)
+                    if(MaxDateControlMode == RangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
                             create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, CurrentDate.Value.ToString(DateFormat));
@@ -654,7 +654,7 @@ namespace ESWCtrls
                 else
                 {
                     close.AppendFormat("\"{0}\",", MaxDateControl);
-                    if(MaxDateControlMode == DateRangeMode.Fixed)
+                    if(MaxDateControlMode == RangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
                             create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, CurrentDate.Value.ToString(DateFormat));

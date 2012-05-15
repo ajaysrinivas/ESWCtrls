@@ -165,7 +165,7 @@ namespace ESWCtrls
         /// <summary>The marker is upper-latin (A, B, C, D, E, etc.)</summary>
         UpperLatin,
         /// <summary>The marker is upper-roman (I, II, III, IV, V, etc.)</summary>
-        UpperRoman 	
+        UpperRoman
     }
 
     /// <summary>The position of the markers in the list</summary>
@@ -693,19 +693,20 @@ namespace ESWCtrls
     /// <summary>
     /// The way the tabs behave
     /// </summary>
-    public enum TabStyle { 
+    public enum TabStyle
+    {
         /// <summary>
         /// The tab will be processed serverside, Only the current page is rendered
         /// </summary>
-        ServerSide, 
+        ServerSide,
         /// <summary>
         /// The tab will be processed client side, good for maintaining diffrent styles from jquery.
         /// </summary>
-        ClientSide, 
+        ClientSide,
         /// <summary>
         /// Uses jquery to handle tabs
         /// </summary>
-        jQuery 
+        jQuery
     }
 
     #endregion
@@ -762,7 +763,7 @@ namespace ESWCtrls
     /// <summary>
     /// The min/max control modes how the control should control the min/max of the other control
     /// </summary>
-    public enum DateRangeMode
+    public enum RangeMode
     {
         /// <summary>
         /// Uses min/max date on the other control. So the limit is hard fixed on the control
@@ -820,5 +821,5 @@ namespace ESWCtrls
         };
     }
 
-#endregion
+    #endregion
 }

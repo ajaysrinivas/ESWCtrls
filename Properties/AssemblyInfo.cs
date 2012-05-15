@@ -74,6 +74,10 @@ using System.Web.UI;
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.slide.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.transfer.js", "text/javascript")]
 
+// Additiona jQuery Timepicker
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.ui.timepicker.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Styles.timepicker.css", "text/css")]
+
 //My Jquery
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.panels.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.sortcolumn.js", "text/javascript")]
@@ -81,6 +85,7 @@ using System.Web.UI;
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.tabctrl.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.popup.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.datepicker.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.timepicker.js", "text/javascript")]
 
 //Number Validator
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.NumberValidator.js", "text/javascript")]

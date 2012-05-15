@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI.WebControls;
-using System.Web.UI;
 using System.ComponentModel;
+using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace ESWCtrls
 {
     /// <summary>
     /// Extended Button class that uses jquery button
     /// </summary>
-    [DefaultProperty("Text"),ToolboxData("<{0}:JButton runat=server />")]
+    [DefaultProperty("Text"), ToolboxData("<{0}:JButton runat=server />")]
     public class JButton : WebControl, IPostBackEventHandler, IPostBackDataHandler
     {
         #region Appearance
@@ -24,7 +23,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Text"] == null)
+                if (ViewState["Text"] == null)
                     return "";
                 else
                     return (string)ViewState["Text"];
@@ -40,7 +39,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["ActiveText"] == null)
+                if (ViewState["ActiveText"] == null)
                     return Text;
                 else
                     return (string)ViewState["ActiveText"];
@@ -56,7 +55,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["ShowText"] == null)
+                if (ViewState["ShowText"] == null)
                     return true;
                 else
                     return (bool)ViewState["ShowText"];
@@ -72,7 +71,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["HighlightActive"] == null)
+                if (ViewState["HighlightActive"] == null)
                     return false;
                 else
                     return (bool)ViewState["HighlightActive"];
@@ -88,7 +87,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Primary"] == null)
+                if (ViewState["Primary"] == null)
                     return JButtonIcon.None;
                 else
                     return (JButtonIcon)ViewState["Primary"];
@@ -104,7 +103,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Secondary"] == null)
+                if (ViewState["Secondary"] == null)
                     return JButtonIcon.None;
                 else
                     return (JButtonIcon)ViewState["Secondary"];
@@ -120,7 +119,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["ActivePrimary"] == null)
+                if (ViewState["ActivePrimary"] == null)
                     return Primary;
                 else
                     return (JButtonIcon)ViewState["ActivePrimary"];
@@ -136,7 +135,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["ActiveSecondary"] == null)
+                if (ViewState["ActiveSecondary"] == null)
                     return Secondary;
                 else
                     return (JButtonIcon)ViewState["ActiveSecondary"];
@@ -156,7 +155,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Toogle"] == null)
+                if (ViewState["Toogle"] == null)
                     return false;
                 else
                     return (bool)ViewState["Toogle"];
@@ -172,14 +171,14 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Active"] == null)
+                if (ViewState["Active"] == null)
                     return false;
                 else
                     return (bool)ViewState["Active"];
             }
             set
             {
-                if(Toggle) ViewState["Active"] = value;
+                if (Toggle) ViewState["Active"] = value;
             }
         }
 
@@ -191,7 +190,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["CommandName"] == null)
+                if (ViewState["CommandName"] == null)
                     return "";
                 else
                     return (string)ViewState["CommandName"];
@@ -207,7 +206,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["CommandArgument"] == null)
+                if (ViewState["CommandArgument"] == null)
                     return "";
                 else
                     return (string)ViewState["CommandArgument"];
@@ -223,7 +222,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["OnClientClick"] == null)
+                if (ViewState["OnClientClick"] == null)
                     return "";
                 else
                     return (string)ViewState["OnClientClick"];
@@ -239,7 +238,7 @@ namespace ESWCtrls
         {
             get
             {
-                if(ViewState["Postback"] == null)
+                if (ViewState["Postback"] == null)
                     return true;
                 else
                     return (bool)ViewState["Postback"];
@@ -263,17 +262,17 @@ namespace ESWCtrls
             Script.AddResourceScript(Page, "jquery.ui.button.js");
             List<string> opts = new List<string>();
 
-            if(!ShowText)
+            if (!ShowText)
                 opts.Add("text:false");
 
-            if(Toggle)
+            if (Toggle)
             {
-                if(!Postback && (Text != ActiveText || Primary != ActivePrimary || Secondary != ActiveSecondary))
+                if (!Postback && (Text != ActiveText || Primary != ActivePrimary || Secondary != ActiveSecondary))
                 {
                     List<string> actOpts = CalcOpts(ActiveText, ActivePrimary, ActiveSecondary);
                     List<string> natOpts = CalcOpts(Text, Primary, Secondary);
 
-                    if(Active)
+                    if (Active)
                         opts.AddRange(actOpts);
                     else
                         opts.AddRange(natOpts);
@@ -289,7 +288,7 @@ namespace ESWCtrls
                 }
                 else
                 {
-                    if(Active)
+                    if (Active)
                         opts.AddRange(CalcOpts(ActiveText, ActivePrimary, ActiveSecondary));
                     else
                         opts.AddRange(CalcOpts(Text, Primary, Secondary));
@@ -312,15 +311,15 @@ namespace ESWCtrls
             base.AddAttributesToRender(writer);
             writer.AddAttribute(HtmlTextWriterAttribute.Name, UniqueID);
 
-            if(Toggle && (HighlightActive || (Text == ActiveText && Primary == ActivePrimary && Secondary == ActiveSecondary)))
+            if (Toggle && (HighlightActive || (Text == ActiveText && Primary == ActivePrimary && Secondary == ActiveSecondary)))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Type, "checkbox");
-                if(Active)
+                if (Active)
                     writer.AddAttribute(HtmlTextWriterAttribute.Checked, "checked");
 
-                if(Postback)
+                if (Postback)
                 {
-                    if(!string.IsNullOrEmpty(OnClientClick))
+                    if (!string.IsNullOrEmpty(OnClientClick))
                         writer.AddAttribute(HtmlTextWriterAttribute.Onclick, OnClientClick + ";" + Page.ClientScript.GetPostBackEventReference(this, "Clicked"));
                     else
                         writer.AddAttribute(HtmlTextWriterAttribute.Onclick, Page.ClientScript.GetPostBackEventReference(this, "Clicked"));
@@ -330,23 +329,25 @@ namespace ESWCtrls
                 writer.RenderEndTag();
                 writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
                 writer.RenderBeginTag(HtmlTextWriterTag.Label);
-                if(Active)
+                if (Active)
                     writer.Write(ActiveText);
                 else
                     writer.Write(Text);
                 writer.RenderEndTag();
             }
-            
-            if(Postback)
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "submit");
-            if(!string.IsNullOrEmpty(OnClientClick))
-                writer.AddAttribute(HtmlTextWriterAttribute.Onclick, OnClientClick);
-            writer.RenderBeginTag(HtmlTextWriterTag.Button);
-            if(Active)
-                writer.Write(ActiveText);
             else
-                writer.Write(Text);
-            writer.RenderEndTag();
+            {
+                if (Postback)
+                    writer.AddAttribute(HtmlTextWriterAttribute.Type, "submit");
+                if (!string.IsNullOrEmpty(OnClientClick))
+                    writer.AddAttribute(HtmlTextWriterAttribute.Onclick, OnClientClick);
+                writer.RenderBeginTag(HtmlTextWriterTag.Button);
+                if (Active)
+                    writer.Write(ActiveText);
+                else
+                    writer.Write(Text);
+                writer.RenderEndTag();
+            }
         }
 
         #endregion
@@ -368,14 +369,14 @@ namespace ESWCtrls
         /// <param name="eventArgument">A <see cref="T:System.String"/> that represents an optional event argument to be passed to the event handler.</param>
         public void RaisePostBackEvent(string eventArgument)
         {
-            if(Toggle) Active = !Active;
-            if(Click != null)
+            if (Toggle) Active = !Active;
+            if (Click != null)
                 Click(this, new EventArgs());
 
-            if(!string.IsNullOrEmpty(CommandName))
+            if (!string.IsNullOrEmpty(CommandName))
             {
                 CommandEventArgs args = new CommandEventArgs(CommandName, CommandArgument);
-                if(Command != null)
+                if (Command != null)
                     Command(this, args);
 
                 RaiseBubbleEvent(this, args);
@@ -392,12 +393,12 @@ namespace ESWCtrls
         /// </returns>
         public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
-            if(postCollection[postDataKey + "_act"] != null)
+            if (postCollection[postDataKey + "_act"] != null)
             {
-                if(postCollection[postDataKey + "_act"] != Active.ToString().ToLower())
+                if (postCollection[postDataKey + "_act"] != Active.ToString().ToLower())
                     Page.RegisterRequiresRaiseEvent(this);
             }
-            else if(postCollection[postDataKey] != null)
+            else if (postCollection[postDataKey] != null)
                 Page.RegisterRequiresRaiseEvent(this);
             return false;
         }
@@ -418,17 +419,17 @@ namespace ESWCtrls
         {
             List<string> rst = new List<string>();
 
-            if(!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text))
                 rst.Add(string.Format("label:\"{0}\"", text));
 
-            if(primary != JButtonIcon.None)
+            if (primary != JButtonIcon.None)
             {
-                if(secondary != JButtonIcon.None)
+                if (secondary != JButtonIcon.None)
                     rst.Add(string.Format("icons:{{primary:\"ui-icon-{0}\",secondary:\"ui-icon-{1}\"}}", Constants.IconStrings[(int)primary], Constants.IconStrings[(int)secondary]));
                 else
                     rst.Add(string.Format("icons:{{primary:\"ui-icon-{0}\"}}", Constants.IconStrings[(int)primary]));
             }
-            else if(secondary != JButtonIcon.None)
+            else if (secondary != JButtonIcon.None)
                 rst.Add(string.Format("icons:{{secondary:\"ui-icon-{0}\"}}", Constants.IconStrings[(int)secondary]));
 
             return rst;
