@@ -12,6 +12,12 @@ namespace ESWCtrls
     public class CompressPage : System.Web.UI.Page
     {
 
+        protected override void OnPreRenderComplete(EventArgs e)
+        {
+            Script.PreRenderComplete(this);
+            base.OnPreRenderComplete(e);
+        }
+
         /// <summary>
         /// Loads the compressed viewstate
         /// </summary>
@@ -20,7 +26,7 @@ namespace ESWCtrls
         protected override object LoadPageStateFromPersistenceMedium()
         {
             string viewState = Request.Form["__VSTATE"];
-            if(viewState.StartsWith("C$"))
+            if (viewState.StartsWith("C$"))
             {
                 byte[] bytes = Convert.FromBase64String(viewState.Substring(2));
 
@@ -32,7 +38,7 @@ namespace ESWCtrls
                 byte[] buff = new byte[65];
                 int read = -1;
                 read = gzip.Read(buff, 0, buff.Length);
-                while(read > 0)
+                while (read > 0)
                 {
                     ms2.Write(buff, 0, read);
                     read = gzip.Read(buff, 0, buff.Length);
@@ -62,7 +68,7 @@ namespace ESWCtrls
             string vss = sw.ToString();
 
 
-            if(vss.Length > 512)
+            if (vss.Length > 512)
             {
                 byte[] bytes = Convert.FromBase64String(vss);
 
@@ -75,7 +81,7 @@ namespace ESWCtrls
                 bytes = ms.ToArray();
 
                 string vsc = Convert.ToBase64String(bytes);
-                if(vsc.Length < vss.Length)
+                if (vsc.Length < vss.Length)
                     ScriptManager.RegisterHiddenField(Page, "__VSTATE", "C$" + vsc);
                 else
                     ScriptManager.RegisterHiddenField(Page, "__VSTATE", vss);
@@ -124,7 +130,7 @@ namespace ESWCtrls
         ///
         public override string NewLine
         {
-            get { return " ";  }
+            get { return " "; }
             set { base.NewLine = value; }
         }
 

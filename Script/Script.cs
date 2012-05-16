@@ -40,7 +40,7 @@ namespace ESWCtrls
             {
                 _resScripts.Clear();
                 string[] names = value.Split(',');
-                foreach (string name in names)
+                foreach(string name in names)
                     AddWithDepends(name.Trim());
             }
         }
@@ -53,7 +53,7 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["TryCDN"] != null)
+                if(ViewState["TryCDN"] != null)
                     return (bool)ViewState["TryCDN"];
                 else
                     return true;
@@ -69,7 +69,7 @@ namespace ESWCtrls
         {
             get
             {
-                if (ViewState["UseScriptManager"] == null)
+                if(ViewState["UseScriptManager"] == null)
                     return false;
                 else
                     return (bool)ViewState["UseScriptManager"];
@@ -132,18 +132,18 @@ namespace ESWCtrls
         {
             Script s = Current(page);
 
-            if (s._startScripts.Count > 0)
+            if(s._startScripts.Count > 0)
             {
                 s._startScripts.Sort();
 
                 string endPart = string.Empty;
-                if (s.Context.IsDebuggingEnabled)
+                if(s.Context.IsDebuggingEnabled)
                     endPart = "\n";
 
                 StringBuilder sb = new StringBuilder();
                 sb.Append("$(document).ready(function(){" + endPart);
 
-                foreach (StartUpScript ss in s._startScripts)
+                foreach(StartUpScript ss in s._startScripts)
                     sb.Append(ss.Text + endPart);
 
                 sb.Append("});" + endPart);
@@ -157,15 +157,15 @@ namespace ESWCtrls
         ///
         protected override void Render(HtmlTextWriter writer)
         {
-            if (_resScripts.Count > 0)
+            if(_resScripts.Count > 0)
             {
                 List<string> rs = new List<string>(_resScripts);
-                if (TryCDN)
+                if(TryCDN)
                 {
-                    if (rs.Contains("jquery.js"))
+                    if(rs.Contains("jquery.js"))
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js");
+                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
                         writer.RenderBeginTag(HtmlTextWriterTag.Script);
                         writer.RenderEndTag();
                         writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
@@ -175,10 +175,10 @@ namespace ESWCtrls
                     }
 
 
-                    if (rs.Contains("jquery.ui.core.js") || rs.Contains("jquery.effects.core.js"))
+                    if(rs.Contains("jquery.ui.core.js") || rs.Contains("jquery.effects.core.js"))
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js");
+                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.20/jquery-ui.min.js");
                         writer.RenderBeginTag(HtmlTextWriterTag.Script);
                         writer.RenderEndTag();
                         writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
@@ -190,26 +190,26 @@ namespace ESWCtrls
                     rs.RemoveAll(x => x == "jquery.js" || x.Contains("jquery.ui.") || x.Contains("jquery.effects."));
                 }
 
-                if (!string.IsNullOrEmpty(Extension))
+                if(!string.IsNullOrEmpty(Extension))
                 {
                     string filename = CalcFilename(rs);
                     string fullFilename = Path.GetTempPath() + "esw_scripts\\" + filename;
                     string scriptContents = null;
 
-                    if (!File.Exists(fullFilename + ".js"))
+                    if(!File.Exists(fullFilename + ".js"))
                     {
                         scriptContents = ScriptContents(rs);
-                        if (!Directory.Exists(Path.GetTempPath() + "esw_scripts"))
+                        if(!Directory.Exists(Path.GetTempPath() + "esw_scripts"))
                             Directory.CreateDirectory(Path.GetTempPath() + "esw_scripts");
-                        using (StreamWriter sw = new StreamWriter(fullFilename + ".js"))
+                        using(StreamWriter sw = new StreamWriter(fullFilename + ".js"))
                         {
                             sw.Write(scriptContents);
                         }
                     }
 
-                    if (!File.Exists(fullFilename + ".jsc"))
+                    if(!File.Exists(fullFilename + ".jsc"))
                     {
-                        if (string.IsNullOrEmpty(scriptContents))
+                        if(string.IsNullOrEmpty(scriptContents))
                             scriptContents = ScriptContents(rs);
 
                         byte[] bytes = Encoding.UTF8.GetBytes(scriptContents);
@@ -219,9 +219,9 @@ namespace ESWCtrls
                         gzip.Close();
                         bytes = ms.ToArray();
 
-                        if (!Directory.Exists(Path.GetTempPath() + "esw_scripts"))
+                        if(!Directory.Exists(Path.GetTempPath() + "esw_scripts"))
                             Directory.CreateDirectory(Path.GetTempPath() + "esw_scripts");
-                        using (FileStream fs = new FileStream(fullFilename + ".jsc", FileMode.OpenOrCreate))
+                        using(FileStream fs = new FileStream(fullFilename + ".jsc", FileMode.OpenOrCreate))
                         {
                             fs.Write(bytes, 0, bytes.Length);
                         }
@@ -234,10 +234,10 @@ namespace ESWCtrls
                 }
                 else
                 {
-                    foreach (string name in rs)
+                    foreach(string name in rs)
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                        if (name == "jquery.js")
+                        if(name == "jquery.js")
                             writer.AddAttribute(HtmlTextWriterAttribute.Src, Page.ClientScript.GetWebResourceUrl(this.GetType(), "ESWCtrls.ResEmbed.Scripts.jquery.jquery.js"));
                         else
                             writer.AddAttribute(HtmlTextWriterAttribute.Src, Page.ClientScript.GetWebResourceUrl(this.GetType(), "ESWCtrls.ResEmbed.Scripts." + name));
@@ -247,13 +247,13 @@ namespace ESWCtrls
                 }
             }
 
-            if (_startScripts.Count > 0)
+            if(_startScripts.Count > 0)
             {
                 _startScripts.Sort();
 
-                if (UseScriptManager)
+                if(UseScriptManager)
                 {
-                    foreach (StartUpScript s in _startScripts)
+                    foreach(StartUpScript s in _startScripts)
                         ScriptManager.RegisterStartupScript(s.Ctrl, s.Ctrl.GetType(), s.Key, s.Text, true);
                 }
                 else
@@ -266,32 +266,32 @@ namespace ESWCtrls
 
 
                     string endPart = string.Empty;
-                    if (Context.IsDebuggingEnabled)
+                    if(Context.IsDebuggingEnabled)
                         endPart = "\n";
 
-                    if (upnl)
+                    if(upnl)
                     {
                         writer.Write("$(document).ready(function(){" + endPart);
 
                         bool anyUPnl = false;
-                        foreach (StartUpScript s in _startScripts)
+                        foreach(StartUpScript s in _startScripts)
                         {
-                            if (!s.InUpdatePanel)
+                            if(!s.InUpdatePanel)
                                 writer.Write(s.Text + endPart);
                             else
                                 anyUPnl = true;
                         }
 
-                        if (anyUPnl)
+                        if(anyUPnl)
                         {
                             writer.Write("Sys.WebForms.PageRequestManager.getInstance().add_endRequest(esw_script_SMAJAXEnd);" + endPart);
                             writer.Write("esw_script_SMAJAXEnd();" + endPart);
                             writer.Write("});" + endPart + endPart);
                             writer.Write("function esw_script_SMAJAXEnd(s,a){" + endPart);
 
-                            foreach (StartUpScript s in _startScripts)
+                            foreach(StartUpScript s in _startScripts)
                             {
-                                if (s.InUpdatePanel)
+                                if(s.InUpdatePanel)
                                     writer.Write(s.Text + endPart);
                             }
 
@@ -304,7 +304,7 @@ namespace ESWCtrls
                     {
                         writer.Write("$(document).ready(function(){" + endPart);
 
-                        foreach (StartUpScript s in _startScripts)
+                        foreach(StartUpScript s in _startScripts)
                             writer.Write(s.Text + endPart);
 
                         writer.Write("});" + endPart);
@@ -327,7 +327,7 @@ namespace ESWCtrls
         internal static void AddResourceScript(Page page, params string[] names)
         {
             Script s = Current(page);
-            foreach (string n in names)
+            foreach(string n in names)
                 s.AddWithDepends(n);
         }
 
@@ -335,56 +335,33 @@ namespace ESWCtrls
 
         private void AddWithDepends(string name)
         {
-            if (name.StartsWith("jquery") && name != "jquery.js")
+            if(name.StartsWith("jquery") && name != "jquery.js")
             {
-                if (name == "jquery.effects.core.js" || name == "jquery.ui.core.js")
-                    AddWithDepends("jquery.js");
-                else if (name.StartsWith("jquery.effects."))
+                AddWithDepends("jquery.js");
+
+                if(name.StartsWith("jquery.ui.") && name != "jquery.ui.core.js")
+                    AddWithDepends("jquery.ui.core.js");
+                else if(name.StartsWith("jquery.effects.") && name != "jquery.effects.core.js")
                     AddWithDepends("jquery.effects.core.js");
-                else if (name.StartsWith("jquery.ui."))
-                {
-                    using (StreamReader sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("ESWCtrls.ResEmbed.Scripts." + name)))
-                    {
-                        string line = sr.ReadLine();
-                        bool depends = false;
-                        while (line != null && !line.Contains("*/"))
-                        {
-                            if (!depends)
-                            {
-                                if (line.Contains("Depends:"))
-                                    depends = true;
-                            }
-                            else
-                            {
-                                line = line.Replace('*', ' ').Trim();
-                                if (!string.IsNullOrEmpty(line))
-                                    AddWithDepends(line);
-                            }
-                            line = sr.ReadLine();
-                        }
-                    }
-                }
-                else
-                    AddWithDepends("jquery.js");
             }
 
-            if (!_resScripts.Contains(name))
+            if(!_resScripts.Contains(name))
                 _resScripts.Add(name);
         }
 
         private static Script Current(Page page)
         {
             Script s = null;
-            foreach (Control c in page.Header.Controls)
+            foreach(Control c in page.Header.Controls)
             {
-                if (c is ESWCtrls.Script)
+                if(c is ESWCtrls.Script)
                 {
                     s = c as ESWCtrls.Script;
                     break;
                 }
             }
 
-            if (s == null)
+            if(s == null)
             {
                 s = new Script();
                 page.Header.Controls.Add(s);
@@ -404,13 +381,13 @@ namespace ESWCtrls
         private string ScriptContents(List<string> nameList)
         {
             StringBuilder rst = new StringBuilder();
-            foreach (string name in nameList)
+            foreach(string name in nameList)
             {
                 string resName = "ESWCtrls.ResEmbed.Scripts." + name;
-                if (name == "jquery.js")
+                if(name == "jquery.js")
                     resName = "ESWCtrls.ResEmbed.Scripts.jquery.jquery.js";
 
-                using (StreamReader sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(resName)))
+                using(StreamReader sr = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(resName)))
                 {
                     rst.Append(sr.ReadToEnd());
                     rst.AppendLine(";");
@@ -427,7 +404,7 @@ namespace ESWCtrls
         {
             get
             {
-                if (_wscExt == null)
+                if(_wscExt == null)
                     GetExtPath();
                 return _wscExt;
             }
@@ -440,7 +417,7 @@ namespace ESWCtrls
         {
             get
             {
-                if (_wscPath == null)
+                if(_wscPath == null)
                     GetExtPath();
                 return _wscPath;
             }
@@ -458,15 +435,15 @@ namespace ESWCtrls
 
             // look for iis6 and below section
             XmlNodeList nodes = doc.SelectNodes("//system.web/httpHandlers/add[@type='ESWCtrls.ScriptHandler, ESWCtrls']");
-            if (nodes.Count == 0) // now check iis7
+            if(nodes.Count == 0) // now check iis7
                 nodes = doc.SelectNodes("//system.webServer/handlers/add[@type='ESWCtrls.ScriptHandler, ESWCtrls']");
 
-            if (nodes.Count > 0)
+            if(nodes.Count > 0)
             {
                 XmlAttribute a = nodes[0].Attributes["path"];
-                if (a != null)
+                if(a != null)
                 {
-                    if (a.Value.StartsWith("*"))
+                    if(a.Value.StartsWith("*"))
                     {
                         _wscExt = a.Value.Substring(1);
                         _wscPath = "";
@@ -513,10 +490,10 @@ namespace ESWCtrls
 
             public int CompareTo(object obj)
             {
-                if (obj is StartUpScript)
+                if(obj is StartUpScript)
                 {
                     StartUpScript s2 = (StartUpScript)obj;
-                    if (!Priority.Equals(s2.Priority))
+                    if(!Priority.Equals(s2.Priority))
                         return Comparer.Default.Compare(Priority, s2.Priority);
                     else
                         return Comparer.Default.Compare(Key, s2.Key);
@@ -532,9 +509,9 @@ namespace ESWCtrls
         {
             public new void Add(StartUpScript item)
             {
-                foreach (StartUpScript s in this)
+                foreach(StartUpScript s in this)
                 {
-                    if (s.Key == item.Key)
+                    if(s.Key == item.Key)
                         return;
                 }
 
@@ -543,9 +520,9 @@ namespace ESWCtrls
 
             public bool ContainsKey(string key)
             {
-                foreach (StartUpScript s in this)
+                foreach(StartUpScript s in this)
                 {
-                    if (s.Key == key)
+                    if(s.Key == key)
                         return true;
                 }
 

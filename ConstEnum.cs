@@ -763,7 +763,7 @@ namespace ESWCtrls
     /// <summary>
     /// The min/max control modes how the control should control the min/max of the other control
     /// </summary>
-    public enum RangeMode
+    public enum DateRangeMode
     {
         /// <summary>
         /// Uses min/max date on the other control. So the limit is hard fixed on the control

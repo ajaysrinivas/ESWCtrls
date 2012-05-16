@@ -120,7 +120,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Schedule\TimePicker.cs" />
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptHandler.cs" />
     <Compile Include="Slider.cs" />
@@ -294,11 +293,10 @@
     <None Include="ResEmbed\Scripts\jquery\uncompressed\panelmenu.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ResEmbed\Styles\timepicker.css" />
+    <EmbeddedResource Include="ResEmbed\Scripts\jquery\timepicker.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ResEmbed\Scripts\jquery\timepicker.js" />
-    <Content Include="ResEmbed\Scripts\jquery\uncompressed\timepicker.js" />
+    <EmbeddedResource Include="ResEmbed\Styles\timepicker.css" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

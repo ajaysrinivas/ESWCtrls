@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text;
 
 namespace ESWCtrls
 {
@@ -16,9 +16,48 @@ namespace ESWCtrls
     [ToolboxData("<{0}:datepicker runat=\"server\"></{0}:datepicker>")]
     public class DatePicker : WebControl, IPostBackDataHandler
     {
+        #region Enums
+
+        /// <summary>
+        /// The mode of the datepicker
+        /// </summary>
+        public enum DateTimeMode
+        {
+            /// <summary>
+            /// Just the timepicker itself
+            /// </summary>
+            Date,
+            /// <summary>
+            /// Just the time picker
+            /// </summary>
+            Time,
+            /// <summary>
+            /// The date plus time picker
+            /// </summary>
+            DateTime
+        }
+
+        #endregion
+
         #region Properties
 
         #region Behaviour
+
+        /// <summary>
+        /// The mode of the timepicker
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(DateTimeMode.Date)]
+        public DateTimeMode Mode
+        {
+            get
+            {
+                if(ViewState["Mode"] != null)
+                    return (DateTimeMode)ViewState["Mode"];
+                else
+                    return DateTimeMode.Date;
+            }
+            set { ViewState["Mode"] = value; }
+        }
 
         /// <summary>
         /// When a button is used, only show the datepicker when its clicked, not
@@ -136,15 +175,15 @@ namespace ESWCtrls
         /// <summary>
         /// The Minimum date mode
         /// </summary>
-        [Category("Behaviour"), DefaultValue(RangeMode.Fixed)]
-        public RangeMode MinDateControlMode
+        [Category("Behaviour"), DefaultValue(DateRangeMode.Fixed)]
+        public DateRangeMode MinDateControlMode
         {
             get
             {
                 if(ViewState["MinDateControlMode"] != null)
-                    return (RangeMode)ViewState["MinDateControlMode"];
+                    return (DateRangeMode)ViewState["MinDateControlMode"];
                 else
-                    return RangeMode.Fixed;
+                    return DateRangeMode.Fixed;
             }
             set { ViewState["MinDateControlMode"] = value; }
         }
@@ -168,15 +207,15 @@ namespace ESWCtrls
         /// <summary>
         /// The Maximum date mode
         /// </summary>
-        [Category("Behaviour"), DefaultValue(RangeMode.Fixed)]
-        public RangeMode MaxDateControlMode
+        [Category("Behaviour"), DefaultValue(DateRangeMode.Fixed)]
+        public DateRangeMode MaxDateControlMode
         {
             get
             {
                 if(ViewState["MaxDateControlMode"] != null)
-                    return (RangeMode)ViewState["MaxDateControlMode"];
+                    return (DateRangeMode)ViewState["MaxDateControlMode"];
                 else
-                    return RangeMode.Fixed;
+                    return DateRangeMode.Fixed;
             }
             set { ViewState["MaxDateControlMode"] = value; }
         }
@@ -239,22 +278,6 @@ namespace ESWCtrls
             set { ViewState["AllowManualEntry"] = value; }
         }
 
-        /// <summary>
-        /// The date format to use
-        /// </summary>
-        [Category("Behaviour"), DefaultValue("dd/MM/yyyy")]
-        public string DateFormat
-        {
-            get
-            {
-                if(ViewState["DateFormat"] != null)
-                    return (string)ViewState["DateFormat"];
-                else
-                    return "dd/MM/yyyy";
-            }
-            set
-            { ViewState["DateFormat"] = value; }
-        }
 
         /// <summary>
         /// Whether to postback when a date is picked
@@ -289,15 +312,99 @@ namespace ESWCtrls
             }
         }
 
+        #region Time Section
+
+        /// <summary>
+        /// The steps for hour slider (0 Smooth)
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(0)]
+        public int StepHour
+        {
+            get
+            {
+                if(ViewState["StepHour"] != null)
+                    return (int)ViewState["StepHour"];
+                else
+                    return 0;
+            }
+            set { ViewState["StepHour"] = value; }
+        }
+
+        /// <summary>
+        /// The steps for minute slider (0 Smooth)
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(0)]
+        public int StepMinute
+        {
+            get
+            {
+                if(ViewState["StepMin"] != null)
+                    return (int)ViewState["StepMin"];
+                else
+                    return 0;
+            }
+            set { ViewState["StepMin"] = value; }
+        }
+
+        /// <summary>
+        /// The steps for second slider (0 Smooth)
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(0)]
+        public int StepSecond
+        {
+            get
+            {
+                if(ViewState["StepSec"] != null)
+                    return (int)ViewState["StepSec"];
+                else
+                    return 0;
+            }
+            set { ViewState["StepSec"] = value; }
+        }
+
+        /// <summary>
+        /// The steps for millisecond slider (0 Smooth)
+        /// </summary>
+        [Category("Behaviour"), DefaultValue(0)]
+        public int StepMillisecond
+        {
+            get
+            {
+                if(ViewState["StepMil"] != null)
+                    return (int)ViewState["StepMil"];
+                else
+                    return 0;
+            }
+            set { ViewState["StepMil"] = value; }
+        }
+
+        #endregion
 
         #endregion
 
         #region Appearance
 
         /// <summary>
+        /// The date format to use
+        /// </summary>
+        [Category("Appearance"), DefaultValue("dd/MM/yyyy")]
+        public string DateFormat
+        {
+            get
+            {
+                if(ViewState["DateFormat"] != null)
+                    return (string)ViewState["DateFormat"];
+                else
+                    return "dd/MM/yyyy";
+            }
+            set
+            { ViewState["DateFormat"] = value; }
+        }
+
+        /// <summary>
         /// A button image to use to pop up the calendar
         /// </summary>
-        [Category("Behaviour"), DefaultValue(null)]
+        [Category("Appearance"), DefaultValue(null)]
         public string ButtonImage
         {
             get
@@ -313,7 +420,7 @@ namespace ESWCtrls
         /// <summary>
         /// The text to use for a button to open the calendar
         /// </summary>
-        [Category("Behaviour"), DefaultValue(null)]
+        [Category("Appearance"), DefaultValue(null)]
         public string ButtonText
         {
             get
@@ -422,7 +529,187 @@ namespace ESWCtrls
             }
             set { ViewState["Effect"] = value; }
         }
-        
+
+        #region Time Section
+
+        /// <summary>
+        /// The time format to use
+        /// </summary>
+        [Category("Appearance"), DefaultValue("HH:mm")]
+        public string TimeFormat
+        {
+            get
+            {
+                if(ViewState["TimeFormat"] != null)
+                    return (string)ViewState["TimeFormat"];
+                else
+                    return "HH:mm";
+            }
+            set { ViewState["TimeFormat"] = value; }
+        }
+
+        /// <summary>
+        /// Separator between date and time
+        /// </summary>
+        [Category("Appearance"), DefaultValue(" ")]
+        public string Separator
+        {
+            get
+            {
+                if(ViewState["Separator"] != null)
+                    return (string)ViewState["Separator"];
+                else
+                    return " ";
+            }
+            set { ViewState["Separator"] = value; }
+        }
+
+        /// <summary>
+        /// Use 12 hour clock with am pm.
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool AMPM
+        {
+            get
+            {
+                if(ViewState["AMPM"] != null)
+                    return (bool)ViewState["AMPM"];
+                else
+                    return false;
+            }
+            set { ViewState["AMPM"] = value; }
+        }
+
+        /// <summary>
+        /// Show the hour slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(true)]
+        public bool ShowHour
+        {
+            get
+            {
+                if(ViewState["ShowHour"] != null)
+                    return (bool)ViewState["ShowHour"];
+                else
+                    return true;
+            }
+            set { ViewState["ShowHour"] = value; }
+        }
+
+        /// <summary>
+        /// Show the minute slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(true)]
+        public bool ShowMinute
+        {
+            get
+            {
+                if(ViewState["ShowMin"] != null)
+                    return (bool)ViewState["ShowMin"];
+                else
+                    return true;
+            }
+            set { ViewState["ShowMin"] = value; }
+        }
+
+        /// <summary>
+        /// Show the second slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool ShowSecond
+        {
+            get
+            {
+                if(ViewState["ShowSec"] != null)
+                    return (bool)ViewState["ShowSec"];
+                else
+                    return false;
+            }
+            set { ViewState["ShowSec"] = value; }
+        }
+
+        /// <summary>
+        /// Show the Millisecond slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool ShowMillisecond
+        {
+            get
+            {
+                if(ViewState["ShowMil"] != null)
+                    return (bool)ViewState["ShowMil"];
+                else
+                    return false;
+            }
+            set { ViewState["ShowMil"] = value; }
+        }
+
+        /// <summary>
+        /// Show num ticks under hour slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool ShowHourGrid
+        {
+            get
+            {
+                if(ViewState["ShowHourGrid"] != null)
+                    return (bool)ViewState["ShowHourGrid"];
+                else
+                    return false;
+            }
+            set { ViewState["ShowHourGrid"] = value; }
+        }
+
+        /// <summary>
+        /// Show num ticks under minute slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool ShowMinuteGrid
+        {
+            get
+            {
+                if(ViewState["ShowMinuteGrid"] != null)
+                    return (bool)ViewState["ShowMinuteGrid"];
+                else
+                    return false;
+            }
+            set { ViewState["ShowMinuteGrid"] = value; }
+        }
+
+        /// <summary>
+        /// Show num ticks under second slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool ShowSecondGrid
+        {
+            get
+            {
+                if(ViewState["ShowSecondGrid"] != null)
+                    return (bool)ViewState["ShowSecondGrid"];
+                else
+                    return false;
+            }
+            set { ViewState["ShowSecondGrid"] = value; }
+        }
+
+        /// <summary>
+        /// Show num ticks under millisecond slider
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        public bool ShowMilliSecondGrid
+        {
+            get
+            {
+                if(ViewState["ShowMilliSecondGrid"] != null)
+                    return (bool)ViewState["ShowMilliSecondGrid"];
+                else
+                    return false;
+            }
+            set { ViewState["ShowMilliSecondGrid"] = value; }
+        }
+
+        #endregion
+
         #endregion
 
         #region Data
@@ -455,18 +742,76 @@ namespace ESWCtrls
             base.OnPreRender(e);
 
             Script.AddResourceScript(Page, "jquery.ui.datepicker.js", "jquery.datepicker.js");
+
             List<string> opts = new List<string>();
 
-            opts.Add(string.Format("dateFormat:\"{0}\"",jqFormat()));
-            opts.Add("firstDay:1");
-            opts.Add("gotoCurrent:true");
-            opts.Add("showOtherMonths:true");
-            opts.Add("selectOtherMonths:true");
+            opts.Add(string.Format("dateFormat:\"{0}\"", jqFormat()));
 
-            if(ChangeMonth)
-                opts.Add("changeMonth:true");
-            if(ChangeYear)
-                opts.Add("changeYear:true");
+            if(Mode != DateTimeMode.Date)
+            {
+                Script.AddResourceScript(Page, "jquery.timepicker.js");
+                Util.addStyleSheet("timepicker.css", "TimePickerCSS", Page, this);
+
+                opts.Add(string.Format("timeFormat:\"{0}\"", TimeFormat.Replace("H", "h")));
+
+                if(StepHour > 0)
+                    opts.Add(string.Format("stepHour:{0}", StepHour));
+                if(StepMinute > 0)
+                    opts.Add(string.Format("stepMinute:{0}", StepMinute));
+                if(StepSecond > 0)
+                    opts.Add(string.Format("stepSecond:{0}", StepSecond));
+                if(StepMillisecond > 0)
+                    opts.Add(string.Format("stepMillisec:{0}", StepMillisecond));
+
+                if(Separator != " ")
+                    opts.Add(string.Format("separator:\"{0}\"", Separator));
+
+                if(AMPM)
+                    opts.Add("ampm:true");
+
+                if(!ShowHour)
+                    opts.Add("showHour:false");
+                if(!ShowMinute)
+                    opts.Add("showMinute:false");
+                if(ShowSecond)
+                    opts.Add("showSecond:true");
+                if(ShowMillisecond)
+                    opts.Add("showMillisec:true");
+
+                if(ShowHourGrid)
+                    opts.Add("hourGrid:true");
+                if(ShowMinuteGrid)
+                    opts.Add("minuteGrid:true");
+                if(ShowSecondGrid)
+                    opts.Add("secondGrid:true");
+                if(ShowMilliSecondGrid)
+                    opts.Add("millisecGrid:true");
+            }
+
+            if(Mode != DateTimeMode.Time)
+            {
+                opts.Add("firstDay:1");
+                opts.Add("gotoCurrent:true");
+                opts.Add("showOtherMonths:true");
+                opts.Add("selectOtherMonths:true");
+
+                if(ChangeMonth)
+                    opts.Add("changeMonth:true");
+                if(ChangeYear)
+                    opts.Add("changeYear:true");
+
+                if(NumberOfMonths > 1)
+                {
+                    opts.Add(string.Format("numberOfMonths:{0}", NumberOfMonths));
+                    if(ShowCurrentMonthAtPosition > 0)
+                        opts.Add(string.Format("showCurrentAtPos:{0}", ShowCurrentMonthAtPosition));
+                }
+
+                if(ShowWeek)
+                    opts.Add("showWeek:true");
+            }
+
+
             if(!RestrictInput)
                 opts.Add("constrainInput:false");
             if(!Enabled)
@@ -486,21 +831,11 @@ namespace ESWCtrls
                     opts.Add(string.Format("buttonText:\"{0}\"", ButtonText));
             }
 
-            if(DefaultDate.HasValue)
-                opts.Add(string.Format("defaultDate:\"{0}\"",DefaultDate.Value.ToString(DateFormat)));
-
-            if(NumberOfMonths > 1)
-            {
-                opts.Add(string.Format("numberOfMonths:{0}", NumberOfMonths));
-                if(ShowCurrentMonthAtPosition > 0)
-                    opts.Add(string.Format("showCurrentAtPos:{0}", ShowCurrentMonthAtPosition));
-            }
-
             if(ShowButtonPanel)
                 opts.Add("showButtonPanel:true");
 
-            if(ShowWeek)
-                opts.Add("showWeek:true");
+            if(DefaultDate.HasValue)
+                opts.Add(string.Format("defaultDate:{0}", jsDate(DefaultDate.Value)));
 
             StringBuilder create = new StringBuilder();
             StringBuilder close = new StringBuilder();
@@ -510,9 +845,9 @@ namespace ESWCtrls
             MinMaxDateRange(ref create, ref close);
 
             if(MinDate.HasValue)
-                opts.Add(string.Format("minDate:\"{0}\"", MinDate.Value.ToString(DateFormat)));
+                opts.Add(string.Format("minDate:\"{0}\"", jsDate(MinDate.Value)));
             if(MaxDate.HasValue)
-                opts.Add(string.Format("maxDate:\"{0}\"", MaxDate.Value.ToString(DateFormat)));
+                opts.Add(string.Format("maxDate:\"{0}\"", jsDate(MaxDate.Value)));
 
             // Auto postback
             if(AutoPostBack)
@@ -531,7 +866,12 @@ namespace ESWCtrls
                     opts.Add(string.Format("showOptions:{0}", Effect.RenderOptions()));
             }
 
-            Script.AddStartupScript(this, ClientID, "datepicker", opts);
+            if(Mode == DateTimeMode.Date)
+                Script.AddStartupScript(this, ClientID, "datepicker", opts);
+            else if(Mode == DateTimeMode.Time)
+                Script.AddStartupScript(this, ClientID, "timepicker", opts);
+            else
+                Script.AddStartupScript(this, ClientID, "datetimepicker", opts);
         }
 
         ///
@@ -543,9 +883,9 @@ namespace ESWCtrls
             if(!AllowManualEntry)
                 writer.AddAttribute(HtmlTextWriterAttribute.ReadOnly, "readonly");
             if(CurrentDate.HasValue)
-                writer.AddAttribute(HtmlTextWriterAttribute.Value, CurrentDate.Value.ToString(DateFormat));
+                writer.AddAttribute(HtmlTextWriterAttribute.Value, CurrentDate.Value.ToString(FullFormat()));
             else if(!AllowBlank)
-                writer.AddAttribute(HtmlTextWriterAttribute.Value, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                writer.AddAttribute(HtmlTextWriterAttribute.Value, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(FullFormat()));
             writer.RenderBeginTag(HtmlTextWriterTag.Input);
             writer.RenderEndTag();
         }
@@ -588,7 +928,7 @@ namespace ESWCtrls
         //Converts current ASP.NET format to jQuery format
         private string jqFormat()
         {
-            string rst = DateFormat.Replace("dddd","DD").Replace("ddd","D");
+            string rst = DateFormat.Replace("dddd", "DD").Replace("ddd", "D");
 
             if(rst.Contains("MMMM"))
                 rst = rst.Replace("MMMM", "MM");
@@ -602,6 +942,32 @@ namespace ESWCtrls
             return rst;
         }
 
+        private string jsDate(DateTime dt)
+        {
+            return "new Date(" + dt.ToString("yyyy, M, d, h, m, s") + ")";
+        }
+
+        private string FullFormat()
+        {
+            string ff = "";
+
+            if(Mode != DateTimeMode.Time)
+                ff = DateFormat;
+
+            if(Mode == DateTimeMode.DateTime)
+                ff += Separator;
+
+            if(Mode != DateTimeMode.Date)
+            {
+                if(AMPM)
+                    ff += TimeFormat.Replace("H", "h");
+                else
+                    ff += TimeFormat.Replace("h", "H");
+            }
+
+            return ff;
+        }
+
         private void MinMaxDateRange(ref StringBuilder create, ref StringBuilder close)
         {
             if(!string.IsNullOrEmpty(MinDateControl))
@@ -611,24 +977,24 @@ namespace ESWCtrls
                 {
                     close.AppendFormat("\"#{0}\",", altCtrl.ClientID);
 
-                    if(MinDateControlMode == RangeMode.Fixed)
+                    if(MinDateControlMode == DateRangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
-                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, CurrentDate.Value.ToString(DateFormat));
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, jsDate(CurrentDate.Value));
                         else if(!AllowBlank)
-                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"minDate\",{1});", altCtrl.ClientID, jsDate(DefaultDate.GetValueOrDefault(DateTime.Now)));
                     }
                 }
                 else
                 {
                     close.AppendFormat("\"{0}\",", MinDateControl);
 
-                    if(MinDateControlMode == RangeMode.Fixed)
+                    if(MinDateControlMode == DateRangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
-                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, CurrentDate.Value.ToString(DateFormat));
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, jsDate(CurrentDate.Value));
                         else if(!AllowBlank)
-                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"minDate\",{1});", MinDateControl, jsDate(DefaultDate.GetValueOrDefault(DateTime.Now)));
                     }
                 }
 
@@ -643,23 +1009,23 @@ namespace ESWCtrls
                 if(altCtrl != null)
                 {
                     close.AppendFormat("\"#{0}\",", altCtrl.ClientID);
-                    if(MaxDateControlMode == RangeMode.Fixed)
+                    if(MaxDateControlMode == DateRangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
-                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, CurrentDate.Value.ToString(DateFormat));
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, jsDate(CurrentDate.Value));
                         else if(!AllowBlank)
-                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                            create.AppendFormat("$(\"#{0}\").datepicker(\"option\",\"maxDate\",{1});", altCtrl.ClientID, jsDate(DefaultDate.GetValueOrDefault(DateTime.Now)));
                     }
                 }
                 else
                 {
                     close.AppendFormat("\"{0}\",", MaxDateControl);
-                    if(MaxDateControlMode == RangeMode.Fixed)
+                    if(MaxDateControlMode == DateRangeMode.Fixed)
                     {
                         if(CurrentDate.HasValue)
-                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, CurrentDate.Value.ToString(DateFormat));
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, jsDate(CurrentDate.Value));
                         else if(!AllowBlank)
-                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, DefaultDate.GetValueOrDefault(DateTime.Now).ToString(DateFormat));
+                            create.AppendFormat("$(\"{0}\").datepicker(\"option\",\"maxDate\",{1});", MaxDateControl, jsDate(DefaultDate.GetValueOrDefault(DateTime.Now)));
                     }
                 }
 
@@ -668,7 +1034,7 @@ namespace ESWCtrls
             else
                 close.Append("null,null);");
         }
-        
+
         private DatePickerClientEvents _clientEvents;
 
         #endregion
@@ -692,16 +1058,16 @@ namespace ESWCtrls
         public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
         {
             bool changed = false;
-            if (postCollection[UniqueID] != null)
+            if(postCollection[UniqueID] != null)
             {
-                if (!string.IsNullOrEmpty(postCollection[UniqueID]))
+                if(!string.IsNullOrEmpty(postCollection[UniqueID]))
                 {
                     DateTime rst = DateTime.MinValue;
-                    if (DateTime.TryParseExact(Page.Request.Params[UniqueID], DateFormat, CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out rst))
+                    if(DateTime.TryParseExact(Page.Request.Params[UniqueID], DateFormat, CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out rst))
                     {
-                        if (CurrentDate.HasValue)
+                        if(CurrentDate.HasValue)
                         {
-                            if (CurrentDate.Value != rst)
+                            if(CurrentDate.Value != rst)
                                 changed = true;
                         }
                         else
@@ -710,7 +1076,7 @@ namespace ESWCtrls
                     }
                     else
                     {
-                        if (CurrentDate.HasValue)
+                        if(CurrentDate.HasValue)
                         {
                             changed = true;
                             CurrentDate = null;

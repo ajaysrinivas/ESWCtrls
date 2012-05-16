@@ -75,7 +75,7 @@ using System.Web.UI;
 [assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.effects.transfer.js", "text/javascript")]
 
 // Additiona jQuery Timepicker
-[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.ui.timepicker.js", "text/javascript")]
+[assembly: WebResource("ESWCtrls.ResEmbed.Scripts.jquery.timepicker.js", "text/javascript")]
 [assembly: WebResource("ESWCtrls.ResEmbed.Styles.timepicker.css", "text/css")]
 
 //My Jquery
