@@ -840,7 +840,7 @@ namespace ESWCtrls
             StringBuilder create = new StringBuilder();
             StringBuilder close = new StringBuilder();
 
-            close.AppendFormat("ls_dp_close(dateText,inst,{0},{1},", AllowManualEntry.ToString().ToLower(), AllowBlank.ToString().ToLower());
+            close.AppendFormat("ls_dp_close(dateText,inst,'{0}',{1},", Mode, AllowBlank.ToString().ToLower());
 
             MinMaxDateRange(ref create, ref close);
 
@@ -854,6 +854,8 @@ namespace ESWCtrls
                 close.AppendFormat("if(dateText!=inst.lastVal){0};", Page.ClientScript.GetPostBackEventReference(this, "dateChanged"));
 
             ClientSideEvents.PreRender(opts, create.ToString(), close.ToString());
+
+
 
             if(YearRange != 10)
                 opts.Add(string.Format("yearRange:\"c-{0}:c+{0}\"", YearRange));
