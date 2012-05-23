@@ -1065,7 +1065,7 @@ namespace ESWCtrls
                 if(!string.IsNullOrEmpty(postCollection[UniqueID]))
                 {
                     DateTime rst = DateTime.MinValue;
-                    if(DateTime.TryParseExact(Page.Request.Params[UniqueID], DateFormat, CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out rst))
+                    if(DateTime.TryParseExact(Page.Request.Params[UniqueID], FullFormat(), CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out rst))
                     {
                         if(CurrentDate.HasValue)
                         {

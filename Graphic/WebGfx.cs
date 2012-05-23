@@ -168,7 +168,7 @@ namespace ESWCtrls.Graphic
             if(string.IsNullOrEmpty(Title) == false) writer.AddAttribute(HtmlTextWriterAttribute.Title, Title);
             if(string.IsNullOrEmpty(AltText) == false) writer.AddAttribute(HtmlTextWriterAttribute.Alt, AltText);
             _saveTime = DateTime.Now;
-            writer.AddAttribute(HtmlTextWriterAttribute.Src, FileName + Extension);
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, FullPath);
             Context.Application["wgx_" + FileName] = this;
             writer.RenderBeginTag(HtmlTextWriterTag.Img);
             writer.RenderEndTag();
