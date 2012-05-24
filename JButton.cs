@@ -301,15 +301,26 @@ namespace ESWCtrls
             {
                 AdvStyle s = new AdvStyle();
                 s.BackgroundImageUrl = CustomIconFile;
-                Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + ".ui-state-default .ui-icon");
+                if(Toggle)
+                    Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + " + .ui-state-default .ui-icon");
+                else
+                    Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + ".ui-state-default .ui-icon");
             }
 
             if(!string.IsNullOrEmpty(CustomHoverIconFile))
             {
                 AdvStyle s = new AdvStyle();
                 s.BackgroundImageUrl = CustomHoverIconFile;
-                Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + ".ui-state-hover .ui-icon");
-                Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + ".ui-state-focus .ui-icon");
+                if(Toggle)
+                {
+                    Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + " + .ui-state-hover .ui-icon");
+                    Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + " + .ui-state-focus .ui-icon");
+                }
+                else
+                {
+                    Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + ".ui-state-hover .ui-icon");
+                    Page.Header.StyleSheet.CreateStyleRule(s, this, "#" + ClientID + ".ui-state-focus .ui-icon");
+                }
             }
 
             if(!ShowText)
