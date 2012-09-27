@@ -98,7 +98,7 @@ namespace ESWCtrls
             //        s._startScripts.Add(new StartUpScript(ctrl, key, script, priority));
             //}
             //else
-            ScriptManager.RegisterStartupScript(ctrl, ctrl.GetType(), key, "$(document).ready(function(){" + script + "});", true);
+            ScriptManager.RegisterStartupScript(ctrl, ctrl.GetType(), key, "$(document).ready(function(){" + script + "});\n", true);
 
             //if(!s._startScripts.ContainsKey(key))
             //{

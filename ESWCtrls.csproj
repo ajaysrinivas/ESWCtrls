@@ -90,6 +90,7 @@
     <Compile Include="Help\HelpPoint.cs" />
     <Compile Include="JButton.cs" />
     <Compile Include="Menu\PanelMenu.cs" />
+    <Compile Include="PagePosition.cs" />
     <Compile Include="Parts\Effect.cs" />
     <Compile Include="Parts\Option.cs" />
     <Compile Include="Parts\Positioning.cs" />
